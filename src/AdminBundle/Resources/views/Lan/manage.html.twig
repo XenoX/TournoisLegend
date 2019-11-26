@@ -1,0 +1,72 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/plugins/datatables/css/datatables.bootstrap.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Participants <small>{{ lan.name }}</small></h3>
+        </div>
+        <div class="box-body">
+            <table id="participant_list" class="table table-condensed dataTable">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    {% if lan.team %}
+                        <th>Tag(s)</th>
+                    {% endif %}
+                    <th>State</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for participant in participants %}
+                    <tr>
+                        <td>{{ participant.name }}</td>
+                        <td>{{ participant.email }}</td>
+                        {% if lan.team %}
+                            <td>{{ participant.players }}</td>
+                        {% endif %}
+                        <td>
+                            <a href="{{ path('admin_lanparticipant_changestate', {'participant': participant.id}) }}">
+                                {% if constant('TournamentBundle\\Workflow\\LanParticipantWorkflow::STATE_REGISTERED') == participant.state %}
+                                    <button type="button" class="btn btn-success btn-xs" title="Confirm">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                {% else %}
+                                    <button type="button" class="btn btn-warning btn-xs" title="Unconfirm">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                {% endif %}
+                            </a>
+                            <a href="{{ path('admin_lanparticipant_remove', {'participant': participant.id}) }}" class="pull-right">
+                                <button type="button" class="btn btn-danger btn-xs" title="Remove participant">
+                                    <i class="fas fa-remove"></i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function() {
+            $('#participant_list').dataTable({
+                "bPaginate":false,
+                "bLengthChange":false,
+                "bInfo":false
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('static/plugins/datatables/js/datatables.bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('static/plugins/datatables/js/jquery.datatables.js') }}"></script>
+{% endblock %}

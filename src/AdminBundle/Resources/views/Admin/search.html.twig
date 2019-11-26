@@ -1,0 +1,110 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+{% if tournaments %}
+    <div class="box box-primary">
+        <div class="box-header with-border"><h3 class="box-title">Tournaments</h3></div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        {% if tournaments %}
+                            {% for tournament in tournaments %}
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 margin-bottom-20">
+                                    <div class="thumbnail">
+                                        <img src="{{ asset(tournament.mode.game.webPath) }}" class="center-block" title="logo-{{ tournament.name }}">
+                                        <div class="caption">
+                                            <h4 class="text-center">{{ tournament.name }}</h4>
+                                            <i class="fas fa-gamepad margin-bottom-10"></i> {{ tournament.mode.game.shortName }}<br>
+                                            <i class="fas fa-users margin-bottom-10"></i> {{ tournament.formatStringify }} - {{ tournament.size }}<br>
+                                            <i class="fas fa-calendar-alt margin-bottom-10"></i> {{ tournament.startAt|localizeddate('short', 'short', null, tournament.startAt|date('e')) }}<br>
+                                            <a href="{{ path('admin_tournament_manage', {'tournament': tournament.id}) }}" class="btn btn-block btn-primary btn-rounded btn-sm margin-top-20">
+                                                <i class="fas fa-cogs"></i> Manage
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-center text-info">No result in tournaments.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if users %}
+    <div class="box box-primary">
+        <div class="box-header with-border"><h3 class="box-title">Users</h3></div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        {% if users %}
+                            {% for user in users %}
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 margin-bottom-20">
+                                    <div class="thumbnail">
+                                        <img src="data:image/jpeg;base64,{{ user.name|avatar }}" class="center-block" title="logo-{{ user.name }}">
+                                        <div class="caption">
+                                            <h4 class="text-center">{{ user.name }}</h4>
+                                            <i class="fas fa-flag margin-bottom-10"></i> {{ user.country|country }}<br>
+                                            {% if user.gender == 'm' %}
+                                                <i class="fas fa-mars margin-bottom-10"></i> Male<br>
+                                            {% elseif user.gender == 'f' %}
+                                                <i class="fas fa-venus margin-bottom-10"></i> Female<br>
+                                            {% else %}
+                                                <i class="fas fa-usb margin-bottom-10"></i> Robot<br>
+                                            {% endif %}
+                                            <i class="fas fa-calendar-alt margin-bottom-10"></i> {{ user.registerAt|localizeddate('short', 'short', null, user.registerAt|date('e')) }}<br>
+                                            <a href="{{ path('admin_user_update', {'user': user.id}) }}" class="btn btn-block btn-primary btn-rounded btn-sm margin-top-20">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-center text-info">No result in users.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if teams %}
+    <div class="box box-primary">
+        <div class="box-header with-border"><h3 class="box-title">Teams</h3></div>
+        <div class="box-body">
+            <div class="row margin-top-20">
+                <div class="col-lg-12">
+                    <div class="row">
+                        {% if teams %}
+                            {% for team in teams %}
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 margin-bottom-20">
+                                    <div class="thumbnail">
+                                        <img src="{{ asset(team.webPath) }}" class="center-block" title="logo-{{ team.name }}">
+                                        <div class="caption">
+                                            <h4 class="text-center">{{ team.name }}</h4>
+                                            <i class="fas fa-star margin-bottom-10"></i> {{ team.leader.username }}<br>
+                                            <i class="fas fa-calendar-alt margin-bottom-10"></i> {{ team.createdAt|localizeddate('short', 'short', null, team.createdAt|date('e')) }}<br>
+                                            <a href="{{ path('admin_team_update', {'team': team.id,}) }}" class="btn btn-block btn-primary btn-rounded btn-sm margin-top-20">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-center text-info">No result in teams.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

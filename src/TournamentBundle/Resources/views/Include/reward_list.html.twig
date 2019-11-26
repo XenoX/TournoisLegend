@@ -1,0 +1,16 @@
+{% if object.reward %}
+    <div class="bold text-uppercase margin-top-40">{{ 'tournament.profile.rewards'|trans }}</div>
+    <span class="font-size-13 bold">1 :</span> <span class="font-size-13">{{ attribute(object.reward, "first" ~ locale)|raw }}</span><br>
+    {% if object.reward.secondEn %}
+        <span class="font-size-13 bold">2 :</span> <span class="font-size-13">{{ attribute(object.reward, "second" ~ locale)|raw }}</span><br>
+    {% endif %}
+    {% if object.reward.thirdEn %}
+        <span class="font-size-13 bold">3 :</span> <span class="font-size-13">{{ attribute(object.reward, "third" ~ locale)|raw }}</span><br>
+    {% endif %}
+    {% if object.reward.fourthEn %}
+        <span class="font-size-13 bold">4 :</span> <span class="font-size-13">{{ attribute(object.reward, "fourth" ~ locale)|raw }}</span><br>
+    {% endif %}
+    {% if object.reward.fifthToEighthEn %}
+        <span class="font-size-13 bold">5 {{ 'tournament.profile.to'|trans }} 8 :</span> <span class="font-size-13">{{ attribute(object.reward, "fifthToEighth" ~ locale)|raw }}</span>
+    {% endif %}
+{% endif %}

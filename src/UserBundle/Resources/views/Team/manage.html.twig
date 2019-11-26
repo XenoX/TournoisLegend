@@ -1,0 +1,299 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.team_manage'|trans }} {{ parent() }}{% endblock %}
+
+{% block css %}
+<style>
+    textarea {
+        resize: none;
+        min-height: 120px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div id="wrapper">
+    <section class="hero" style="background-image: url({{ asset('static/img/cover-team-manage.jpg') }});">
+        <div class="hero-bg-primary"></div>
+        <div class="container">
+            <div class="page-header">
+                <div class="page-title">{{ 'team_manage.banner.title'|trans }}</div>
+                <em>{{ team.name }}</em>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white no-padding border-bottom-1 border-grey-300" style="height: 54px">
+        <div class="tab-select text-center sticky">
+            <div class="container">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active">
+                        <a href="#members" aria-controls="members" role="tab" data-toggle="tab">
+                            <i class="fas fa-users"></i> {{ 'team_manage.menu.members'|trans }}
+                        </a>
+                    </li>
+                    {% if app.user == team.leader %}
+                        <li role="presentation">
+                            <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">
+                                <i class="fas fa-wrench"></i> {{ 'team_manage.menu.settings'|trans }}
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-grey-50 padding-top-30">
+        <div class="container">
+            <div class="row sidebar">
+                <div class="col-md-8 leftside">
+                    <div class="row margin-bottom-30">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="members">
+                                <div class="container-fluid">
+                                    <h3>{{ 'team_manage.join_link'|trans }}</h3><hr>
+                                    <p class="text-info">{{ 'team_manage.join_link_info'|trans }} :</p>
+                                    <div class="input-group form-control margin-top-10 margin-bottom-30">
+                                        <input id="invitelink" title="inviteLink" class="form-control" value="{{ url('user_teammember_join', {'token': team.token}) }}" readonly>
+                                        <span class="input-group-btn">
+                                            <button class="btn-link btn btn-default" data-toggle="tooltip" data-placement="top" data-original-title="{{ 'team_manage.copy'|trans }}" alt="{{ 'team_manage.copy'|trans }}" data-clipboard-target="#invitelink">
+                                                <i class="fas fa-clipboard"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+
+                                    {% if requests %}
+                                        <h3>{{ 'team_manage.requests'|trans }}</h3><hr>
+                                        <table class="table table-stripped table-bordered table-condensed margin-top-10 margin-bottom-30">
+                                            <thead>
+                                                <th>{{ 'team_manage.username'|trans }}</th>
+                                                <th>{{ 'team_manage.date'|trans }}</th>
+                                                {% if app.user.id == team.leader.id %}
+                                                    <th>{{ 'team_manage.actions'|trans }}</th>
+                                                {% endif %}
+                                            </thead>
+                                            <tbody>
+                                                {% for request in requests %}
+                                                    <tr>
+                                                        <td>
+                                                            <a href="{{ path('user_user_profile', {'user': request.user.id, 'slug': request.user.username|slugify}) }}" target="_blank">
+                                                                {{ request.user.username }}
+                                                            </a>
+                                                        </td>
+                                                        <td>{{ request.joinAt|localizeddate('long', 'medium', null, request.joinAt|date('e')) }}</td>
+                                                        {% if app.user.id == team.leader.id %}
+                                                            <td>
+                                                                <a href="{{ path('user_teammember_requestaccept', {'teamMember': request.id}) }}">
+                                                                    <button class="btn btn-sm btn-success">
+                                                                        <i class="fas fa-check"></i>
+                                                                    </button>
+                                                                </a>
+                                                                <a href="{{ path('user_teammember_requestdelete', {'teamMember': request.id}) }}">
+                                                                    <button class="btn btn-sm btn-danger">
+                                                                        <i class="fas fa-remove"></i>
+                                                                    </button>
+                                                                </a>
+                                                            </td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+
+                                    <h3>{{ 'team_manage.member_list'|trans }} ({{ members.getTotalItemCount() }})</h3><hr>
+                                    <div class="row">
+                                        {% for member in members %}
+                                            <div class="col-sm-4 col-xs-6 margin-bottom-sm-30">
+                                                <div class="card card-hover">
+                                                    <div class="card-img">
+                                                        <img src="data:image/jpeg;base64,{{ member.user.name|avatar }}" alt="{{ member.user.username }}_avatar">
+                                                        <div class="category">
+                                                            <span class="label {{ member.user.id == team.leader.id ? 'label-warning' : 'label-primary' }}">{{ member.role|trans }}</span>
+                                                        </div>
+                                                        <div class="meta hidden-xs hidden-sm">
+                                                            {% if app.user.id != member.user.id and app.user.id == team.leader.id %}
+                                                                <button type="button" class="btn btn-xs btn-default" data-toggle="modal" data-target="#leader-modal" data-member-id="{{ member.id }}" data-user-username="{{ member.user.username }}" title="{{ 'team_manage.member_set_leader'|trans }}">
+                                                                    <i class="fas fa-briefcase text-default no-margin"></i>
+                                                                </button>
+                                                                <a href="{{ path('user_teammember_remove', {'teamMember': member.id}) }}" class="btn btn-xs btn-default" title="{{ 'team_manage.member_remove'|trans }}">
+                                                                    <i class="fas fa-remove text-danger no-margin"></i>
+                                                                </a>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="caption">
+                                                        <h3 class="card-title">
+                                                            <a href="{{ path('user_user_profile', {'user': member.user.id, 'slug': member.user.username|slugify}) }}">
+                                                                {{ member.user.username }}
+                                                            </a>
+                                                        </h3>
+                                                        <p>
+                                                            <i class="fas fa-clock"></i>
+                                                            {{ member.joinAt|localizeddate('long', 'none', null, member.joinAt|date('e')) }}
+                                                        </p>
+                                                        <span class="visible-xs visible-sm">
+                                                            {% if app.user.id != member.user.id and app.user.id == team.leader.id %}
+                                                                <a href="{{ path('user_teammember_remove', {'teamMember': member.id}) }}" class="btn btn-sm btn-block btn-danger">
+                                                                    {{ 'team_manage.member_remove'|trans }}
+                                                                </a>
+                                                                <button type="button" class="btn btn-sm btn-block btn-warning" data-toggle="modal" data-target="#leader-modal" data-member-id="{{ member.id }}" data-user-username="{{ member.user.username }}">
+                                                                    {{ 'team_manage.member_set_leader'|trans }}
+                                                                </button>
+                                                            {% endif %}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        {{ knp_pagination_render(members) }}
+                                    </div>
+
+                                    {% if app.user != team.leader %}
+                                        <h3 class="margin-top-30">{{ 'team_manage.team_quit'|trans }}</h3><hr>
+                                        {{ 'team_manage.team_quit_warning'|trans }}
+                                        <br><br><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#quit-modal">{{ 'team_manage.team_quit_button'|trans }}</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {% if app.user == team.leader %}
+                                <div role="tabpanel" class="tab-pane fade" id="settings">
+                                    <div class="container-fluid">
+                                        <h3>{{ 'team_manage.edit'|trans }}</h3><hr>
+                                        {{ form_start(form) }}
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <label for="avatar_and_banner_file">
+                                                        <img id="logoUpload" src="{{ asset(team.getWebPath()) }}" alt="logo_{{ team.name }}" class="img-responsive margin-bottom-10">
+                                                        {{ form_errors(form.file) }}
+                                                        {{ form_widget(form.file) }}
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <label for="avatar_and_banner_fileBanner">
+                                                        <img id="bannerUpload" src="{{ asset(team.getWebPathBanner()) }}" alt="banner_{{ team.name }}" class="img-responsive margin-bottom-10">
+                                                        {{ form_errors(form.fileBanner) }}
+                                                        <span class="pull-right">{{ form_widget(form.fileBanner) }}</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="row margin-bottom-10">
+                                                <div class="col-sm-4">
+                                                    {% if team.logo != constant('DEFAULT_LOGO', team) %}
+                                                        <a href="{{ path('user_team_removeimage', {'type': 'logo', 'team': team.id}) }}" class="text-warning">{{ 'team_manage.remove_logo'|trans }}</a>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    {% if team.banner != constant('DEFAULT_BANNER', team) %}
+                                                        <a href="{{ path('user_team_removeimage', {'type': 'banner', 'team': team.id}) }}" class="text-warning pull-right">{{ 'team_manage.remove_banner'|trans }}</a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    {{ form_row(form.tag) }}
+                                                    {{ form_row(form.name) }}
+                                                    {{ form_row(form.website) }}
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    {{ form_row(form.facebook) }}
+                                                    {{ form_row(form.twitter) }}
+                                                    {{ form_row(form.twitch) }}
+                                                </div>
+                                            </div>
+                                            {{ form_row(form.description) }}
+                                            {{ form_rest(form) }}
+                                            <br><button type="submit" class="btn btn-primary btn-block">{{ 'form.team_manage.button'|trans }}</button>
+                                        {{ form_end(form) }}
+
+                                        <h3 class="margin-top-30">{{ 'team_manage.team_delete'|trans }}</h3><hr>
+                                        {{ 'team_manage.team_delete_warning'|trans }}
+                                        <br><br><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete-modal">{{ 'team_manage.team_delete_button'|trans }}</button>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 rightside hidden-xs hidden-sm">
+                    {% include 'UserBundle:Include:recent_tweets.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="delete-modal" class="modal fade" tabindex="-1" role="dialog" style="display: none;" data-effect="bounceIn">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">{{ 'close'|trans }}</span></button>
+                <h4 class="modal-title">{{ 'modal.team_delete.header'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                {{ 'modal.team_delete.message'|trans }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'close'|trans }}</button>
+                <a href="{{ path('user_team_delete', {'team': team.id}) }}" class="btn btn-danger">{{ 'confirm'|trans }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="quit-modal" class="modal fade" tabindex="-1" role="dialog" style="display: none;" data-effect="bounceIn">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">{{ 'close'|trans }}</span></button>
+                <h4 class="modal-title">{{ 'modal.team_quit.header'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+                {{ 'modal.team_quit.message'|trans }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'close'|trans }}</button>
+                <a href="{{ path('user_teammember_left', {'teamMember': teamMember.id}) }}" class="btn btn-danger">{{ 'confirm'|trans }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="leader-modal" class="modal fade" tabindex="-1" role="dialog" style="display: none;" data-effect="bounceIn">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">{{ 'close'|trans }}</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                {{ 'modal.team_leader.message'|trans }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'close'|trans }}</button>
+                <a id="leader-button" href="" class="btn btn-warning leader-button">{{ 'confirm'|trans }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    new Clipboard('.btn-link');
+
+    $('#leader-modal').on('show.bs.modal', function (event) {
+        var modal = $(this);
+        var button = $(event.relatedTarget);
+        var url = '{{ path('user_teammember_leader', {'teamMember': 'memberId'}) }}';
+        url = url.replace('memberId', button.data('member-id'));
+        var title = '{{ 'modal.team_leader.header'|trans({'%username%': 'usernameToChange'}) }}';
+        title = title.replace('usernameToChange', button.data('user-username'));
+        modal.find('.modal-title').text(title);
+        modal.find('#leader-button').attr('href', url);
+    })
+</script>
+{% endblock %}

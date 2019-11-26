@@ -1,0 +1,31 @@
+TournamentBundle\Entity\RankingLevel:
+    rankingLevel-bronze:
+        nameFr: 'Bronze'
+        nameEn: 'Bronze'
+        color: '#A54404'
+        eloMax: 500
+    rankingLevel-silver:
+        nameFr: 'Argent'
+        nameEn: 'Silver'
+        color: '#A6A6A6'
+        eloMax: 600
+    rankingLevel-gold:
+        nameFr: 'Or'
+        nameEn: 'Gold'
+        color: '#DCAB1C'
+        eloMax: 700
+    rankingLevel-platinium:
+        nameFr: 'Platine'
+        nameEn: 'Platinium'
+        color: '#05A5A8'
+        eloMax: 750
+    rankingLevel-diamond:
+        nameFr: 'Diamant'
+        nameEn: 'Diamond'
+        color: '#13E5F0'
+        eloMax: 800
+    rankingLevel-legend:
+        nameFr: 'Légende'
+        nameEn: 'Legend'
+        color: '#E62727'
+        eloMax: 99999

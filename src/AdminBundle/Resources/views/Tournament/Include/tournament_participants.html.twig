@@ -1,0 +1,91 @@
+<div id="box_participants" class="box box-info {{ tournament.started ? 'collapsed-box' }}">
+    <div class="box-header with-border">
+        <a href="#" data-widget="collapse">
+            <h3 class="box-title fas {{ tournament.started ? 'fa-plus' : 'fa-minus' }}">
+                Participants ({{ participants|length }}) ({{ countCheckInParticipants }} check in) <small>Click for (un)collapse</small>
+            </h3>
+        </a>
+    </div>
+    <div class="box-body">
+        <table id="participant_list" class="table table-condensed dataTable">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Tag(s)</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for participant in participants %}
+                <tr {{ not participant[0].teamOrUser.clean ? 'class="bg-danger"' }}>
+                    {% if participant[0].team %}
+                        <td>
+                            <a href="{{ path('admin_team_update', {'team': participant[0].team.id}) }}" class="{% if participant[0].checkIn %}text-bold text-success{% endif %}">
+                                {{ participant[0].team.name }}
+                            </a>
+                        </td>
+                        <td>
+                            {% for userParticipant in participant %}
+                                {% if userParticipant.tag %}
+                                    <a href="{{ path('admin_user_update', {'user': participant[loop.index0].user.id}) }}">
+                                        {{ userParticipant.tag }}
+                                    </a>
+                                {% else %}
+                                    <span class="text-warning">No Tag</span>
+                                {% endif %}
+                                {% if not loop.last %} |{% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% if not tournament.started %}
+                                {% if participant[0].confirmed and not participant[0].checkIn and tournament.checkInPhase %}
+                                    <a href="{{ path('admin_participant_checkin', {'participant': participant[0].id}) }}" class="btn btn-xs btn-success" title="Check In">
+                                        <i class="fas fa-check"></i>
+                                    </a>
+                                {% endif %}
+                                <a href="{{ path('admin_participant_remove', {'participant': participant[0].id}) }}" class="btn btn-xs btn-danger pull-right" title="Remove">
+                                    <i class="fas fa-remove"></i>
+                                </a>
+                            {% endif %}
+                            <a href="{{ path('admin_participant_change', {'tournament': tournament.id, 'team': participant[0].team.id}) }}" class="btn btn-xs btn-info" title="Change line-up">
+                                <i class="fas fa-th-list"></i>
+                            </a>
+                        </td>
+                    {% else %}
+                        <td>
+                            <a href="{{ path('admin_user_update', {'user': participant[0].user.id}) }}">
+                                {{ participant[0].user.name }}
+                            </a>
+                        </td>
+                        <td>{{ participant[0].tag }}</td>
+                        <td>
+                            {% if not tournament.started %}
+                                {% if participant[0].confirmed and not participant[0].checkIn and tournament.checkInPhase %}
+                                    <a href="{{ path('admin_participant_checkin', {'participant': participant[0].id}) }}" class="btn btn-xs btn-success" title="Check In">
+                                        <i class="fas fa-check"></i>
+                                    </a>
+                                {% endif %}
+                                <a href="{{ path('admin_participant_remove', {'participant': participant[0].id}) }}" class="btn btn-xs btn-danger pull-right" title="Remove">
+                                    <i class="fas fa-remove"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $('#participant_list').dataTable({
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": true,
+            "bSort": false,
+            "bInfo": false
+        });
+    });
+</script>

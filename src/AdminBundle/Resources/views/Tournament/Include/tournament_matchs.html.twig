@@ -1,0 +1,59 @@
+{% if tournament.started %}
+    <div id="box_battles" class="box box-info">
+        <div class="box-header with-border">
+            <a href="#" data-widget="collapse">
+                <h3 class="box-title fas fa-minus"> Matchs <small>Click for (un)collapse</small></h3>
+            </a>
+        </div>
+        <div class="box-body">
+            {% if battles %}
+                <table id="battle_list" class="table table-condensed dataTable">
+                    <thead>
+                    <tr>
+                        <th>Round - (Match) Participants</th>
+                        <th>Start - End</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for battle in battles %}
+                        <tr>
+                            <td>{{ battle.round }} - ({{ battle.battleId }}) {{ battle|participantBattle }}</td>
+                            <td>{{ battle.startAt|localizeddate('short', 'short', null, battle.startAt|date('e')) }}{% if battle.endAt %} - {{ battle.endAt|localizeddate('short', 'short', null, battle.endAt|date('e')) }}{% else %}{% endif %}</td>
+                            <td>
+                                {% if not battle.endAt %}
+                                    {% if battle.participant1 and battle.participant2 %}
+                                        <a href="{{ path('admin_battle_win', {'battle': battle.id, 'winner': battle.participant1.id }) }}" class="btn btn-xs btn-default" title="Win for left participant" onclick="return(confirm('Are you sure ?'));">
+                                            <i class="fas fa-trophy"></i> Left
+                                        </a>
+                                        <a href="{{ path('admin_battle_win', {'battle': battle.id, 'winner': battle.participant2.id }) }}" class="btn btn-xs btn-default" title="Win for right participant" onclick="return(confirm('Are you sure ?'));">
+                                            <i class="fas fa-trophy"></i> Right
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                                {% if battle.endAt and battle.participant1 and battle.participant2 %}
+                                    <a href="{{ path('admin_battle_reset', {'battle': battle.id}) }}" class="btn btn-xs btn-warning" title="Reset battle"  onclick="return(confirm('Reset this battle, are you sure ?'));">
+                                        <i class="fas fa-bolt"></i>
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+
+<script type="text/javascript">
+    $(function() {
+        $('#battle_list').dataTable({
+            "bPaginate":false,
+            "bLengthChange":false,
+            "bFilter": true,
+            "bSort": false,
+            "bInfo":false
+        });
+    });
+</script>

@@ -1,0 +1,27 @@
+tournament:
+    resource: "@TournamentBundle/Controller/"
+    type:     annotation
+    prefix:   /{_locale}/tournament
+
+admin:
+    resource: "@AdminBundle/Controller/"
+    type:     annotation
+    prefix:   /admin
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /{_locale}
+
+app:
+    resource: "@AppBundle/Controller/AppController.php"
+    type:     annotation
+    prefix:   /{_locale}
+
+front:
+    resource: "@AppBundle/Controller/FrontController.php"
+    type:     annotation
+    prefix:   /
+
+v3:
+    resource: "routing_v3.yml"

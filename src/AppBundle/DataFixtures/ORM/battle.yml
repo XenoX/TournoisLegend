@@ -1,0 +1,25 @@
+TournamentBundle\Entity\Battle:
+    battle-1:
+        battleId: 1
+        round: 1
+        participant1: '@participant-1'
+        participant2: '@participant-4'
+        tournament: '@tournament-team'
+    battle-2:
+        battleId: 2
+        round: 1
+        participant1: '@participant-7'
+        participant2: '@participant-10'
+        tournament: '@tournament-team'
+    battle-3:
+        battleId: 3
+        round: 1
+        participant1: '@participant-13'
+        participant2: '@participant-16'
+        tournament: '@tournament-team'
+    battle-4:
+        battleId: 4
+        round: 1
+        participant1: '@participant-19'
+        participant2: '@participant-21'
+        tournament: '@tournament-team'

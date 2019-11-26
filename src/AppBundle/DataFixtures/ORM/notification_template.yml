@@ -1,0 +1,41 @@
+UserBundle\Entity\NotificationTemplate:
+    notification-template-1:
+        name: 'welcome'
+        contentEn: 'Welcome on Tournois-Legend'
+        contentFr: 'Bienvenue sur Tournois-Legend'
+    notification-template-2:
+        name: 'team.member.leader'
+        contentEn: 'A team set you leader'
+        contentFr: 'Une équipe vient de vous nommer chef'
+    notification-template-3:
+        name: 'team.member.role'
+        contentEn: 'A team change your role'
+        contentFr: 'Une équipe a changé votre role'
+    notification-template-4:
+        name: 'tournament.team.registration'
+        contentEn: 'A team registered you in tournament'
+        contentFr: 'On vient de vous inscrire à un tournoi'
+    notification-template-5:
+        name: 'team.member.joined'
+        contentEn: 'An user join your team'
+        contentFr: 'Un joueur rejoint votre équipe'
+    notification-template-6:
+        name: 'team.member.accepted'
+        contentEn: 'A team has accepted you'
+        contentFr: 'Une équipe vous a acceptée'
+    notification-template-7:
+        name: 'tournament.stream.accepted'
+        contentEn: 'Your stream request is accepted'
+        contentFr: 'Votre requête de stream est acceptée'
+    notification-template-8:
+        name: 'admin.team.member.leader'
+        contentEn: 'An admin set you leader'
+        contentFr: 'Un admin vient de vous nommer chef'
+    notification-template-9:
+        name: 'team.member.requested'
+        contentEn: 'New request for your team'
+        contentFr: 'Nouvelle demande pour votre équipe'
+    notification-template-9:
+        name: 'team.deleted'
+        contentEn: 'Your team has been deleted'
+        contentFr: 'Votre équipe a été supprimée'

@@ -1,0 +1,20 @@
+<ul class="dropdown-menu mega-dropdown-menu category">
+    <li class="col-md-4">
+        <a href="{{ path('tournament_tournament_index') }}">
+            <img src="{{ asset(game.webPathBanner) }}" alt="all_game_banner">
+            <div class="caption">
+                <p class="font-size-16">{{ 'tournament.list.all_games'|trans }}</p>
+            </div>
+        </a>
+    </li>
+    {% for game in games %}
+        <li class="col-md-4">
+            <a href="{{ path('tournament_tournament_index_game', {'game': game.id, 'slug': game.name|slugify}) }}">
+                <img src="{{ asset(game.webPathBanner) }}" alt="{{ game.name }}_banner">
+                <div class="caption">
+                    <p class="font-size-16">{{ game.fullName }}</p>
+                </div>
+            </a>
+        </li>
+    {% endfor %}
+</ul>

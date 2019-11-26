@@ -1,0 +1,23 @@
+TournamentBundle\Entity\Tournament:
+    tournament-team:
+        name: 'BallzyThreeline #1'
+        size: 8
+        format: 3
+        registrationStartAt: '<datetime()>'
+        mapNameEn: 'Twisted Threeline'
+        mapNameFr: 'Forêt Torturée'
+        mode: '@mode-lol-classic'
+        description: '@description-*'
+        reward: '@reward-*'
+        rules: '@rules-*'
+        organizer: '@organizer-*'
+    tournament-solo:
+        name: 'HS Contest #1'
+        size: 8
+        format: 1
+        registrationStartAt: '<datetime()>'
+        mode: '@mode-hs-classic'
+        description: '@description-*'
+        reward: '@reward-*'
+        rules: '@rules-*'
+        organizer: '@organizer-*'

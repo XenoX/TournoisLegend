@@ -1,0 +1,47 @@
+TournamentBundle\Entity\Lan:
+    lan-solo:
+        name: Solo
+        slug: lan-solo
+        size: 8
+        format: 1
+        plan: <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d40492.60173871181!2d3.012141077822228!3d50.63106225204916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2d579b3256e11%3A0x40af13e81646360!2sLille!5e0!3m2!1sfr!2sfr!4v1488803973325" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+        price: 0
+        twitch: esl_tournoislegend
+        registrationStartAt: <dateTimeBetween("now", "+ 5 days")>
+        registrationStopAt: <dateTimeBetween("+ 5 days", "+ 10 days")>
+        startAt: <dateTimeBetween("+ 10 days", "+ 15 days")>
+        description: '@description-*'
+        rules: '60%? @rules-*'
+        reward: '80%? @reward-*'
+        game: '@game-hs'
+    lan-solo-not-free:
+        name: SoloNotFree
+        slug: lan-solo-notfree
+        size: 8
+        format: 1
+        plan: <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d40492.60173871181!2d3.012141077822228!3d50.63106225204916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2d579b3256e11%3A0x40af13e81646360!2sLille!5e0!3m2!1sfr!2sfr!4v1488803973325" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+        price: 10
+        twitch: esl_tournoislegend
+        registrationStartAt: <dateTimeBetween("now", "+ 5 days")>
+        registrationStopAt: <dateTimeBetween("+ 5 days", "+ 10 days")>
+        startAt: <dateTimeBetween("+ 10 days", "+ 15 days")>
+        description: '@description-*'
+        rules: '60%? @rules-*'
+        reward: '80%? @reward-*'
+        game: '@game-hs'
+    lan-team:
+        name: Team
+        slug: lan-team
+        size: 8
+        format: 5
+        plan: <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d40492.60173871181!2d3.012141077822228!3d50.63106225204916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2d579b3256e11%3A0x40af13e81646360!2sLille!5e0!3m2!1sfr!2sfr!4v1488803973325" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+        price: 0
+        twitch: esl_tournoislegend
+        registrationStartAt: <dateTimeBetween("now", "+ 5 days")>
+        registrationStopAt: <dateTimeBetween("+ 5 days", "+ 10 days")>
+        startAt: <dateTimeBetween("+ 10 days", "+ 15 days")>
+        description: '@description-*'
+        rules: '60%? @rules-*'
+        reward: '80%? @reward-*'
+        game: '@game-lol'
+        mail: '@mail-ballzyparty'

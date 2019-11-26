@@ -1,0 +1,162 @@
+{% extends '::base.html.twig' %}
+
+{% set locale = app.request.locale|capitalize %}
+{% block title %}[LAN] {{ lan.name|capitalize }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero height-350 hero-game" style="background-image: url({{ asset(lan.game.webPathBanner) }});">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">{{ lan.name }}</div>
+                    <p class="font-size-20">{{ lan.game.name }}</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white no-padding hidden-xs border-bottom-1 border-grey-300" style="height: 54px">
+            <div class="tab-select text-center sticky">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" {% if not lan.bracket %}class="active"{% endif %}>
+                        <a href="#informations" aria-controls="informations" role="tab" data-toggle="tab">
+                            <i class="fas fa-file-text"></i> {{ 'tournament.profile.informations'|trans }}
+                        </a>
+                    </li>
+                    {% if lan.bracket %}
+                        <li role="presentation" class="active">
+                            <a href="#bracket" aria-controls="bracket" role="tab" data-toggle="tab">
+                                <i class="fas fa-list"></i> {{ 'tournament.profile.bracket'|trans }}
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li role="presentation">
+                        <a href="#participants" aria-controls="participants" role="tab" data-toggle="tab">
+                            <i class="fas fa-users"></i> {{ 'lan.profile.register_and_participants'|trans }} ({{ participants|length }})
+                        </a>
+                    </li>
+                    {% if lan.rules %}
+                        <li role="presentation">
+                            <a href="#rules" aria-controls="rules" role="tab" data-toggle="tab">
+                                <i class="fas fa-book"></i> {{ 'lan.profile.rules'|trans }}
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </section>
+
+        <section class="bg-grey-50 padding-top-30">
+            <div class="container">
+                <div class="row margin-bottom-30">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade {% if not lan.bracket %}in active{% endif %}" id="informations">
+                            <div class="col-md-8 padding-right-20">
+                                {{ attribute(lan.description, "content" ~ locale)|raw }}
+                            </div>
+                            <div class="col-md-4 padding-left-20">
+                                <div class="widget widget-game" style="background-image: url({{ asset(lan.game.webPathBanner) }});">
+                                    <div class="overlay">
+                                        {% include 'TournamentBundle:Include:informations_widget.html.twig' with {'object': lan} %}
+                                    </div>
+                                </div>
+
+                                {% if lan.plan %}
+                                    <h3>Plan</h3>
+                                    <hr>
+                                    {{ lan.plan|raw }}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% if lan.bracket %}
+                            <div role="tabpanel" class="tab-pane fade in active" id="bracket">
+                                {% include 'TournamentBundle:Include:stream.html.twig' with {'lan': lan} %}
+
+                                {{ lan.bracket|raw }}
+                                {% if lan.bracketAmateur %}
+                                    <br><br><h2>Bracket amateur</h2><hr>
+                                    {{ lan.bracketAmateur|raw }}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        <div role="tabpanel" class="tab-pane fade" id="participants">
+                            <div class="col-md-8 padding-right-20">
+                                <div class="widget widget-list">
+                                    <div class="panel panel-default margin-bottom-20">
+                                        <div class="panel-heading bold">{{ 'tournament.profile.participants'|trans }} ({{ participants|length }}/{{ lan.size }})</div>
+                                        <div class="panel-body">
+                                            {% if participants %}
+                                                <ul>
+                                                    {% for participant in participants %}
+                                                        <li>
+                                                            {% if lan.format > 1 %}
+                                                                <div class="widget-list-meta">
+                                                                    <h4 class="widget-list-title">
+                                                                        {{ participant.name }}
+                                                                        - <span class="font-size-12">{% if participant.state %}{{ participant|lanParticipantState }}{% endif %}</span>
+                                                                    </h4>
+                                                                    <p>
+                                                                        <i class="fas fa-users"></i>
+                                                                        {{ participant.players }}
+                                                                    </p>
+                                                                </div>
+                                                            {% else %}
+                                                                <div class="widget-list-meta">
+                                                                    <h4 class="widget-list-title">
+                                                                        <i class="fas fa-users"></i>
+                                                                        {{ participant.name }}
+                                                                        - <span class="font-size-12">{% if participant.state %}{{ participant|lanParticipantState }}{% endif %}</span>
+                                                                    </h4>
+                                                                </div>
+                                                            {% endif %}
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+                                                <p class="text-info text-center">{{ 'lan.profile.no_participant'|trans }}</p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-left-20">
+                                {% if date(lan.registrationStartAt) <= date() and date(lan.registrationStopAt) >= date() %}
+                                    <div class="widget">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">{{ 'lan.profile.subscription'|trans }}</div>
+                                            <div class="panel-body">
+                                                {{ form_start(form) }}
+                                                {{ form_widget(form) }}
+                                                <button class="btn btn-sm btn-success btn-block margin-top-15">
+                                                    {{ lan.format > 1 ? 'lan.profile.register.team'|trans : 'lan.profile.register.solo'|trans }}
+                                                </button>
+                                                {{ form_end(form) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="widget">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">{{ 'tournament.profile.about.title'|trans }}</div>
+                                        <div class="panel-body">
+                                            <span class="text-warning bold">{{ 'participant.state.registered'|trans }}: </span> {{ 'lan.profile.about.registered'|trans }}<br><br>
+                                            <span class="text-primary bold">{{ 'participant.state.confirmed'|trans }}: </span> {{ 'lan.profile.about.confirmed'|trans }}<br><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if lan.rules %}
+                            <div role="tabpanel" class="tab-pane fade" id="rules">
+                                {{ attribute(lan.rules, "content" ~ locale)|raw }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

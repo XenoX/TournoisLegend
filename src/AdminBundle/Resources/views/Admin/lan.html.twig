@@ -1,0 +1,120 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/plugins/datatables/css/datatables.bootstrap.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Lan</h3>
+                </div>
+                <div class="box-body">
+                    {% if lans %}
+                        <table id="init_tournament_list" class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>[game] format (size) name</th>
+                                <th>Registration</th>
+                                <th>Start</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for lan in lans %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('admin_lan_update', {'lan': lan.id}) }}">
+                                            [{{ lan.game.shortName }}] {{ lan.formatStringify }} ({{ lan.size }}) - {{ lan.name }}
+                                        </a>
+                                    </td>
+                                    <td>{{ lan.registrationStartAt.format('d/m h\\hi') }} - {{ lan.registrationStopAt.format('d/m h\\hi') }}</td>
+                                    <td>{{ lan.startAt.format('d/m h\\hi') }}</td>
+                                    <td>
+                                        <a href="{{ path('admin_lan_manage', {'lan': lan.id}) }}" class="btn btn-xs btn-info" title="Manage">
+                                            <i class="fas fa-cogs"></i>
+                                        </a>
+                                        <a href="{{ path('tournament_lan_view', {'lan': lan.id, 'slug': lan.slug }) }}" class="btn btn-xs btn-primary" title="See in website" target="_blank">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-center text-info">No LAN yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Rewards</h3>
+                </div>
+                <div class="box-body">
+                    {% if rewards %}
+                        <table id="reward_list" class="table table-condensed">
+                            <tbody>
+                            {% for reward in rewards %}
+                                <tr {% if false == reward.activated %}class="bg-warning"{% endif %}>
+                                    <td><a href="{{ path('admin_reward_update', {'reward': reward.id}) }}">{{ reward.name }}</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-info text-center">No LAN rewards yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Mail</h3>
+                </div>
+                <div class="box-body">
+                    {% if mails %}
+                        <table id="reward_list" class="table table-condensed">
+                            <tbody>
+                            {% for mail in mails %}
+                                <tr {% if not mail.activated %}class="bg-warning"{% endif %}>
+                                    <td><a href="{{ path('admin_mail_update', {'mail': mail.id}) }}">{{ mail.name }}</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-info text-center">No mails yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Rules</h3>
+                </div>
+                <div class="box-body">
+                    {% if rules %}
+                        <table id="rules_list" class="table table-condensed">
+                            <tbody>
+                            {% for rule in rules %}
+                                <tr>
+                                    <td><a href="{{ path('admin_rules_update', {'rules': rule.id}) }}">{{ rule.name }}</a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-info text-center">No rules yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

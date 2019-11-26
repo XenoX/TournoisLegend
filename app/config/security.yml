@@ -1,0 +1,53 @@
+security:
+    providers:
+        main:
+            entity: { class: UserBundle\Entity\User }
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            switch_user: true
+
+            pattern: ^/
+            form_login:
+                login_path: user_user_login
+                check_path: user_user_logincheck
+                success_handler: user.login_handler
+
+            logout:
+                path: user_user_logout
+                target: app_app_index
+            logout_on_user_change: true
+
+            remember_me:
+                secret: "%secret%"
+                lifetime: 31536000
+                path: /
+                always_remember_me: false
+
+    encoders:
+        UserBundle\Entity\User:
+            algorithm: sha1
+            iterations: 1
+            encode_as_base64: false
+
+    role_hierarchy:
+        ROLE_VIP:        ROLE_USER
+        ROLE_STREAMER:   ROLE_USER
+        ROLE_TOURNAMENT: ROLE_USER
+        ROLE_MODO:       [ROLE_TOURNAMENT, ROLE_STREAMER, ROLE_VIP]
+        ROLE_ADMIN:      ROLE_MODO
+        ROLE_KAIO:       [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    access_control:
+        - { path: ^/(fr|en)/user/(login|register|forgot-password|profile), role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(fr|en)/user, roles: ROLE_USER }
+        - { path: ^/(fr|en)/team/profile, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(fr|en)/team, roles: ROLE_USER }
+        - { path: ^/(fr|en)/tournament/(registration|stream|battle), roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_MODO }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

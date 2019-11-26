@@ -1,0 +1,57 @@
+UserBundle\Entity\User:
+    user-member:
+        username: Member
+        email: <email()>
+        about: '75%? <realText(30)>'
+        password: f91a8ee646a277a2f1359709604b99c1b32d9f24
+        roles: ['ROLE_USER']
+        activated: true
+    user-vip:
+        username: Vip
+        email: <email()>
+        about: '75%? <realText(30)>'
+        password: f91a8ee646a277a2f1359709604b99c1b32d9f24
+        roles: ['ROLE_VIP']
+        activated: true
+    user-tournament:
+        username: Tournament
+        email: <email()>
+        about: '75%? <realText(30)>'
+        password: f91a8ee646a277a2f1359709604b99c1b32d9f24
+        roles: ['ROLE_TOURNAMENT']
+        activated: true
+    user-streamer:
+        username: Streamer
+        email: <email()>
+        about: '75%? <realText(30)>'
+        password: f91a8ee646a277a2f1359709604b99c1b32d9f24
+        roles: ['ROLE_STREAMER']
+        activated: true
+    user-moderator:
+        username: Moderator
+        email: <email()>
+        about: '75%? <realText(30)>'
+        password: f91a8ee646a277a2f1359709604b99c1b32d9f24
+        roles: ['ROLE_MODO']
+        activated: true
+    user-administrator:
+        username: Administrator
+        email: <email()>
+        about: '75%? <realText(30)>'
+        password: f91a8ee646a277a2f1359709604b99c1b32d9f24
+        roles: ['ROLE_ADMIN']
+        activated: true
+    user-xenox:
+        username: XenoX
+        email: <email()>
+        about: '75%? <realText(30)>'
+        password: f91a8ee646a277a2f1359709604b99c1b32d9f24
+        roles: ['ROLE_KAIO']
+        activated: true
+    user-{8..50}:
+        username: User<current()>
+        email: <email()>
+        about: '75%? <realText(30)>'
+        password: f91a8ee646a277a2f1359709604b99c1b32d9f24
+        roles: ['ROLE_USER']
+        activated: <boolean(90)>

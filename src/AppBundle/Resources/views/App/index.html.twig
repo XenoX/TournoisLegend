@@ -1,0 +1,111 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.index'|trans }}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        {% if inProgressTournament and stream %}
+            <section class="background-image" style="background-image: url({{ web_image(inProgressTournament.mode.game.webPathBanner) }});">
+                <span class="background-overlay"></span>
+                <div class="container">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://player.twitch.tv/?channel={{ stream.channel }}" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </section>
+        {% else %}
+            <div class="owl-carousel">
+                {% for tournament in nextTournaments %}
+                    <div class="post-carousel" {{ not loop.last ? 'style="border-right: 1px white solid"' }}>
+                        <a href="{{ path('tournament_tournament_profile', {'game': tournament.mode.game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="link">
+                            <img src="{{ web_image(tournament.mode.banner ? tournament.mode.webPathBanner : tournament.mode.game.webPathBanner) }}" alt="Game image">
+                            <div class="overlay">
+                                <div class="caption">
+                                    <div class="post-title">
+                                        <h4>{{ tournament.name }}</h4>
+                                    </div>
+                                    <p>
+                                        <i class="fas fa-users margin-right-5"></i> {{ tournament.formatStringify }}<br>
+                                        <i class="fas fa-calendar-alt margin-right-5"></i> {{ tournament.startAt|localizeddate('full', 'short', null, tournament.startAt|date('e'))|capitalize }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <section>
+            <div class="container">
+                <div class="row sidebar">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 leftside">
+                        {% for n in news %}
+                            <div class="post post-lg">
+                                <div class="post-header post-author">
+                                    <a href="{{ path('user_user_profile', {'user': n.id, 'slug': n.user.name|slugify}) }}" class="author" data-toggle="tooltip" title="{{ n.user.name }}">
+                                        <img src="data:image/jpeg;base64,{{ n.user.name|avatar }}" alt="avatar_{{ n.user.name }}" />
+                                    </a>
+                                    <div class="post-title">
+                                        <h2>{{ attribute(n, "title" ~ app.request.locale|capitalize) }}</h2>
+                                        <ul class="post-meta">
+                                            <li>
+                                                <a href="{{ path('user_user_profile', {'user': n.user.id, 'slug': n.user.name|slugify}) }}">
+                                                    <i class="far fa-user"></i> {{ n.user.name }}
+                                                </a>
+                                            </li>
+                                            <li><i class="far fa-calendar-alt"></i> {{ n.createdAt|localizeddate('full', 'none', null, n.createdAt|date('e')) }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p>{{ attribute(n, "content" ~ app.request.locale|capitalize)|raw }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 rightside">
+                        {% if topTenRank %}
+                            <div class="widget widget-games">
+                                <div class="title">{{ 'index.ranking_title'|trans }}</div>
+                                <ul>
+                                    {% for rankingParticipant in topTenRank %}
+                                        {% set teamOrUser = rankingParticipant.teamOrUser %}
+                                        <li style="background-image: url({{ web_image(teamOrUser.webPathBanner) }});">
+                                            {% if rankingParticipant.getTeamOrUserString == 'team' %}
+                                                <a href="{{ path('user_team_profile', {'team': teamOrUser.id, 'slug': teamOrUser.name|slugify}) }}" class="overlay">
+                                            {% else %}
+                                                <a href="{{ path('user_user_profile', {'user': teamOrUser.id, 'slug': teamOrUser.name|slugify}) }}" class="overlay">
+                                            {% endif %}
+                                                <span class="number">{{ loop.index }}</span>
+                                                <div class="game-meta">
+                                                    <h3 class="game-title">{{ teamOrUser.name }}</h3>
+                                                    <span>{{ rankingParticipant.elo }} {{ 'points'|trans }}</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        {% include 'UserBundle:Include:recent_tweets.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        (function($) {
+            $(".owl-carousel").owlCarousel({
+                autoPlay: true,
+                items : {{ nextTournaments|length }},
+                itemsDesktop : [1300, 3],
+                itemsTablet: [800, 2],
+                itemsMobile : [600, 1]
+            });
+        })(jQuery);
+    </script>
+{% endblock %}

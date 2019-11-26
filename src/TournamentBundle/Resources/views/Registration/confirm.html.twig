@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.registration_confirm'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero hero-game height-300" style="background-image: url({{ asset(tournament.mode.game.webPathBanner) }});">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">{{ 'registration.confirm.banner'|trans }}</div>
+                    <p class="font-size-20">{{ tournament.name }}</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="row sidebar">
+                    <div class="col-md-9 leftside">
+                        <h2>{{ 'registration.confirm.title'|trans }}</h2><hr>
+                        {{ form_start(form) }}
+                        {{ form_row(form.value) }}
+                        {% if userTags %}
+                            <p class="margin-top-10 margin-bottom-10">{{ 'registration.confirm.recent_tags'|trans }} :
+                                {% for participant in userTags %}
+                                    <a class="text-primary text-bold" onclick="document.getElementById('confirm_value').value = '{{ participant.tag }}'">
+                                        {{ participant.tag }}
+                                    </a>
+                                    {% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+                        <button type="submit" class="btn btn-primary margin-top-10">{{ 'send'|trans }}</button>
+                        {{ form_end(form) }}
+                    </div>
+
+                    <div class="col-md-3 rightside hidden-sm hidden-xs">
+                        {% include 'UserBundle:Include:recent_tweets.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

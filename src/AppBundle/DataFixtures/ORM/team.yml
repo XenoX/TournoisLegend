@@ -1,0 +1,7 @@
+UserBundle\Entity\Team:
+    team-{1..10}:
+        name: Team<current()>
+        tag: 'TEA<current()>'
+        description: '60%? <realText(500)>'
+        website: <url()>
+        leader: '@user-*'

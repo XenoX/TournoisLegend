@@ -1,0 +1,20 @@
+services:
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+    alaczi.twig.country_extension:
+        class: alaczi\Twig\Extension\CountryExtension
+        tags:
+            - { name: twig.extension }
+    twig.extension.date:
+        class: Jasny\Twig\DateExtension
+        tags:
+            - { name: twig.extension }
+
+    swiftmailer.mailer.transport.mailjet:
+        class: Mailjet\MailjetSwiftMailer\SwiftMailer\MailjetTransport
+        arguments:
+            - "@swiftmailer.transport.eventdispatcher.mailjet"
+            - "%mailjet.api_key%"
+            - "%mailjet.secret_key%"

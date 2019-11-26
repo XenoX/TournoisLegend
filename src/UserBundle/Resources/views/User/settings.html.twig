@@ -1,0 +1,96 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.settings'|trans }} {{ parent() }}{% endblock %}
+
+{% block css %}
+    <style>
+        textarea {
+            resize: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero" style="background-image: url({{ asset('static/img/cover-settings.jpg') }});">
+            <div class="hero-bg-primary"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">{{ 'settings.banner.title'|trans }}</div>
+                    <em>"{{ 'settings.banner.subtitle'|trans }}"</em> <span class="sm-size">- Blitzcrank</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-grey-50 padding-top-30">
+            <div class="container">
+                <div class="row sidebar">
+                    <div class="col-md-8 leftside">
+                        <div class="row margin-bottom-30">
+                            <div class="container-fluid">
+                                <h3>{{ 'settings.personnal_informations'|trans }}</h3><hr>
+                                <p class="text-primary"><i class="fas fa-info"></i> {{ 'settings.avatar_informations'|trans|raw }}</p>
+                                {{ form_start(formPersonnal) }}
+                                <div class="row">
+                                    <div class="col-sm-6">{{ form_row(formPersonnal.username) }}</div>
+                                    <div class="col-sm-6">{{ form_row(formPersonnal.email) }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">{{ form_row(formPersonnal.birthdate) }}</div>
+                                    <div class="col-sm-4">{{ form_row(formPersonnal.country) }}</div>
+                                    <div class="col-sm-4">{{ form_row(formPersonnal.gender) }}</div>
+                                </div>
+                                {{ form_row(formPersonnal.about) }}
+                                {{ form_rest(formPersonnal) }}
+                                <button type="submit" class="btn btn-primary btn-sm pull-right">{{ 'form.settings.button'|trans }}</button>
+                                {{ form_end(formPersonnal) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3>{{ 'settings.social_networks'|trans }}</h3><hr>
+                                {{ form_start(formSocial) }}
+                                <div class="margin-bottom-15">
+                                    <i class="fas fa-globe"></i> {{ form_label(formSocial.website) }}
+                                    {{ form_widget(formSocial.website) }}
+                                </div>
+                                <div class="margin-bottom-15">
+                                    <i class="fab fa-discord"></i> {{ form_label(formSocial.discord) }}
+                                    {{ form_widget(formSocial.discord) }}
+                                </div>
+                                <div class="margin-bottom-15">
+                                    <i class="fab fa-facebook"></i> {{ form_label(formSocial.facebook) }}
+                                    {{ form_widget(formSocial.facebook) }}
+                                </div>
+                                <div class="margin-bottom-15">
+                                    <i class="fab fa-twitter"></i> {{ form_label(formSocial.twitter) }}
+                                    {{ form_widget(formSocial.twitter) }}
+                                </div>
+                                <div class="margin-bottom-15">
+                                    <i class="fab fa-twitch"></i> {{ form_label(formSocial.twitch) }}
+                                    {{ form_widget(formSocial.twitch) }}
+                                </div>
+                                {{ form_rest(formSocial) }}
+                                <button type="submit" class="btn btn-primary btn-sm pull-right">{{ 'form.settings.button'|trans }}</button>
+                                {{ form_end(formSocial) }}
+                            </div>
+                            <div class="col-md-6">
+                                <h3>{{ 'settings.password_change'|trans }}</h3><hr>
+                                {{ form_start(formPassword) }}
+                                {{ form_row(formPassword.password) }}
+                                {{ form_row(formPassword.new_password.first) }}
+                                {{ form_row(formPassword.new_password.second) }}
+                                {{ form_rest(formPassword) }}
+                                <button type="submit" class="btn btn-primary btn-sm pull-right">{{ 'form.settings.button'|trans }}</button>
+                                {{ form_end(formPassword) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 rightside hidden-xs hidden-sm">
+                        {% include 'UserBundle:Include:recent_tweets.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}

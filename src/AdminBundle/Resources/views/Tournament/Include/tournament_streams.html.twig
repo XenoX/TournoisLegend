@@ -1,0 +1,50 @@
+{% if streams %}
+    <h4>Streams</h4>
+    <table id="stream_list" class="table table-condensed table-bordered">
+        <thead>
+        <tr>
+            <th>Channel</th>
+            <th>User | Organizer</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for stream in streams %}
+            <tr {{ constant('TournamentBundle\\Workflow\\StreamWorkflow::STATE_ACCEPTED') == stream.state ? 'class=\"success\"'}}
+                {{ constant('TournamentBundle\\Workflow\\StreamWorkflow::STATE_REFUSED') == stream.state ? 'class=\"danger\"'}}
+            >
+                <td>
+                    {% if stream.main %}[Main] {% endif %}
+                    <a href="https://twitch.tv/{{ stream.channel }}" target="_blank">{{ stream.channel }}</a>
+                </td>
+                <td>{{ stream.streamerName }}</td>
+                <td>
+                    {% if not stream.main and constant('TournamentBundle\\Workflow\\StreamWorkflow::STATE_ACCEPTED') == stream.state %}
+                        <a href="{{ path('admin_stream_main', {'stream': stream.id}) }}" class="btn btn-xs btn-warning">
+                            <i class="fas fa-star"></i> Main
+                        </a>
+                    {% endif %}
+                    {% if constant('TournamentBundle\\Workflow\\StreamWorkflow::STATE_REQUESTED') == stream.state %}
+                        <a href="{{ path('admin_stream_accept', {'stream': stream.id}) }}" class="btn btn-xs btn-success">
+                            <i class="fas fa-check"></i> Accept
+                        </a>
+                        <a href="{{ path('admin_stream_refuse', {'stream': stream.id}) }}" class="btn btn-xs btn-danger">
+                            <i class="fas fa-remove"></i> Refuse
+                        </a>
+                    {% endif %}
+                    {% if constant('TournamentBundle\\Workflow\\StreamWorkflow::STATE_REFUSED') == stream.state %}
+                        <a href="{{ path('admin_stream_accept', {'stream': stream.id}) }}" class="btn btn-xs btn-success">
+                            <i class="fas fa-check"></i> Accept
+                        </a>
+                    {% endif %}
+                    {% if constant('TournamentBundle\\Workflow\\StreamWorkflow::STATE_ACCEPTED') == stream.state %}
+                        <a href="{{ path('admin_stream_refuse', {'stream': stream.id}) }}" class="btn btn-xs btn-danger">
+                            <i class="fas fa-remove"></i> Refuse
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

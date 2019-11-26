@@ -1,0 +1,13 @@
+<script type="text/javascript">
+    var tournament = {
+        teams: {{ teams|raw }},
+        results: {{ results }}
+    };
+
+    $(function() {
+        $('div#bracket .data').bracket({
+            centerConnectors: true,
+            init: tournament
+        })
+    });
+</script>

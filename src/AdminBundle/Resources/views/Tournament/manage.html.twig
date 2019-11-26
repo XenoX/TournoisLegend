@@ -1,0 +1,265 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/plugins/datatables/css/datatables.bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/css/jquery.bracket.min.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="container-fluid">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">[{{ tournament.formatStringify }}] {{ tournament.name }} ({{ tournament.size }})</h3>
+                    <div class="box-tools pull-right">
+                        <span data-toggle="tooltip">{{ tournament.state|tournamentState }}</span>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row margin-bottom-20">
+                        <div class="container-fluid">
+                            <a href="{{ path('admin_tournament_update', {'tournament': tournament.id}) }}" class="btn btn-xs btn-primary">Edit</a>
+                            {% if not tournament.done %}
+                                <a href="{{ path('admin_tournament_stop', {'tournament': tournament.id}) }}" class="btn btn-xs btn-warning">Stop</a>
+                            {% endif %}
+                            {% if not tournament.started %}
+                                <a href="{{ path('admin_tournament_start', {'tournament': tournament.id}) }}" class="btn btn-xs btn-success">Start</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-20">
+                        <div class="container-fluid">
+                            <div id="box_streams"></div>
+                        </div>
+                    </div>
+                    {% if podium %}
+                        <div class="row margin-bottom-20">
+                            <div class="container-fluid">
+                                <table class="table table-bordered table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <td>Place</td>
+                                        <td><b>Name:</b> Tags</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for k, p in podium %}
+                                        <tr>
+                                            <td>{{ k }}</td>
+                                            <td>
+                                                {% if p is not iterable %}
+                                                    <b>{{ p.teamOrUser.name }}:</b> {{ p|tags }}
+                                                {% else %}
+                                                    {% for last in p %}
+                                                        <b>{{ last.teamOrUser.name }}:</b>
+                                                        {{ last|tags }}<br>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div id="bracket">
+                        <div class="data"></div>
+                        <div id="bracketJS"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="battles"></div>
+
+    <div id="participants"></div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="history"></div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Alerts</h3>
+                    <div class="box-tools pull-right">
+                        <span data-toggle="tooltip">
+                            <a data-toggle="modal" data-target="#alert-modal" class="btn btn-xs btn-primary">Create</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row margin-bottom-20">
+                        <div class="container-fluid">
+                            {% if alerts %}
+                                <table class="table table-condensed">
+                                    <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Message</th>
+                                        <th>Activated</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for alert in alerts %}
+                                            <tr>
+                                                <td>{{ alert.type }}</td>
+                                                <td>{{ alert.contentEn }}</td>
+                                                <td>{{ alert.activated }}</td>
+                                                <td>
+                                                    <a href="{{ path('admin_tournament_removealert', {'alert': alert.id}) }}" class="btn btn-xs btn-danger pull-right" title="Remove">
+                                                        <i class="fas fa-remove"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <p class="text-primary text-center">No alert yet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="alert-modal" tabindex="-1" role="dialog" aria-labelledby="modalTitle">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalTitle">Create an alert</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(form) }}
+                    {{ form_row(form.contentFr) }}
+                    {{ form_row(form.contentEn) }}
+                    {{ form_row(form.type) }}
+                    <div class="container-fluid">{{ form_widget(form.activated) }} <label class="margin-left-5">{{ form_label(form.activated) }}</label></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    {{ form_rest(form) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('static/plugins/datatables/js/datatables.bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('static/plugins/datatables/js/jquery.datatables.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('static/js/jquery.bracket.min.js') }}"></script>
+
+    <script type="text/javascript">
+        function refreshBracket() {
+            $.ajax({
+                type: "GET",
+                url: "{{ path('tournament_tournament_bracket', {'tournament': tournament.id }) }}",
+                data: '',
+                cache: true,
+                success: function(data){
+                    $('#bracketJS').html(data);
+                },
+                error: function(){
+                    setTimeout(refresh, 25000);
+                },
+                complete: function(){
+                    setTimeout(refresh, 10000);
+                }
+            });
+        }
+
+        function refreshStreams() {
+            $.ajax({
+                type: "GET",
+                url: "{{ path('admin_tournament_streams', {'tournament': tournament.id }) }}",
+                data: '',
+                cache: true,
+                success: function(data){
+                    $('#box_streams').html(data);
+                }
+            });
+        }
+
+        function refreshBattles() {
+            $.ajax({
+                type: "GET",
+                url: "{{ path('admin_tournament_matchs', {'tournament': tournament.id }) }}",
+                data: '',
+                cache: true,
+                success: function(data){
+                    if (!$("#box_battles").hasClass("collapsed-box")) {
+                        $('#battles').html(data);
+                    }
+                },
+                error: function(){},
+                complete: function(){}
+            });
+        }
+
+        function refreshHistories() {
+            $.ajax({
+                type: "GET",
+                url: "{{ path('admin_tournament_history', {'tournament': tournament.id }) }}",
+                data: '',
+                cache: true,
+                success: function(data){
+                    $('#history').html(data);
+                },
+                error: function(){},
+                complete: function(){}
+            });
+        }
+
+        function refreshParticipants(needRefresh) {
+            $.ajax({
+                type: "GET",
+                url: "{{ path('admin_tournament_participants', {'tournament': tournament.id }) }}",
+                data: '',
+                cache: true,
+                success: function(data){
+                    if (!$("#box_participants").hasClass("collapsed-box")) {
+                        $('#participants').html(data);
+                    }
+                },
+                error: function(){
+                    if (true === needRefresh) { setTimeout(refresh, 25000); }
+                },
+                complete: function(){
+                    if (true === needRefresh) { setTimeout(refresh, 10000); }
+                }
+            });
+        }
+
+        function refresh() {
+            {% if not tournament.done %}
+                {% if tournament.started %}
+                    refreshBracket();
+                    refreshBattles();
+                {% else %}
+                    refreshParticipants(true);
+                {% endif %}
+                refreshHistories();
+                refreshStreams();
+            {% endif %}
+        }
+
+        $(function() {
+            {% if tournament.started %}
+                refreshBracket();
+                refreshBattles();
+            {% endif %}
+            refreshHistories();
+            refreshStreams();
+            refreshParticipants(false);
+        });
+    </script>
+{% endblock %}

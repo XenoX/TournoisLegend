@@ -1,0 +1,25 @@
+UserBundle\Entity\Notification:
+    notification-1:
+        type: 'tournament'
+        value: '@tournament-team->id'
+        template: '@notification-template-4'
+        user: '@user-xenox'
+    notification-2:
+        type: 'tournament'
+        value: '@tournament-team->id'
+        template: '@notification-template-4'
+        user: '@user-xenox'
+    notification-3:
+        type: 'tournament'
+        value: '@tournament-team->id'
+        template: '@notification-template-4'
+        user: '@user-xenox'
+    notification-4:
+        type: 'team'
+        value: '@team-1->id'
+        template: '@notification-template-3'
+        user: '@user-xenox'
+    notification-5:
+        type: 'welcome'
+        template: '@notification-template-1'
+        user: '@user-xenox'

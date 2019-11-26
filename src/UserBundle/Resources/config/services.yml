@@ -1,0 +1,23 @@
+services:
+    user.notification:
+        class: UserBundle\Service\NotificationService
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@slugify'
+            - '@router'
+            - '@twig'
+        public: true
+    user.login_handler:
+        class: UserBundle\Handler\LoginHandler
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@router'
+
+    # Subscriber
+    user.user_listener:
+        class: UserBundle\EventListener\UserListener
+        arguments:
+            - "@app.mail"
+            - "@translator"
+        tags:
+            - { name: doctrine.event_subscriber }

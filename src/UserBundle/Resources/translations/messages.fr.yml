@@ -1,0 +1,170 @@
+alert.success.edit_password: 'Mot de passe modifié avec succès !'
+alert.success.edit_settings: 'Paramètres modifiés avec succès !'
+alert.success.forgot_password.email_sent: 'Merci de cliquer sur le lien dans l''email pour modifier votre mot de passe.'
+alert.success.forgot_password.password_changed: 'Votre mot de passe a été modifié !'
+alert.success.register: 'Merci de cliquer sur le lien dans l''email pour finir votre inscription'
+alert.success.register_confirmation: 'Merci pour votre inscription, vous êtes maintenant connecté'
+alert.success.remove_banner: 'Bannière supprimée avec succès !'
+alert.success.remove_logo: 'Logo supprimé avec succès !'
+alert.success.remove_team: 'Équipe supprimée avec succès !'
+alert.success.team_create: 'Équipe créée avec succès !'
+alert.success.team_edit: 'Equipe modifiée avec succès !'
+alert.success.team_member.join: 'Équipe rejoint avec succès !'
+alert.success.team_member.leader: 'Leader modifié avec succès !'
+alert.success.team_member.left: 'Équipe quittée avec succès !'
+alert.success.team_member.request: 'Équipe demandée avec succès !'
+alert.success.team_member.request_cancel: 'Requête annulée avec succès !'
+alert.success.team_member.remove: 'Membre viré avec succès !'
+alert.warning.team_member.already_requested: 'Vous avez déjà demandé a rejoindre cette équipe, soyez patient :)'
+close: Fermer
+confirm: Confirmer
+forgot_password.banner.subtitle: 'Don''t be so shy.'
+forgot_password.banner.title: 'Mot de passe oublié'
+forgot_password.email_or_username: 'Dites-nous qui vous êtes !'
+forgot_password.new_password: 'Entrer un nouveau mot de passe'
+form.forgot_password.email_or_username: 'Email ou nom d''utilisateur'
+form.forgot_password.new_password: 'Nouveau mot de passe'
+form.forgot_password.new_password_repeat: 'Répéter le nouveau mot de passe'
+form.login.button: Connexion
+form.login.click_here: 'Clique ici !'
+form.login.forgot_password: 'Mot de passe oublié ?'
+form.login.no_account: 'Pas de compte Tournois Legend ?'
+form.login.password: 'Mot de passe'
+form.login.remember_me: 'Se souvenir de moi'
+form.login.sign_up: 'S''inscrire maintenant'
+form.login.title: 'Connexion sur Tournois-Legend'
+form.login.username: 'Nom d''utilisateur'
+form.register.already_account: 'Déjà un compte ?'
+form.register.button: Inscription
+form.register.country: Pays
+form.register.email: Email
+form.register.password: 'Mot de passe'
+form.register.password_repeat: 'Répéter le mot de passe'
+form.register.sign_in: 'Se connecter maintenant'
+form.register.terms: 'Accepter les termes du contrat.'
+form.register.title: 'Inscription sur Tournois-Legend'
+form.register.username: 'Nom d''utilisateur'
+form.register_confirmation.about: 'À propos de moi'
+form.register_confirmation.birthdate: 'Date de naissance'
+form.register_confirmation.button: Confirmation
+form.register_confirmation.footer: 'Compléter ton profil, tu dois !'
+form.register_confirmation.title: 'Confirmation d''inscription'
+form.register_confirmation.website: 'Site'
+form.settings.about: 'À propos de moi'
+form.settings.birthdate: 'Date de naissance'
+form.settings.button: Modifier
+form.settings.country: Pays
+form.settings.email: Email
+form.settings.gender: Genre
+form.settings.new_password: 'Nouveau mot de passe'
+form.settings.new_password_repeat: 'Répéter le nouveau mot de passe'
+form.settings.password: 'Mot de passe'
+form.settings.username: 'Nom d''utilisateur'
+form.settings.website: 'Site'
+form.settings.wrong_password: 'Mauvais mot de passe.'
+form.team_create.banner: Bannière
+form.team_create.button: Création
+form.team_create.description: Description
+form.team_create.logo: Logo
+form.team_create.name: Nom
+form.team_create.tag: Tag
+form.team_create.title: 'Créer une équipe'
+form.team_create.website: Site
+form.team_manage.button: Sauvegarder
+form.team_manage.description: Description
+form.team_manage.name: Nom
+form.team_manage.tag: Tag
+form.team_manage.website: 'Site'
+gender.female: Femme
+gender.male: Homme
+gender.robot: Robot
+include.recent_tweets: 'Derniers Tweets'
+include.tweets_by: 'Tweets de TournoisLegend'
+mail.subject.banned: 'Vous venez d''être banni'
+mail.subject.forgot_password: 'Mot de passe oublié'
+mail.subject.register_confirmation: 'Confirmation d''inscription'
+mail.body.banned: "<p>Bonjour</p>\n<p>Suite à votre comportement, vous venez d'être banni par un administrateur.</p>\n<p>Si vous pensez que c'est une erreur, contactez-nous dès que possible.</p>\n<p>Merci de votre compréhension </p>\n<p>Ceci est un mail automatique, merci de ne pas répondre.</p>\n<p>Salutations,<br>Tournois-Legend</p>\n"
+mail.body.forgot_password: "<p>Bonjour</p>\n<p>Pour confirmer votre changement de mot de passe sur Tournois-Legend, veuillez cliquer sur le lien suivant :</p>\n<p><a href=\"%link%\">Modifier mon mot de passe</a></p>\n<p>Si le lien ne fonctionne pas, copiez le lien suivant dans le champ d'adresse de votre navigateur : %link%</p>\n<p>Si vous n'êtes pas à l'origine de cette action, vous pouvez simplement ignorer cet e-mail.</p>\n<p>Ceci est un mail automatique, merci de ne pas répondre.</p>\n<p>Salutations,<br>Tournois-Legend</p>\n"
+mail.body.register: "<p>Hello</p>\n<p>Merci de votre inscription sur Tournois-Legend</p>\n<p>Voici le lien pour activer votre compte :</p>\n<p><a href=\"%link%\">Activer mon compte</a></p>\n<p>Si le lien ne fonctionne pas, copiez le lien suivant dans le champ d'adresse de votre navigateur : %link%</p>\n<p>This is an automatic mail, please do not reply.</p>\n<p>Greetings,<br>Tournois-Legend</p>"
+modal.team_delete.header: 'Supprimer une équipe'
+modal.team_delete.message: 'Êtes-vous sûr de vouloir supprimer votre équipe ?'
+modal.team_leader.header: 'Donner le lead a %username%'
+modal.team_leader.message: 'Si vous donnez le lead a un autre membre, vous allez perdre vos droits. Êtes-vous sûr ?'
+modal.team_quit.header: 'Quitter l''équipe'
+modal.team_quit.message: 'Êtes-vous sûr de vouloir quitter l''équipe ?'
+profile.about_me: 'À propos'
+profile.age: ans
+profile.last_tournaments: Dernier(s)
+profile.menu.rankings: Classements
+profile.menu.teams: Équipes
+profile.menu.tournaments: Tournois
+profile.not_specified: 'Non spécifié'
+profile.no_last_tournaments: 'Aucun tournoi terminé pour cet utilisateur actuellement.'
+profile.no_rankings: 'Ce joueur ne fait partie d''aucun classement actuellement.'
+profile.no_teams: 'Aucune équipe pour cet utilisateur actuellement.'
+profile.no_upcoming_tournaments: 'Aucun tournoi de prévu pour cet utilisateur actuellement.'
+profile.other_informations: 'Autre informations'
+profile.social: 'Réseaux Sociaux'
+profile.upcoming_tournaments: Prochain(s)
+profile.update: 'Modifiez votre profil'
+role.coach: Coach
+role.leader: Leader
+role.manager: Manager
+role.player: Joueur
+role.streamer: Streamer
+role.troll: Troll
+send: Envoyer
+settings.banner.subtitle: 'Un golem qui roule ne prend pas la poussière.'
+settings.banner.title: 'Modifier mes paramètres'
+settings.avatar_informations: 'Vous pourrez bientôt modifier votre avatar et votre bannière, soyez patient !'
+settings.password_change: 'Modifier le mot de passe'
+settings.personnal_informations: 'Informations personnelles'
+settings.social_networks: 'Réseaux sociaux'
+team_create.banner.subtitle: 'Rejoindre la bataille.'
+team_create.banner.title: 'Montez votre équipe.'
+team_create.remove_banner: 'Enlever la bannière.'
+team_create.remove_logo: 'Enlever le logo'
+team_manage.actions: Actions
+team_manage.banner.title: 'Gèrer l''équipe'
+team_manage.copy: Copier
+team_manage.date: 'Date de la demande'
+team_manage.edit: 'Modifier les informations'
+team_manage.join_link: 'Lien pour rejoindre'
+team_manage.join_link_info: 'Envoyez ce lien a vos joueurs pour qu''ils rejoignent l''équipe'
+team_manage.member_list: 'Liste des membres'
+team_manage.member_remove: Virer
+team_manage.member_set_leader: 'Assigner le lead'
+team_manage.menu.members: Membres
+team_manage.menu.settings: Paramètres
+team_manage.remove_logo: 'Supprimer le logo'
+team_manage.remove_banner: 'Supprimer la bannière'
+team_manage.requests: 'Liste des demandes'
+team_manage.team_delete: 'Supprimer l''équipe'
+team_manage.team_delete_button: Supprimer
+team_manage.team_delete_warning: 'Si vous supprimez votre équipe, toutes les données vont êtres perdues.'
+team_manage.team_quit: 'Quitter l''équipe'
+team_manage.team_quit_button: Quitter
+team_manage.team_quit_warning: 'Si vous quittez cette équipe, toute votre progression avec sera perdue.'
+team_manage.username: 'Nom d''utilisateur'
+team_profile.about: 'À propos'
+team_profile.last_tournaments: Dernier(s)
+team_profile.manage: Gérer
+team_profile.menu.members: Membres
+team_profile.menu.rankings: Classements
+team_profile.menu.tournaments: Tournois
+team_profile.not_specified: 'Non spécifié'
+team_profile.no_last_tournaments: 'Aucun tournoi terminé pour cette équipe actuellement.'
+team_profile.no_rankings: 'Cette équipe ne fait partie d''aucun classement actuellement.'
+team_profile.no_upcoming_tournaments: 'Aucun prochain tournoi pour cette équipe actuellement'
+team_profile.other_informations: 'Autre informations'
+team_profile.request_add: 'Demander de rejoindre'
+team_profile.request_cancel: 'Annuler la demande'
+team_profile.social: Sociale
+team_profile.upcoming_tournaments: Prochain(s)
+title.forgot_password: 'Mot de passe oublié'
+title.login: Connexion
+title.register: Inscription
+title.register_confirmation: 'Confirmation d''inscription'
+title.settings: Paramètres
+title.team_create: 'Créer une équipe'
+title.team_manage: 'Gestion de l''équipe'

@@ -1,0 +1,6 @@
+TournamentBundle\Entity\LanParticipant:
+    lanParticipant-{1..40}:
+        email: <email()>
+        name: LanParticipant<current()>
+        players: '50%? Player<current()>'
+        lan: '@lan-*'

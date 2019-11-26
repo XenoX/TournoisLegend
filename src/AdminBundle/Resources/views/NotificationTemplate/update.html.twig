@@ -1,0 +1,26 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    {% if template.name %}
+                        Update {{ template.name }}
+                    {% else %}
+                        Create notification template
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="box-body">
+                {{ form_start(form) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.contentFr) }}
+                {{ form_row(form.contentEn) }}
+                {{ form_rest(form) }}
+                <button type="submit" class="btn btn-primary margin-top-10">Send</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

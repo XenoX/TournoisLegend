@@ -1,0 +1,14 @@
+TournamentBundle\Entity\Reward:
+    reward-{1..5}:
+        name: reward<current()>
+        firstFr: <randomNumber(4)> RP et plein de truc de folie !
+        firstEn: <randomNumber(4)> RP and amazing stuff!
+        secondFr: '50%? <randomNumber(4)> RP'
+        secondEn: '50%? <randomNumber(4)> RP'
+        thirdFr: '50%? <randomNumber(3)> RP'
+        thirdEn: '50%? <randomNumber(3)> RP'
+        fourthFr: '50%? <randomNumber(3)> RP'
+        fourthEn: '50%? <randomNumber(3)> RP'
+        fifthToEighthFr: '50%? Bonus PI'
+        fifthToEighthEn: '50%? PI Bonus'
+        lan: <boolean(80)>

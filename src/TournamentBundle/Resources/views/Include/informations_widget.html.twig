@@ -1,0 +1,21 @@
+<div class="title">{{ object.name }}<br>{% if object.state is defined %}{{ object.state|tournamentState }}{% endif %}</div>
+
+<div class="bold text-uppercase">{{ 'tournament.profile.basic_informations'|trans }}</div>
+
+{% if object.mapNameEn is defined and object.mapNameEn is not null %}
+    <span class="font-size-13 bold">{{ 'tournament.profile.map'|trans }} :</span> <span class="font-size-13">{{ attribute(object, "mapName" ~ locale)|raw }}</span><br>
+{% endif %}
+<span class="font-size-13 bold">{{ 'tournament.profile.format'|trans }} :</span> <span class="font-size-13">{{ object.formatStringify }}</span><br>
+<span class="font-size-13 bold">{{ 'tournament.profile.size'|trans }} :</span> <span class="font-size-13">{{ object.size }}</span>
+
+<div class="bold text-uppercase margin-top-40">{{ 'tournament.profile.dates'|trans }}</div>
+<span class="font-size-13 bold">{{ 'tournament.profile.registration_start'|trans }} :</span> <span class="font-size-13">{{ object.registrationStartAt|localizeddate('short', 'short', null, object.registrationStartAt|date('e')) }}</span><br>
+<span class="font-size-13 bold">{{ 'tournament.profile.registration_stop'|trans }} :</span> <span class="font-size-13">{{ object.registrationStopAt|localizeddate('short', 'short', null, object.registrationStopAt|date('e')) }}</span><br>
+<span class="font-size-13 bold">{{ 'tournament.profile.start_at'|trans }} :</span> <span class="font-size-13">{{ object.startAt|localizeddate('long', 'short', null, object.startAt|date('e')) }}</span>
+
+{% include 'TournamentBundle:Include:reward_list.html.twig' with {'object': object} %}
+
+{% if object.organizer is defined and object.organizer is not null %}
+    <div class="bold text-uppercase margin-top-40">{{ 'tournament.profile.organizer'|trans }}</div>
+    <span class="font-size-13"><a href="{{ object.organizer.website }}" class="color-white" target="_blank">{{ object.organizer.name }}</a></span>
+{% endif %}

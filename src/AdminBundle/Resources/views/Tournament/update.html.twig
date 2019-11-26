@@ -1,0 +1,128 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <div class="col-md-8 col-md-offset-2">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    {% if tournament.name %}
+                        {{ tournament.name }}
+                    {% else %}
+                        Create tournament
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="box-body">
+                {{ form_start(form) }}
+                <fieldset>
+                    <legend>Core informations:</legend>
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_row(form.name) }}
+                            {{ form_row(form.size) }}
+                            {{ form_row(form.format) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{ form_row(form.registrationStartAt) }}
+                            {{ form_row(form.registrationStopAt) }}
+                            {{ form_row(form.startAt) }}
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Game informations:</legend>
+                    <div class="row">
+                        <div class="col-md-4">{{ form_row(form.mapNameFr) }}</div>
+                        <div class="col-md-4">{{ form_row(form.mapNameEn) }}</div>
+                        <div class="col-md-4">{{ form_row(form.riotId) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">{{ form_row(form.mode) }}</div>
+                        <div class="col-md-4">{{ form_row(form.organizer) }}</div>
+                        <div class="col-md-4">{{ form_row(form.reward) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">{{ form_row(form.description) }}</div>
+                        <div class="col-md-6">{{ form_row(form.rules) }}</div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Other informations:</legend>
+                    <div class="col-md-3">{{ form_row(form.hiddenParticipant) }}</div>
+                    <div class="col-md-3">{{ form_row(form.startAuto) }}</div>
+                    <div class="col-md-3">{{ form_row(form.activated) }}</div>
+                    <div class="col-md-3">{{ form_row(form.rankingRatio) }}</div>
+                </fieldset>
+            </div>
+            <div class="box-footer">
+                {{ form_rest(form) }}
+                <button type="submit" class="btn btn-primary">Send</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block css %}
+    <style>
+        fieldset legend { font-weight: bold; }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/plugins/datetimepicker/bootstrap-datetimepicker.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('static/plugins/datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('static/plugins/datetimepicker/locales/bootstrap-datetimepicker.fr.js') }}"></script>
+    <script>
+        var today = new Date();
+        var lastWeek = new Date();
+        lastWeek.setDate(today.getDate() - 7);
+
+        var datetimepickerRstart = $('#tournament_registrationStartAt');
+        var datetimepickerRstop = $('#tournament_registrationStopAt');
+        var datetimepickerStart = $('#tournament_startAt');
+
+        datetimepickerRstart.datetimepicker({
+            format: "dd-mm-yyyy hh:ii",
+            todayBtn: true,
+            startDate: lastWeek,
+            minuteStep: 15,
+            autoclose: true,
+            language: 'fr'
+        });
+        datetimepickerRstop.datetimepicker({
+            format: "dd-mm-yyyy hh:ii",
+            todayBtn: true,
+            startDate: today,
+            minuteStep: 15,
+            autoclose: true,
+            language: 'fr'
+        });
+        datetimepickerStart.datetimepicker({
+            format: "dd-mm-yyyy hh:ii",
+            todayBtn: true,
+            startDate: today,
+            minuteStep: 15,
+            autoclose: true,
+            language: 'fr'
+        });
+
+        datetimepickerStart.change(function(){
+
+            // une fois la date du début du tournoi choisi, je la transforme en objet date
+            var dateStart = datetimepickerStart.val().split("-");
+            dateStart = new Date(dateStart[2].substring(0,4), dateStart[1] - 1, dateStart[0], dateStart[2].substring(5,7), dateStart[2].substring(8,10));
+
+            // gestion de la fin des inscriptions : 15 minutes avant le début du tournoi
+            dateRstop = new Date(dateStart.getTime());
+            dateRstop.setMinutes(dateStart.getMinutes() - 15);
+            datetimepickerRstop.datetimepicker('update', dateRstop);
+
+            // gestion du début des inscriptions : 2 jours avant le début du tournoi
+            dateStart.setDate(dateStart.getDate() - 2);
+            datetimepickerRstart.datetimepicker('update', dateStart);
+        });
+
+
+    </script>
+{% endblock %}

@@ -1,0 +1,2 @@
+password.invalid_message: 'The password fields must match.'
+password.wrong_password: 'Wrong password.'

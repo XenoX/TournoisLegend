@@ -1,0 +1,13 @@
+AppBundle\Entity\Game:
+    game-lol:
+        name: League of Legends
+        shortName: LoL
+        solo: true
+        team: true
+        activated: true
+    game-hs:
+        name: Hearthstone
+        shortName: HS
+        solo: true
+        team: false
+        activated: true

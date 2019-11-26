@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.login'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+<div id="wrapper">
+    <section class="hero hero-panel" style="background-image: url({{ asset('static/img/cover-login.jpg')}});">
+        <div class="hero-bg"></div>
+        <div class="container relative">
+            <div class="row margin-top-60 margin-bottom-60">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 pull-none margin-auto">
+                    <div class="panel panel-default panel-login">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fas fa-user"></i> {{ 'form.login.title'|trans }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {{ form_start(form, {'action': path("user_user_logincheck", {})}) }}
+                                {% if error %}<div class="text-center text-danger margin-bottom-25">{{ error.message|trans }}</div>{% endif %}
+                                <div class="form-group input-icon-left">
+                                    <i class="fas fa-user"></i>
+                                    {{ form_widget(form._username) }}
+                                </div>
+                                <div class="form-group input-icon-left">
+                                    <i class="fas fa-lock"></i>
+                                    {{ form_widget(form._password) }}
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">{{ 'form.login.button'|trans }}</button>
+
+                                <div class="form-actions">
+                                    <div class="checkbox checkbox-primary">
+                                        {{ form_widget(form._remember_me) }}
+                                        {{ form_label(form._remember_me) }}
+                                    </div>
+                                </div>
+                                {{ form_rest(form) }}
+                            {{ form_end(form) }}
+                        </div>
+                        <div class="panel-footer">
+                            {{ 'form.login.no_account'|trans }} <a href="{{ path('user_user_register') }}">{{ 'form.login.sign_up'|trans }}</a><br>
+                            {{ 'form.login.forgot_password'|trans }} <a href="{{ path('user_user_forgotpassword') }}">{{ 'form.login.click_here'|trans }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

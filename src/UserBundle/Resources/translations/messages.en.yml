@@ -1,0 +1,170 @@
+alert.success.edit_password: 'Password changed successfully!'
+alert.success.edit_settings: 'Settings changed successfully!'
+alert.success.forgot_password.email_sent: 'Please click on the link in your email address to change your password'
+alert.success.forgot_password.password_changed: 'Your password has been changed'
+alert.success.register: 'Please click on the link in your email address to finish registering'
+alert.success.register_confirmation: 'Thank you for your registration, you are now connected'
+alert.success.remove_banner: 'Banner deleted successfully!'
+alert.success.remove_logo: 'Logo deleted successfully!'
+alert.success.remove_team: 'Team deleted successfully!'
+alert.success.team_create: 'Team created successfully!'
+alert.success.team_edit: 'Team edited successfully!'
+alert.success.team_member.join: 'Team joined successfully!'
+alert.success.team_member.leader: 'Leader changed successfully!'
+alert.success.team_member.left: 'Team successfully left!'
+alert.success.team_member.request: 'Team requested successfully!'
+alert.success.team_member.request_cancel: 'Request cancelled successfully!'
+alert.success.team_member.remove: 'Member remove successfully!'
+alert.warning.team_member.already_requested: 'You have already requested this team! Be patient :)'
+close: Close
+confirm: Confirm
+forgot_password.banner.subtitle: 'Don''t be so shy.'
+forgot_password.banner.title: 'Password Forgot'
+forgot_password.email_or_username: 'Tell us who you are!'
+forgot_password.new_password: 'Choose A New Password'
+form.forgot_password.email_or_username: 'Email Or Username'
+form.forgot_password.new_password: 'New Password'
+form.forgot_password.new_password_repeat: 'Repeat New Password'
+form.login.button: 'Sign In'
+form.login.click_here: 'Click Here!'
+form.login.forgot_password: 'Forgot your password?'
+form.login.no_account: 'Don''t have Tournois-Legend account?'
+form.login.password: Password
+form.login.remember_me: 'Remember me'
+form.login.sign_up: 'Sign Up Now'
+form.login.title: 'Sign In to Tournois-Legend'
+form.login.username: Username
+form.register.already_account: 'Already have an account?'
+form.register.button: Register
+form.register.country: Country
+form.register.email: Email
+form.register.password: Password
+form.register.password_repeat: 'Repeat password'
+form.register.sign_in: 'Sign In Now'
+form.register.terms: 'Accept terms and service.'
+form.register.title: 'Register to Tournois-Legend'
+form.register.username: Username
+form.register_confirmation.about: 'About me'
+form.register_confirmation.birthdate: Birthdate
+form.register_confirmation.button: Confirmation
+form.register_confirmation.footer: 'Complete your profile, you must!'
+form.register_confirmation.title: 'Registration confirmation'
+form.register_confirmation.website: 'Website'
+form.settings.about: 'About Me'
+form.settings.birthdate: Birthdate
+form.settings.button: Edit
+form.settings.country: Country
+form.settings.email: Email
+form.settings.gender: Gender
+form.settings.new_password: 'New Password'
+form.settings.new_password_repeat: 'Repeat New Password'
+form.settings.password: Password
+form.settings.username: Username
+form.settings.website: 'Website'
+form.settings.wrong_password: 'Wrong password.'
+form.team_create.banner: Banner
+form.team_create.button: Create
+form.team_create.description: Description
+form.team_create.logo: Logo
+form.team_create.name: Name
+form.team_create.tag: Tag
+form.team_create.title: 'Create A Team'
+form.team_create.website: Website
+form.team_manage.button: Save
+form.team_manage.description: Description
+form.team_manage.name: Name
+form.team_manage.tag: Tag
+form.team_manage.website: 'Website'
+gender.female: Women
+gender.male: Men
+gender.robot: Robot
+include.recent_tweets: 'Latest Tweets'
+include.tweets_by: 'Tweets by TournoisLegend'
+mail.subject.banned: 'You have just been banned'
+mail.subject.forgot_password: 'Password forgot'
+mail.subject.register_confirmation: 'Registration confirmation'
+mail.body.banned: "<p>Hello</p>\n<p>Following your behavior, you have just been banned by an administrator.</p>\n<p>If you think this is a mistake, please contact us as soon as possible.</p>\n<p>Thank you for your understanding</p>\n<p>This is an automatic mail, please do not reply.</p>\n<p>Greetings,<br>Tournois-Legend</p>\n"
+mail.body.forgot_password: "<p>Hello</p>\n<p>To confirm your password change on Tournois-Legend, please click on the following link :</p>\n<p><a href=\"%link%\">Modify my password</a></p>\n<p>If the link is broken, copy the following link in the address field of your browser : %link%</p>\n<p>If you are not at the origin of this action, you can just ignore this email.</p>\n<p>This is an automatic mail, please do not reply.</p>\n<p>Greetings,<br>Tournois-Legend</p>\n"
+mail.body.register: "<p>Hello</p>\n<p>Thanks you for your registration on Tournois-Legend</p>\n<p>Here's the link to activate your account :</p>\n<p><a href=\"%link%\">Activate my account</a></p>\n<p>If the link is broken, copy the following link in the address field of your browser : %link%</p>\n<p>This is an automatic mail, please do not reply.</p>\n<p>Greetings,<br>Tournois-Legend</p>"
+modal.team_delete.header: 'Delete a team'
+modal.team_delete.message: 'Are you sure to delete your team?'
+modal.team_leader.header: 'Give the lead to %username%'
+modal.team_leader.message: 'If you give the lead to another member, you will lose some rights. Are you sure?'
+modal.team_quit.header: 'Quit the team'
+modal.team_quit.message: 'Are you sure you want to leave this team?'
+profile.about_me: 'About Me'
+profile.age: 'years old'
+profile.last_tournaments: Last
+profile.menu.rankings: Rankings
+profile.menu.teams: Teams
+profile.menu.tournaments: Tournaments
+profile.not_specified: 'Not specified'
+profile.no_last_tournaments: 'No finished tournament for this user yet.'
+profile.no_rankings: 'This player is not currently ranked.'
+profile.no_teams: 'No team for this user yet.'
+profile.no_upcoming_tournaments: 'No upcoming tournament for this user yet.'
+profile.other_informations: 'Other Informations'
+profile.social: 'Social Networks'
+profile.upcoming_tournaments: Upcoming
+profile.update: 'Update your profile'
+role.coach: Coach
+role.leader: Leader
+role.manager: Manager
+role.player: Player
+role.streamer: Streamer
+role.troll: Troll
+send: Send
+settings.banner.subtitle: 'A rolling golem gathers no rust.'
+settings.banner.title: 'Edit My Settings'
+settings.avatar_informations: 'You will soon be able to modify your avatar and your banner, be patient!'
+settings.password_change: 'Password Change'
+settings.personnal_informations: 'Personnal Informations'
+settings.social_networks: 'Social Networks'
+team_create.banner.subtitle: 'Join the battle.'
+team_create.banner.title: 'Build your team.'
+team_create.remove_banner: 'Remove Banner'
+team_create.remove_logo: 'Remove logo'
+team_manage.actions: Actions
+team_manage.banner.title: 'Manage Your Team'
+team_manage.copy: Copy
+team_manage.date: 'Request date'
+team_manage.edit: 'Edit Informations'
+team_manage.join_link: 'Join link'
+team_manage.join_link_info: 'Send the link to your players to join your team'
+team_manage.member_list: 'Member List'
+team_manage.member_remove: Remove
+team_manage.member_set_leader: 'Assign lead'
+team_manage.menu.members: Members
+team_manage.menu.settings: Settings
+team_manage.remove_logo: 'Remove logo'
+team_manage.remove_banner: 'Remove banner'
+team_manage.requests: 'Requests list'
+team_manage.team_delete: 'Delete Team'
+team_manage.team_delete_button: Delete
+team_manage.team_delete_warning: 'If you delete your team, all data will be lost'
+team_manage.team_quit: 'Leave the team'
+team_manage.team_quit_button: Quit
+team_manage.team_quit_warning: 'If you leave the team, you will lose all your progress with this team'
+team_manage.username: Username
+team_profile.about: About
+team_profile.last_tournaments: Last
+team_profile.manage: Manage
+team_profile.menu.members: Members
+team_profile.menu.rankings: Rankings
+team_profile.menu.tournaments: Tournaments
+team_profile.not_specified: 'Not specified'
+team_profile.no_last_tournaments: 'No finished tournament for this team yet.'
+team_profile.no_rankings: 'This team is not currently ranked.'
+team_profile.no_upcoming_tournaments: 'No upcoming tournament for this team yet.'
+team_profile.other_informations: 'Other Informations'
+team_profile.request_add: 'Ask to join'
+team_profile.request_cancel: 'Cancel the request'
+team_profile.social: Social
+team_profile.upcoming_tournaments: Upcoming
+title.forgot_password: 'Forgot Password'
+title.login: 'Sign in'
+title.register: Register
+title.register_confirmation: 'Registration confirmation'
+title.settings: Settings
+title.team_create: 'Create A Team'
+title.team_manage: 'Team Manager'

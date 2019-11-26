@@ -1,0 +1,5 @@
+TournamentBundle\Entity\Description:
+    description-{1..5}:
+        name: Description<current()>
+        contentEn: <realText(4000)>
+        contentFr: <realText(4000)>

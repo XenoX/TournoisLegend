@@ -1,0 +1,41 @@
+UserBundle\Entity\TeamMember:
+    teamMember-{1..5}:
+        user: '@user-*'
+        team: '@team-1'
+        requested: <boolean(20)>
+    teamMember-{6..10}:
+        user: '@user-*'
+        team: '@team-2'
+        requested: <boolean(20)>
+    teamMember-{11..15}:
+        user: '@user-*'
+        team: '@team-3'
+        requested: <boolean(20)>
+    teamMember-{16..20}:
+        user: '@user-*'
+        team: '@team-4'
+        requested: <boolean(20)>
+    teamMember-{21..25}:
+        user: '@user-*'
+        team: '@team-5'
+        requested: <boolean(20)>
+    teamMember-{26..30}:
+        user: '@user-*'
+        team: '@team-6'
+        requested: <boolean(20)>
+    teamMember-{31..35}:
+        user: '@user-*'
+        team: '@team-7'
+        requested: <boolean(20)>
+    teamMember-{36..40}:
+        user: '@user-*'
+        team: '@team-8'
+        requested: <boolean(20)>
+    teamMember-{41..45}:
+        user: '@user-*'
+        team: '@team-9'
+        requested: <boolean(20)>
+    teamMember-{46..50}:
+        user: '@user-*'
+        team: '@team-10'
+        requested: <boolean(20)>

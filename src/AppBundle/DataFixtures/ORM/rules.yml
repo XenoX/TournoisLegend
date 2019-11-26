@@ -1,0 +1,5 @@
+TournamentBundle\Entity\Rules:
+    rules-{1..5}:
+        name: rules<current()>
+        contentFr: <realText(800)>
+        contentEn: <realText(800)>

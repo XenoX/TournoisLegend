@@ -1,0 +1,96 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.registration_players'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero hero-game height-300" style="background-image: url({{ asset(tournament.mode.game.webPathBanner) }});">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title bold">{{ 'registration.players.title'|trans }}</div>
+                    <p class="font-size-20">{{ tournament.name }} - {{ team.name }}</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="row sidebar">
+                    <div class="col-md-9 leftside">
+                        <h2>{{ 'registration.players.subtitle'|trans }}</h2><hr>
+                        {% if tournament.checkInPhase %}
+                            <p class="text-info text-center">{{ 'registration.players.check_in_phase'|trans }}</p>
+                        {% endif %}
+                        {{ form_start(form) }}
+                        <table class="table table-striped">
+                            <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <td class="hidden">{{ form_row(attribute(form, 'user_' ~ user.id)) }}</td>
+                                        <td><img src="data:image/jpeg;base64,{{ user.name|avatar }}" class="img-responsive" alt="{{ user.name }}_logo" style="max-height:100px;"></td>
+                                        <td><strong><i>{{ user.username }}</i></strong></td>
+                                        <td>{{ form_row(attribute(form, 'tag_' ~ user.id)) }}</td>
+                                        <td id="user_{{ user.id }}" onclick="selectMember({{ user.id }})">
+                                            <i class="far fa-circle fa-3x text-info"></i>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <p class="text-info margin-top-20">
+                            {{ 'registration.players.info'|trans({'%minParticipant%': minParticipant, '%maxParticipant%': (tournament.format / 2)|round(0, 'floor') + tournament.format}) }}
+                        </p>
+                        <button id="send-players" type="submit" class="btn btn-primary" disabled>{{ 'send'|trans }}</button>
+                        {{ form_end(form) }}
+                    </div>
+
+                    <div class="col-md-3 rightside hidden-sm hidden-xs">
+                        {% include 'UserBundle:Include:recent_tweets.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        var max = {{ (tournament.format / 2)|round(0, 'floor') + tournament.format }};
+        var min = {{ minParticipant }};
+        var nbSelected = 0;
+
+        function selectMember(id) {
+            var inputUser = $('#players_user_' + id);
+
+            if (nbSelected < max || inputUser.prop('checked')) {
+                if (inputUser.prop('checked')) {
+                    // DECHECK
+                    inputUser.prop('checked', false);
+                    $('#user_'+id+' i').removeClass('fas').removeClass('text-primary').addClass('far').addClass('text-info');
+                    nbSelected = nbSelected - 1;
+                } else {
+                    // CHECK
+                    inputUser.prop('checked', true);
+                    $('#user_'+id+' i').removeClass('far').removeClass('text-info').addClass('fas').addClass('text-primary');
+                    nbSelected = nbSelected + 1;
+                }
+                changeButton();
+            }
+        }
+
+        function changeButton() {
+            if (nbSelected >= min) {
+                $('#send-players').prop('disabled', false);
+            } else {
+                $('#send-players').prop('disabled', true);
+            }
+        }
+
+        {% for user in users %}
+            {% if attribute(registeredUsers, user.id) is defined %}
+                selectMember({{ user.id }});
+            {% endif %}
+        {% endfor %}
+    </script>
+{% endblock %}

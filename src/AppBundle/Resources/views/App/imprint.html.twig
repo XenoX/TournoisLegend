@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.imprint'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        {% include '@App/App/include/terms_' ~ app.request.locale ~ '.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,9 @@
+AppBundle\Entity\Mode:
+    mode-hs-classic:
+        nameEn: 'Classic'
+        nameFr: 'Classique'
+        game: '@game-hs'
+    mode-lol-classic:
+        nameEn: 'Classic'
+        nameFr: 'Classique'
+        game: '@game-lol'

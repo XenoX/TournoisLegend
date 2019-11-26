@@ -1,0 +1,94 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/plugins/datatables/css/datatables.bootstrap.css') }}">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Rankings</h3>
+                </div>
+                <div class="box-body">
+                    {% if rankings %}
+                        <table id="ranking_list" class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Period</th>
+                                <th>Mode</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ranking in rankings %}
+                                <tr>
+                                    <td><a href="{{ path('admin_ranking_update', {'ranking': ranking.id}) }}">{{ ranking.name }}</a></td>
+                                    <td>{% if ranking.startAt and ranking.stopAt %}{{ ranking.startAt.format('d/m h\\hi') }} - {{ ranking.startAt.format('d/m h\\hi') }}{% endif %}</td>
+                                    <td>{{ ranking.mode ? ranking.mode.name }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-center text-info">No ranking yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Ranking Levels</h3>
+                </div>
+                <div class="box-body">
+                    {% if rankingLevels %}
+                        <table id="ranking_levels_list" class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Elo Max</th>
+                                <th>Logo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for rankingLevel in rankingLevels %}
+                                <tr {% if false == rankingLevel.activated %}class="bg-warning"{% endif %}>
+                                    <td>
+                                        <a href="{{ path('admin_rankinglevel_update', {'rankingLevel': rankingLevel.id}) }}" style="color:{{ rankingLevel.color }}">
+                                            {{ rankingLevel.name }}
+                                        </a>
+                                    </td>
+                                    <td>{{ rankingLevel.eloMax }}</td>
+                                    <td>{{ rankingLevel.logo }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-center text-info">No ranking level yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('static/plugins/datatables/js/datatables.bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('static/plugins/datatables/js/jquery.datatables.js') }}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#ranking_list').dataTable({
+                "bPaginate":false,
+                "bLengthChange":false,
+                "bInfo":false,
+                "bFilter":false
+            });
+            $('#ranking_levels_list').dataTable({
+                "bPaginate":false,
+                "bLengthChange":false,
+                "bInfo":false,
+                "bFilter":false
+            });
+        });
+    </script>
+{% endblock %}

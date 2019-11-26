@@ -1,0 +1,207 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ user.username }} {{ parent() }}{% endblock %}
+
+{% import '@Tournament/Include/macros.html.twig' as tournamentMacros %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero cover hidden-xs" style="background-image: url({{ asset(user.getWebPathBanner()) }});">
+            <div class="hero-bg"></div>
+            <div class="container relative">
+                <div class="page-header">
+                    <div class="page-title">
+                        {{ user.username|capitalize }}
+                        {% if app.user.id is defined and user.id == app.user.id %}
+                            <a href="{{ path('user_user_settings') }}">
+                                <button type="button" class="btn btn-sm btn-warning">{{ 'profile.update'|trans }}</button>
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="profile-avatar">
+                        <div class="thumbnail" data-toggle="tooltip" title="{{ user.username }}">
+                            <img src="data:image/jpeg;base64,{{ user.name|avatar }}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="profile-nav height-50 border-bottom-1 border-grey-300 hidden-xs">
+            <div class="tab-select sticky">
+                <div class="container">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#teams" aria-controls="teams" role="tab" data-toggle="tab">
+                                {{ 'profile.menu.teams'|trans }} {% if teamsMember %}<span>({{ teamsMember|length }})</span>{% endif %}
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#tournaments" aria-controls="tournaments" role="tab" data-toggle="tab">
+                                {{ 'profile.menu.tournaments'|trans }}
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#rankings" aria-controls="rankings" role="tab" data-toggle="tab">
+                                {{ 'profile.menu.rankings'|trans }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-grey-50 padding-top-60 padding-top-sm-30">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4 hidden-xs">
+                        <div class="widget">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    {{ 'profile.about_me'|trans }}
+                                    <img src="{{ asset('static/img/flag/' ~ user.locale ~ '.jpg') }}" class="profileFlag pull-right" alt="{{ user.locale }}">
+                                </div>
+                                <div class="panel-body">
+                                    {{ user.about }}
+                                    <ul class="panel-list {% if user.about %}margin-top-25{% endif %}">
+                                        <li>
+                                            {% if user.gender == 'm' %}
+                                                <i class="fas fa-mars"></i> {{ 'gender.male'|trans }}
+                                            {% elseif user.gender == 'f' %}
+                                                <i class="fas fa-venus"></i> {{ 'gender.female'|trans }}
+                                            {% else %}
+                                                <i class="fas fa-usb"></i> {{ 'gender.robot'|trans }}
+                                            {% endif %}
+                                            {% if user.birthdate %}
+                                                , {{ user.birthdate|age }} {{ 'profile.age'|trans }}
+                                            {% endif %}
+                                        </li>
+                                        <li><i class="fas fa-map-marker"></i> {{ user.country|country }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="widget">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">{{ 'profile.social'|trans }}</div>
+                                <div class="panel-body no-padding">
+                                    <ul class="panel-list-bordered">
+                                        {% if user.discord %}
+                                            <li><a><i class="fab fa-discord"></i> {{ user.discord }}</a></li>
+                                        {% else %}
+                                            <li><a><i class="fab fa-discord"></i> <em>{{ 'profile.not_specified'|trans }}</em></a></li>
+                                        {% endif %}
+                                        {% if user.twitch %}
+                                            <li><a href="{{ user.twitch }}" target="_blank"><i class="fab fa-twitch"></i> {{ user.twitch }}</a></li>
+                                        {% else %}
+                                            <li><a><i class="fab fa-twitch"></i> <em>{{ 'profile.not_specified'|trans }}</em></a></li>
+                                        {% endif %}
+                                        {% if user.facebook %}
+                                            <li><a href="{{ user.facebook }}" target="_blank"><i class="fab fa-facebook"></i> {{ user.facebook }}</a></li>
+                                        {% else %}
+                                            <li><a><i class="fab fa-facebook"></i> <em>{{ 'profile.not_specified'|trans }}</em></a></li>
+                                        {% endif %}
+                                        {% if user.twitter %}
+                                            <li><a href="{{ user.twitter }}" target="_blank"><i class="fab fa-twitter"></i> {{ user.twitter }}</a></li>
+                                        {% else %}
+                                            <li><a><i class="fab fa-twitter"></i> <em>{{ 'profile.not_specified'|trans }}</em></a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="widget">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">{{ 'profile.other_informations'|trans }}</div>
+                                <div class="panel-body">
+                                    <ul class="panel-list">
+                                        <li><i class="fas fa-clock"></i> {{ user.registerAt|localizeddate('long', 'none', null, user.registerAt|date('e')) }}</li>
+                                        {% if user.website %}
+                                            <li><a href="{{ user.website }}"><i class="fas fa-link"></i> {{ user.website }}</a></li>
+                                        {% else %}
+                                            <li><i class="fas fa-link"></i> <em>{{ 'profile.not_specified'|trans }}</em></li>
+                                        {% endif %}
+                                        <li><i class="fas fa-angle-up"></i> {{ user.roles|rank }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-9 col-sm-8">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="teams">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        {% for tm in teamsMember %}
+                                            {% set team = tm.team %}
+                                            <div class="col-sm-4 col-xs-6">
+                                                <a href="{{ path('user_team_profile', {'team': team.id, 'slug': team.name|slugify}) }}">
+                                                    <div class="card card-hover">
+                                                        <div class="card-img">
+                                                            <img src="{{ web_image(team.webPath).forceResize('300', '300') }}" alt="{{ team.name }}_logo">
+                                                            <div class="category">
+                                                                {% if tm.user.id == team.leader.id %}
+                                                                    <span class="label label-warning">{{ tm.role|trans }}</span>
+                                                                {% else %}
+                                                                    <span class="label label-primary">{{ tm.role|trans }}</span>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="caption">
+                                                            <h3 class="card-title">
+                                                                <a href="{{ path('user_team_profile', {'team': team.id, 'slug': team.name|slugify}) }}">
+                                                                    {{ team.name }}
+                                                                </a>
+                                                            </h3>
+                                                            <p>
+                                                                <i class="fas fa-clock"></i>
+                                                                {{ tm.joinAt|localizeddate('medium', 'none', null, tm.joinAt|date('e')) }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        {% else %}
+                                            <p class="text-info text-center">{{ 'profile.no_teams'|trans }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tournaments">
+                                <h3>{{ 'profile.upcoming_tournaments'|trans }}</h3>
+                                <hr>
+                                {% if upcomingTournaments %}
+                                    {% for participant in upcomingTournaments %}
+                                        {{ tournamentMacros.profileTournament(participant.tournament) }}
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="text-info text-center">{{ 'profile.no_upcoming_tournaments'|trans }}</p>
+                                {% endif %}
+
+                                <h3>{{ 'profile.last_tournaments'|trans }}</h3>
+                                <hr>
+                                {% if lastTournaments %}
+                                    {% for participant in lastTournaments %}
+                                        {{ tournamentMacros.profileTournament(participant.tournament) }}
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="text-info text-center">{{ 'profile.no_last_tournaments'|trans }}</p>
+                                {% endif %}
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="rankings">
+                                {% for rankingParticipant in rankingParticipants %}
+                                    {{ tournamentMacros.profileRankingParticipant(rankingParticipant, rankingLevels) }}
+                                {% else %}
+                                    <p class="text-center text-info">{{ 'profile.no_rankings'|trans }}</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

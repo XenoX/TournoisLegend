@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>TL - Administration</title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <script type="text/javascript" src="{{ asset('static/plugins/jquery/jquery.min.js') }}"></script>
+        <link rel="stylesheet" type="text/css" href="{{ asset('static/plugins/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('static/css/AdminLTE.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('static/css/skin-green.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('static/css/admin.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('static/plugins/font-awesome/old/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('static/plugins/font-awesome/css/fontawesome-all.min.css') }}">
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
+        {% block css %}{% endblock %}
+        <style type="text/css">
+            .alert { margin-left: 0; }
+        </style>
+    </head>
+
+    <body class="skin-green sidebar-mini fixed">
+        <div class="wrapper">
+            <header class="main-header">
+                <a href="{{ path('admin_admin_index') }}" class="logo">
+                    <span class="logo-mini"><b>TL</b></span>
+                    <span class="logo-lg"><b>Tournois-Legend</b></span>
+                </a>
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <li><a href="{{ path('app_app_index') }}">Go to website</a></li>
+                            <li><a href="{{ path('user_user_logout') }}">Logout</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+
+            <aside class="main-sidebar">
+                <section class="sidebar">
+                    <ul class="sidebar-menu">
+                        <li><a href="{{ path('admin_admin_index') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                        <li><a  href="#" data-toggle="modal" data-target="#modal-search"><i class="fas fa-search"></i> <span>Search</span></a></li>
+                        <li><a href="{{ path('admin_news_index') }}"><i class="fas fa-newspaper"></i> <span>News</span></a></li>
+                        <li class="header">TOURNAMENTS</li>
+                        <li><a href="{{ path('admin_admin_tournament') }}"><i class="fas fa-trophy"></i> <span>Tournaments</span></a></li>
+                        <li><a href="{{ path('admin_admin_lan') }}"><i class="fas fa-trophy"></i> <span>LAN</span></a></li>
+                        <li><a href="{{ path('admin_admin_ranking') }}"><i class="fas fa-chevron-up"></i> <span>Rankings</span></a></li>
+                        <li class="treeview">
+                            <a href="#"><i class="fas fa-plus"></i> <span>Create</span><span class="pull-right-container"></span></a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ path('admin_tournament_create') }}"><i class="fas fa-trophy"></i> Tournament</a></li>
+                                <li><a href="{{ path('admin_description_create') }}"><i class="fas fa-file-text"></i> Description</a></li>
+                                <li><a href="{{ path('admin_reward_create') }}"><i class="fas fa-money-bill-alt"></i> Reward</a></li>
+                                <li><a href="{{ path('admin_organizer_create') }}"><i class="fas fa-certificate"></i> Organizer</a></li>
+                                <li><a href="{{ path('admin_rules_create') }}"><i class="fas fa-balance-scale"></i> Rules</a></li>
+                                <li><a href="{{ path('admin_lan_create') }}"><i class="fas fa-trophy"></i> Lan</a></li>
+                                <li><a href="{{ path('admin_mail_create') }}"><i class="fas fa-envelope"></i> Mail</a></li>
+                            </ul>
+                        </li>
+                        <li class="header">USER SPACE</li>
+                        <li><a href="{{ path('admin_user_index') }}"><i class="fas fa-user"></i> <span>Users</span></a></li>
+                        <li><a href="{{ path('admin_team_index') }}"><i class="fas fa-users"></i> <span>Teams</span></a></li>
+                        <li class="header">CONTENT</li>
+                        <li><a href="{{ path('admin_admin_data') }}"><i class="fas fa-database"></i> <span>Dashboard</span></a></li>
+                        <li class="treeview">
+                            <a href="#"><i class="fas fa-plus"></i> <span>Create</span><span class="pull-right-container"></span></a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ path('admin_game_create') }}"><i class="fas fa-gamepad"></i> Game</a></li>
+                                <li><a href="{{ path('admin_tag_create') }}"><i class="fas fa-tags"></i> Tag</a></li>
+                                <li><a href="{{ path('admin_mode_create') }}"><i class="fas fa-rocket"></i> Mode</a></li>
+                                <li><a href="{{ path('admin_notification_create') }}"><i class="fas fa-bell"></i> Notification</a></li>
+                                <li><a href="{{ path('admin_notificationtemplate_create') }}"><i class="far fa-bell"></i> Notification Template</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+            </aside>
+
+            <div class="content-wrapper">
+                <section class="content">
+                    {% for key, value in app.session.flashbag.all() %}
+                        <div class="row margin-bottom-20">
+                            <div class="container-fluid">
+                                <div class="alert alert-{{ key }}">
+                                    <p class="text-center">{{ value[0]|raw }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% block body %}{% endblock %}
+                </section>
+            </div>
+
+            <footer class="main-footer">
+                <strong>Copyright &copy; {{ 'now'|date('Y') }} <a href="{{ app.request.uri }}">{{ app.request.host }}</a>.</strong> All rights reserved.
+            </footer>
+
+            <div class="control-sidebar-bg"></div>
+
+        </div>
+
+        <div id="modal-search" class="modal fade" tabindex="-1" role="dialog" style="display: none;" data-effect="bounceIn">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ path('admin_admin_search') }}" method="post">
+                            <label for="keyword">Keyword</label>
+                            <input type="text" id="keyword" name="keyword" title="keyword" class="form-control" autofocus><br>
+                            <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="{{ asset('static/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('static/js/app.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('static/js/jquery.slimscroll.min.js') }}"></script>
+        <script type="text/javascript">
+            $('#modal-search').on('shown.bs.modal', function() {
+                $(this).find('[autofocus]').focus();
+            });
+        </script>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

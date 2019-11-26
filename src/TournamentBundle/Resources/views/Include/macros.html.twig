@@ -1,0 +1,121 @@
+{% macro tournament(tournament) %}
+    {% set game = tournament.mode.game %}
+    <div class="post post-review">
+        <div class="row">
+            <div class="col-xs-2">
+                <div class="post-thumbnail">
+                    <img src="{{ web_image(game.webPath).forceResize('200', '200') }}">
+                </div>
+            </div>
+            <div class="col-xs-9 col-xs-offset-1">
+                <div class="post-header">
+                    <div class="post-title">
+                        <h4>
+                            <a href="{{ path('tournament_tournament_profile', {'game': game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}">
+                                <small class="pull-right">{{ tournament.state|tournamentState }}</small> {{ tournament.name }}
+                            </a>
+                        </h4>
+                        <ul class="post-meta">
+                            <li>{{ 'tournament.list.by'|trans }} {{ tournament.organizer.name }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        {% if not game.name %}<i class="fas fa-gamepad margin-bottom-10"></i> {{ game.name }}<br>{% endif %}
+                        {% if tournament.reward is not null %}
+                            <i class="fas fa-money-bill-alt margin-bottom-10"></i> {{ tournament.reward.name }}<br>
+                        {% endif %}
+                        <i class="fas fa-calendar-alt margin-bottom-10"></i> {{ tournament.startAt|localizeddate('long', 'short', null, tournament.startAt|date('e')) }}<br>
+                    </div>
+                    <div class="col-md-6">
+                        <i class="fas fa-users margin-bottom-10"></i> {{ tournament.formatStringify }} - {{ tournament.size }} {% if 1 < tournament.format %}{{ 'tournament.list.teams'|trans }}{% else %}{{ 'tournament.list.users'|trans }}{% endif %}<br>
+                        {% if tournament.mapNameEn %}
+                            <i class="fas fa-globe margin-bottom-10"></i> {{ attribute(tournament, "mapName" ~ app.request.locale|capitalize)|raw }}<br>
+                        {% endif %}
+                    </div>
+                </div>
+                <a href="{{ path('tournament_tournament_profile', {'game': game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-primary btn-sm btn-icon-left margin-bottom-15">
+                    <i class="fas fa-chevron-circle-right"></i> {{ 'see_more'|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro profileTournament(tournament) %}
+    {% set game = tournament.mode.game %}
+    <div class="post post-review">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="post-thumbnail">
+                    <img src="{{ web_image(game.webPath).forceResize('200', '200') }}">
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                <div class="post-header">
+                    <div class="post-title">
+                        <h4>
+                            <a href="{{ path('tournament_tournament_profile', {'game': game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}">
+                                <small class="pull-right">{{ tournament.state|tournamentState }}</small> {{ tournament.name }}
+                            </a>
+                        </h4>
+                        <ul class="post-meta">
+                            <li>{{ 'tournament.list.by'|trans }} {{ tournament.organizer.name }}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <i class="fas fa-gamepad margin-bottom-10"></i> {{ game.name }}<br>
+                        {% if tournament.reward is not null %}
+                            <i class="fas fa-money-bill-alt margin-bottom-10"></i> {{ tournament.reward.name }}<br>
+                        {% endif %}
+                        <i class="fas fa-calendar-alt margin-bottom-10"></i> {{ tournament.startAt|localizeddate('long', 'short', null, tournament.startAt|date('e')) }}<br>
+                    </div>
+                    <div class="col-md-6">
+                        <i class="fas fa-users margin-bottom-10"></i> {{ tournament.formatStringify }} - {{ tournament.size }} {% if 1 < tournament.format %}{{ 'tournament.list.teams'|trans }}{% else %}{{ 'tournament.list.users'|trans }}{% endif %}<br>
+                        {% if tournament.mapNameEn %}
+                            <i class="fas fa-globe margin-bottom-10"></i> {{ attribute(tournament, "mapName" ~ app.request.locale|capitalize)|raw }}<br>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro profileRankingParticipant(rankingParticipant, rankingLevels) %}
+    {% set ranking = rankingParticipant.ranking %}
+    {% set game = ranking.mode.game %}
+    <div class="post post-review">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="post-thumbnail">
+                    <img src="{{ web_image(game.webPath).forceResize('200', '200') }}">
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                <div class="post-header">
+                    <div class="post-title">
+                        <h4>
+                            <a href="{{ path('tournament_ranking_ranking', {'slugGame': game.name|slugify, 'ranking': ranking.id, 'rankingSlug': ranking.name|slugify}) }}">
+                                {{ game.shortName }} - {{ attribute(ranking, "name" ~ app.request.locale|capitalize) }}
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <i class="fas fa-hourglass-start margin-bottom-10"></i> {{ ranking.startAt|localizeddate('long', 'none', null, ranking.startAt|date('e')) }}<br>
+                        <i class="fas fa-hourglass-end margin-bottom-10"></i> {{ ranking.stopAt|localizeddate('long', 'none', null, ranking.stopAt|date('e')) }}<br>
+                    </div>
+                    <div class="col-md-6">
+                        <i class="fas fa-bullseye margin-bottom-10"></i> {{ rankingParticipant.elo }} {{ 'points'|trans }}<br>
+                        <i class="fas fa-graduation-cap margin-bottom-10"></i> {{ rankingParticipant.elo|rankingLevelColor(rankingLevels, app.request.locale)|raw }}<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

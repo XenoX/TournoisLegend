@@ -1,0 +1,60 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.registration'|trans }} {{ parent() }}{% endblock %}
+
+{% block css %}
+    <style>
+        .desactivate {
+            pointer-events: none;
+            cursor: default;
+            opacity: 0.7;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero hero-game height-300" style="background-image: url({{ asset(tournament.mode.game.webPathBanner) }});">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title bold">{{ 'registration.index.title'|trans }}</div>
+                    <p class="font-size-20">{{ tournament.name }}</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="row">
+                    <a href="{{ path('user_team_create') }}">
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-user-plus fa-5x margin-bottom-15"></i>
+                            <h3>{{ 'registration.index.create.title'|trans }}</h3>
+                            <p class="text-center text-warning margin-top-15">{{ 'registration.index.create.warning'|trans }}</p>
+                            <p class="text-justify margin-top-15">{{ 'registration.index.create.message'|trans }}</p>
+                        </div>
+                    </a>
+                    <a {% if 0 == teamsMemberCount %}class="desactivate"{% endif %} href="{{ path('tournament_registration_team', {'tournament': tournament.id, 'slug': tournament.name|slugify}) }}">
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-users fa-5x margin-bottom-15"></i>
+                            <h3>{{ 'registration.index.choose.title'|trans }}</h3>
+                            <p class="text-center text-success margin-top-15">{{ 'registration.index.choose.success'|trans }}</p>
+                            <p class="text-center text-info margin-top-15">{{ 'registration.index.choose.info'|trans({'%teamCount%': teamsMemberCount}) }}</p>
+                            <p class="text-justify margin-top-15">{{ 'registration.index.choose.message'|trans }}</p>
+                        </div>
+                    </a>
+                    <a class="desactivate">
+                        <div class="col-md-4 text-center">
+                            <i class="fas fa-user-secret fa-5x margin-bottom-15"></i>
+                            <h3>{{ 'registration.index.solo.title'|trans }}</h3>
+                            <p class="text-center text-warning margin-top-15">{{ 'registration.index.solo.warning'|trans }}</p>
+                            <p class="text-center text-danger">{{ 'registration.index.solo.error'|trans }}</p>
+                            <p class="text-justify margin-top-15">{{ 'registration.index.solo.message'|trans }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

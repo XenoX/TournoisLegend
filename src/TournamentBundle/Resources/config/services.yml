@@ -1,0 +1,131 @@
+services:
+    # Twig Extension
+    tournament.twig_extension.tournament:
+        class: TournamentBundle\Twig\TournamentExtension
+        arguments:
+            - "@translator"
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    tournament.twig_extension.participant:
+        class: TournamentBundle\Twig\ParticipantExtension
+        arguments:
+            - "@translator"
+            - "@router"
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    tournament.twig_extension.lan_participant:
+        class: TournamentBundle\Twig\LanParticipantExtension
+        arguments:
+            - "@translator"
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    tournament.twig_extension.ranking:
+        class: TournamentBundle\Twig\RankingExtension
+        tags:
+            - { name: twig.extension }
+
+    # Guard
+    tournament.workflow_guard:
+        class: TournamentBundle\Workflow\GuardSubscriber
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@tournament"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    # Subscriber
+    tournament.lanparticipant_listener:
+        class: TournamentBundle\EventListener\LanParticipantListener
+        arguments:
+            - "@state_machine.lan_participant"
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    tournament.participant_listener:
+        class: TournamentBundle\EventListener\ParticipantListener
+        arguments:
+            - "@state_machine.participant"
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    tournament.battle_listener:
+        class: TournamentBundle\EventListener\BattleListener
+        arguments:
+            - "@tournament.battle"
+        lazy: true
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    tournament.stream_listener:
+        class: TournamentBundle\EventListener\StreamListener
+        arguments:
+            - "@state_machine.stream"
+            - "@security.authorization_checker"
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    tournament.participant_workflow:
+        class: TournamentBundle\Workflow\ParticipantWorkflowListener
+        tags:
+            - { name: kernel.event_subscriber }
+
+    tournament.tournament_workflow:
+        class: TournamentBundle\Workflow\TournamentWorkflowListener
+        arguments:
+            - "@tournament.ranking"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    # Service
+    tournament:
+        class: TournamentBundle\Service\TournamentService
+        public: true
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@session.flash_bag"
+            - "@translator"
+            - "@state_machine.tournament"
+            - "@app.mail"
+            - "@router"
+            - "@slugify"
+
+    tournament.participant:
+        class: TournamentBundle\Service\ParticipantService
+        public: true
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@session.flash_bag"
+            - "@security.token_storage"
+            - "@user.notification"
+            - "@translator"
+            - "@state_machine.participant"
+
+    tournament.battle:
+        class: TournamentBundle\Service\BattleService
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@session.flash_bag"
+
+    tournament.bracket:
+        class: TournamentBundle\Service\BracketService
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    tournament.stream:
+        class: TournamentBundle\Service\StreamService
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@validator"
+            - "@state_machine.stream"
+
+    tournament.ranking:
+        class: TournamentBundle\Service\RankingService
+        arguments:
+            - "@tournament.participant"
+            - "@doctrine.orm.entity_manager"

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-51742656-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-51742656-1');
+        </script>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>{% block title %}- Tournois Legend{% endblock %}</title>
+        {% if app.request.locale == 'fr' %}
+            <meta name="description" content="Votre site de tournois : League of Legends, Hearthstone c'est ici ! Inscrivez vous et participez à nos tournois !">
+        {% else %}
+            <meta name="description" content="Your tournaments website : League of Legends, Hearthstone here! Register and participate in our tournaments!">
+        {% endif %}
+        <meta name="author" content="XenoX">
+        <meta property="og:site_name" content="Tournois Legend">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Tournois Legend">
+        <meta property="og:image" content="{{ asset('static/img/logo_hd.png') }}">
+        <meta property="og:description" content="Your tournaments website : League of Legends, Hearthstone here! Register and participate in our tournaments!">
+        <meta property="og:url" content="{{ app.request.uri }}">
+        <meta name="twitter:card" content="@TournoisLegend">
+        <meta name="twitter:creator" content="@XenoX_">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="{{ app.request.uri }}">
+        {% stylesheets
+            'static/plugins/bootstrap/css/bootstrap.min.css'
+            'static/plugins/font-awesome/old/css/font-awesome.min.css'
+            'static/plugins/font-awesome/css/fontawesome-all.min.css'
+            'static/plugins/animate/animate.min.css'
+            'static/plugins/owl-carousel/owl.carousel.css'
+            'static/css/jquery.bracket.min.css'
+            'static/css/theme.min.css'
+            'static/css/custom.css'
+            filter='cssrewrite' output='assets/css/tournoislegend.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+        <link rel="icon" type="image/png" href="{{ asset('static/img/logo_xs.png') }}" />
+        {% block css %}{% endblock %}
+    </head>
+    <body class="fixed-header">
+        <header>
+            <div class="container">
+                <span class="bar hide"></span>
+                <h1><a href="{{ path('app_app_index') }}" class="pull-left"><span class="bold text-white">TOURNOIS</span> LEGEND</a></h1>
+                <nav>
+                    <div class="nav-control">
+                        <ul>
+                            <li class="dropdown mega-dropdown">
+                                <a href="#">{{ 'header.menu.tournaments'|trans }}</a>
+                                {{ render(controller('TournamentBundle:Tournament:menu')) }}
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle">{{ 'header.menu.teams'|trans }}</a>
+                                <ul class="dropdown-menu default">
+                                    {{ render(controller('UserBundle:Team:menu')) }}
+                                    <li><a href="{{ path('user_team_create') }}"><i class="fas fa-plus"></i> {{ 'header.menu.team_create'|trans }}</a></li>
+                                </ul>
+                            </li>
+                            {{ render(controller('TournamentBundle:Lan:menu')) }}
+                            {{ render(controller('TournamentBundle:Ranking:menu')) }}
+                            <li>
+                                <a href="{{ social.discord }}" target="_blank">Discord</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="nav-right">
+                    {% if app.user %}
+                        <div class="nav-profile dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="data:image/jpeg;base64,{{ app.user.name|avatar }}" alt="avatar" class="hidden-lg">
+                                <span>{{ app.user.username }}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('user_user_profile', {'user': app.user.id, 'slug': app.user.username|slugify}) }}"><i class="far fa-user"></i> {{ 'header.user.profile'|trans }}</a></li>
+                                <li><a href="{{ path('user_user_settings') }}"><i class="fas fa-cog"></i> {{ 'header.user.settings'|trans }}</a></li>
+                                <li class="divider"></li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li><a href="{{ path('admin_admin_index') }}"><i class="fas fa-briefcase"></i> Administration</a></li>
+                                {% endif %}
+                                <li><a href="{{ path('user_user_logout') }}"><i class="fas fa-power-off"></i> {{ 'header.user.sign_out'|trans }}</a></li>
+                            </ul>
+                        </div>
+
+                        <div id="notifications" class="nav-dropdown dropdown">
+                            {{ render(controller('UserBundle:Notification:getLastNotifications')) }}
+                        </div>
+                        <a id="searchButton" href="#" data-toggle="modal-search"><i class="fas fa-search"></i></a>
+                    {% else %}
+                        <ul class="list-inline">
+                            <li>
+                                <a href="{{ path('user_user_login') }}">
+                                    <span class="hidden-xs">{{ 'header.user.sign_in'|trans }}</span>
+                                    <span class="visible-xs"><i class="fas fa-sign-in-alt"></i></span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ path('user_user_register') }}">
+                                    <span class="hidden-xs">{{ 'header.user.sign_up'|trans }}</span>
+                                    <span class="visible-xs"><i class="fas fa-user-plus"></i></span>
+                                </a>
+                            </li>
+                            <li><a id="searchButton" href="#" data-toggle="modal-search"><i class="fas fa-search"></i></a></li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+
+        <div class="modal-search">
+            <div class="container">
+                <form action="{{ path('app_app_search')}}" method="post">
+                    <input id="searchInput" type="text" name="keyword" class="form-control" placeholder="{{ 'header.search.placeholder'|trans }}" autofocus>
+                    <i class="fas fa-times close"></i>
+                </form>
+            </div>
+        </div>
+
+        {% for key, value in app.session.flashbag.all() %}
+            <section id="flash" class="bg-{{ key }}">
+                <div class="container">
+                    <button id="closeFlash" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="color-white font-weight-300 text-center">{{ value[0]|trans|raw }}</h3>
+                </div>
+            </section>
+        {% endfor %}
+
+        {% block body %}{% endblock %}
+
+        <footer>
+            <div class="container">
+                <div class="widget row">
+                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                        <h4 class="title">{{ 'footer.about.title'|trans }}</h4>
+                        <p>{{ 'footer.about.content'|trans|raw }}</p>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                        <h4 class="title">{{ 'footer.categories'|trans }}</h4>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <ul class="nav">
+                                    <li><a href="{{ path('app_app_index') }}">{{ 'footer.home'|trans }}</a></li>
+                                    <li><a href="{{ path('tournament_tournament_index') }}">{{ 'footer.tournaments'|trans }}</a></li>
+                                    <li>
+                                        <a rel="alternate" hreflang="{{ app.request.locale == 'fr' ? 'en' : 'fr' }}" href="{{ path('app_app_index', {'_locale': app.request.locale == 'fr' ? 'en' : 'fr'}) }}">
+                                            {{ app.request.locale == 'fr' ? 'version.english'|trans : 'version.french'|trans }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <ul class="nav">
+                                    <li><a href="{{ path('app_app_imprint') }}">{{ 'footer.imprint'|trans }}</a></li>
+                                    <li><a href="{{ path('app_app_terms') }}">{{ 'footer.terms'|trans }}</a></li>
+                                    <li><a href="{{ path('app_app_contact') }}">{{ 'footer.contact'|trans }}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="container">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="{{ social.twitter }}" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Follow us on Twitter" target="_blank"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li>
+                            <a href="{{ social.facebook }}" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Follow us on Facebook" target="_blank"><i class="fab fa-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a href="{{ social.discord }}" class="btn btn-circle btn-social-icon" data-toggle="tooltip" title="Join us on Discord" target="_blank"><i class="fab fa-discord"></i></a>
+                        </li>
+                    </ul>
+                    &copy; {{ 'now'|date('Y') }} Tournois-Legend. All rights reserved.
+                </div>
+            </div>
+        </footer>
+
+        {% javascripts
+            'static/plugins/jquery/jquery.min.js'
+            'static/plugins/bootstrap/js/bootstrap.min.js'
+            'static/js/jquery.bracket.min.js'
+            'static/plugins/clipboard/clipboard.min.js'
+            'static/plugins/owl-carousel/owl.carousel.min.js'
+            'static/js/core.js'
+            filter="?jsqueeze" output="assets/js/tournoislegend.js" %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        <script type="text/javascript">
+            $("#searchButton").click(function () {
+                $("#searchInput").focus();
+            })
+        </script>
+        {% if app.user %}
+            <script type="text/javascript">
+                var refreshTimeout;
+
+                function refreshNotifications() {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ path('user_notification_last') }}",
+                        data: '',
+                        cache: true,
+                        success: function(data) {
+                            $('#notifications').html(data);
+                        },
+                        error: function(){},
+                        complete: function(){
+                            clearTimeout(refreshTimeout);
+                            refreshTimeout = setTimeout(refreshNotifications, 30000);
+                        }
+                    });
+                }
+
+                $(function() {
+                    refreshNotifications();
+                });
+
+                $('#notifications').on('show.bs.dropdown', function () {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ path('user_notification_open') }}",
+                        data: '',
+                        success: function(){
+                            refreshNotifications();
+                        }
+                    });
+                })
+            </script>
+        {% endif %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

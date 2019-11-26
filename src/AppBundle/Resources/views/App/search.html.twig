@@ -1,0 +1,131 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.search'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero" style="background-image: url({{ asset('static/img/cover-search.jpg') }});">
+            <div class="hero-bg-primary"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">{{ 'search.banner.title'|trans }}</div>
+                    <em>{{ 'search.banner.subtitle'|trans({'%keyword%': keyword}) }}</em>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>{{ 'search.tournaments'|trans }}</h2><hr>
+                        <div class="row">
+                            {% if tournaments %}
+                                {% for tournament in tournaments %}
+                                    <div class="col-sm-3 col-xs-12 margin-bottom-20">
+                                        <div class="thumbnail">
+                                            <h3 class="thumbnail-title">{{ tournament.name }}</h3>
+                                            <img src="{{ asset(tournament.mode.game.webPath) }}" class="center-block" title="logo-{{ tournament.name }}">
+                                            <div class="caption padding-top-20">
+                                                <i class="fas fa-gamepad margin-bottom-10"></i> {{ tournament.mode.game.shortName }}<br>
+                                                <i class="fas fa-users margin-bottom-10"></i> {{ tournament.formatStringify }} - {{ tournament.size }}<br>
+                                                <i class="fas fa-calendar-alt margin-bottom-10"></i> {{ tournament.startAt|localizeddate('short', 'short', null, tournament.startAt|date('e')) }}<br>
+                                                <a href="{{ path('tournament_tournament_profile', {'game': tournament.mode.game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-block btn-primary btn-rounded btn-sm margin-top-20">
+                                                    <i class="fas fa-chevron-circle-right"></i> {{ 'see_more'|trans }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-center text-info">{{ 'search.no_results'|trans }}</p>
+                            {% endif %}
+                        </div>
+                        {% if tournaments|length == 8 %}
+                            <div class="row text-center">
+                                <a href="{{ path('app_app_results', {'type': 'tournaments', 'keywordEncoded': keywordEncoded}) }}" class="text-info">
+                                    {{ 'see_more'|trans }}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>{{ 'search.users'|trans }}</h2><hr>
+                        <div class="row">
+                            {% if users %}
+                                {% for user in users %}
+                                    <div class="col-sm-3 col-xs-12 margin-bottom-20">
+                                        <div class="thumbnail">
+                                            <h3 class="thumbnail-title">{{ user.name }}</h3>
+                                            <img src="data:image/jpeg;base64,{{ user.name|avatar }}" class="center-block" title="logo-{{ user.name }}">
+                                            <div class="caption padding-top-20">
+                                                <i class="fas fa-flag margin-bottom-10"></i> {{ user.country|country }}<br>
+                                                {% if user.gender == 'm' %}
+                                                    <i class="fas fa-mars margin-bottom-10"></i> {{ 'gender.male'|trans }}<br>
+                                                {% elseif user.gender == 'f' %}
+                                                    <i class="fas fa-venus margin-bottom-10"></i> {{ 'gender.female'|trans }}<br>
+                                                {% else %}
+                                                    <i class="fas fa-usb margin-bottom-10"></i> {{ 'gender.robot'|trans }}<br>
+                                                {% endif %}
+                                                <i class="fas fa-calendar-alt margin-bottom-10"></i> {{ user.registerAt|localizeddate('short', 'short', null, user.registerAt|date('e')) }}<br>
+                                                <a href="{{ path('user_user_profile', {'user': user.id, 'slug': user.name|slugify}) }}" class="btn btn-block btn-primary btn-rounded btn-sm margin-top-20">
+                                                    <i class="fas fa-chevron-circle-right"></i> {{ 'see_more'|trans }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-center text-info">{{ 'search.no_results'|trans }}</p>
+                            {% endif %}
+                        </div>
+                        {% if users|length == 8 %}
+                            <div class="row text-center">
+                                <a href="{{ path('app_app_results', {'type': 'users', 'keywordEncoded': keywordEncoded}) }}" class="text-info">
+                                    {{ 'see_more'|trans }}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row margin-top-20">
+                    <div class="col-lg-12">
+                        <h2>{{ 'search.teams'|trans }}</h2><hr>
+                        <div class="row">
+                            {% if teams %}
+                                {% for team in teams %}
+                                    <div class="col-sm-3 col-xs-12 margin-bottom-20">
+                                        <div class="thumbnail">
+                                            <h3 class="thumbnail-title">{{ team.name }}</h3>
+                                            <img src="{{ web_image(team.webPath).forceResize('300', '300') }}" class="center-block" title="logo-{{ team.name }}">
+                                            <div class="caption padding-top-20">
+                                                <i class="fas fa-star margin-bottom-10"></i> {{ team.leader.username }}<br>
+                                                <i class="fas fa-calendar-alt margin-bottom-10"></i> {{ team.createdAt|localizeddate('short', 'short', null, team.createdAt|date('e')) }}<br>
+                                                <a href="{{ path('user_team_profile', {'team': team.id, 'slug': team.name|slugify}) }}" class="btn btn-block btn-primary btn-rounded btn-sm margin-top-20">
+                                                    <i class="fas fa-chevron-circle-right"></i> {{ 'see_more'|trans }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-center text-info">{{ 'search.no_results'|trans }}</p>
+                            {% endif %}
+                        </div>
+                        {% if teams|length == 8 %}
+                            <div class="row text-center">
+                                <a href="{{ path('app_app_results', {'type': 'teams', 'keywordEncoded': keywordEncoded}) }}" class="text-info">
+                                    {{ 'see_more'|trans }}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+TournamentBundle\Entity\Organizer:
+    organizer-tl:
+        name: TournoisLegend
+        descriptionEn: EN Structure qui dévelope la mixité dans le domaine de l'e-sport
+        descriptionFr: FR Structure qui dévelope la mixité dans le domaine de l'e-sport
+        website: https://tournois-legend.fr/
+    organizer-pw:
+        name: PinkWard
+        descriptionEn: EN Structure qui dévelope la mixité dans le domaine de l'e-sport
+        descriptionFr: FR Structure qui dévelope la mixité dans le domaine de l'e-sport
+        website: https://pink-ward.fr/

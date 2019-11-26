@@ -1,0 +1,19 @@
+tournament_all:
+    path: /{_locale}/tournament/all
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: tournament_tournament_index
+        permanent: true
+lan_3:
+    path: /{_locale}/tournament/lan/ballzyparty3
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /fr/tournament/lan/7-ballzy-party-3
+        permanent: true
+
+ranking_all:
+    path: /{_locale}/contact/create
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: app_app_contact
+        permanent: true

@@ -1,0 +1,40 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <div class="box box-primary">
+        <div class="box-header with-border"><h3 class="box-title">Member list</h3></div>
+        <div class="box-body">
+            {% if users %}
+                <table id="user_list" class="table table-hover table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Register at</th>
+                            <th>Activated</th>
+                            <th>Banned</th>
+                            <th>Deleted</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr {% if false == user.isClean() %}class="warning"{% endif %}>
+                                <td>{{ user.id }}</td>
+                                <td><a href="{{ path('user_user_profile', {'user': user.id, 'slug': user.username|slugify}) }}" target="_blank">{{ user.username }}</a></td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.registerAt|localizeddate('full', 'short', null, user.registerAt|date('e')) }}</td>
+                                <td>{% if user.isEnabled() %}<i class="text-success fas fa-circle"></i>{% else %}<i class="text-danger fas fa-circle"></i>{% endif %}</td>
+                                <td>{% if user.isAccountNonLocked() %}<i class="text-success fas fa-circle"></i>{% else %}<i class="text-danger fas fa-circle"></i>{% endif %}</td>
+                                <td>{% if user.isAccountNonExpired() %}<i class="text-success fas fa-circle"></i>{% else %}<i class="text-danger fas fa-circle"></i>{% endif %}</td>
+                                <td><a href="{{ path('admin_user_update', {'user': user.id}) }}" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i> Edit</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {{ knp_pagination_render(users) }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

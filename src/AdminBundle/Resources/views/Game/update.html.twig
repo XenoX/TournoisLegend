@@ -1,0 +1,53 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block css %}
+<style>
+    #logoUpload:hover, #bannerUpload:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="col-sm-6 col-sm-offset-3">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                {% if game.name %}
+                    Update {{ game.name }}
+                {% else %}
+                    Create game
+                {% endif %}
+            </h3>
+        </div>
+        <div class="box-body">
+            {{ form_start(form) }}
+            <div class="row margin-bottom-10 hidden-xs col-sm-offset-2">
+                <div class="col-sm-3">
+                    <label for="game_file">
+                        <img id="logoUpload" src="{{ asset(game.getWebPath()) }}" class="img-responsive">
+                        {{ form_widget(form.file) }}
+                    </label>
+                </div>
+                <div class="col-sm-5">
+                    <label for="game_fileBanner">
+                        <img id="bannerUpload" src="{{ asset(game.getWebPathBanner()) }}" class="img-responsive">
+                        {{ form_widget(form.fileBanner) }}
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">{{ form_row(form.name) }}</div>
+                <div class="col-md-6">{{ form_row(form.shortName) }}</div>
+            </div>
+            <div class="col-md-4">{{ form_row(form.team) }}</div>
+            <div class="col-md-4">{{ form_row(form.solo) }}</div>
+            <div class="col-md-4">{{ form_row(form.activated) }}</div>
+            {{ form_rest(form) }}
+            <button type="submit" class="btn btn-primary margin-top-10">Send</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

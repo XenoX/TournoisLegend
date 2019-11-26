@@ -1,0 +1,114 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block css %}
+<style>
+    #team_file, #team_fileBanner {
+        display: none;
+    }
+    #logoUpload:hover, #bannerUpload:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Update {{ team.name }}
+                        <small><a href="{{ path('user_team_profile', {'team': team.id, 'slug': team.name|slugify}) }}" class="text-info" target="_blank">See on website</a></small>
+                    </h3>
+                </div>
+                <div class="box-body">
+                    {{ form_start(form) }}
+                        <div class="row margin-bottom-10 hidden-xs col-sm-offset-2">
+                            <div class="col-sm-3">
+                                <label for="team_file">
+                                    <img id="logoUpload" src="{{ asset(team.getWebPath()) }}" alt="logo_{{ team.name }}" class="img-responsive">
+                                    {{ form_widget(form.file) }}
+                                </label>
+                            </div>
+                            <div class="col-sm-5">
+                                <label for="team_fileBanner">
+                                    <img id="bannerUpload" src="{{ asset(team.getWebPathBanner()) }}" alt="banner_{{ team.name }}" class="img-responsive">
+                                    {{ form_widget(form.fileBanner) }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row margin-bottom-10">
+                            <div class="col-sm-4">
+                                {% if team.logo != constant('DEFAULT_LOGO', team) %}
+                                    <a href="{{ path('admin_team_removeimage', {'team': team.id}) }}" class="text-warning pull-right">Remove avatar</a>
+                                {% endif %}
+                            </div>
+                            <div class="col-sm-8">
+                                {% if team.banner != constant('DEFAULT_BANNER', team) %}
+                                    <a href="{{ path('admin_team_removeimage', {'type': 'banner', 'team': team.id}) }}" class="text-warning pull-right">Remove banner</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.tag) }}</div>
+                            <div class="col-md-6">{{ form_row(form.name) }}</div>
+                        </div>
+                        {{ form_row(form.description) }}
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.website) }}</div>
+                            <div class="col-md-6">{{ form_row(form.facebook) }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">{{ form_row(form.twitter) }}</div>
+                            <div class="col-md-6">{{ form_row(form.twitch) }}</div>
+                        </div>
+                        <div class="col-md-6">{{ form_widget(form.activated) }} <label class="margin-left-5">{{ form_label(form.activated) }}</label></div>
+                        <div class="col-md-6">{{ form_widget(form.deleted) }} <label class="margin-left-5">{{ form_label(form.deleted) }}</label></div>
+                        {{ form_rest(form) }}
+                        <button type="submit" class="btn btn-primary margin-top-10">Edit</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">{{ team.name }}'s members</h3>
+                </div>
+                <div class="box-body">
+                    {% if members %}
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Join at</th>
+                                    <th>Role</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for member in members %}
+                                {% set user = member.user %}
+                                <tr>
+                                    <td><a href="{{ path('user_user_profile', {'user': user.id}) }}" target="_blank">{{ user.name }}</a></td>
+                                    <td>{{ member.joinAt|localizeddate('short', 'short', null, member.joinAt|date('e')) }}</td>
+                                    <td>{{ member.role|trans }}</td>
+                                    <td>
+                                        <a href="{{ path('admin_user_update', {'user': user.id}) }}" class="btn btn-xs btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                                        {% if member.role != constant('ROLE_LEADER', member) %}
+                                            <a href="{{ path('admin_team_leader', {'teamMember': member.id}) }}" class="btn btn-xs btn-warning"><i class="fas fa-suitcase"></i> Leader</a>
+                                            <a href="{{ path('admin_team_quit', {'teamMember': member.id}) }}" class="btn btn-xs btn-danger"><i class="fas fa-remove"></i> Remove</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-info text-center">{{ user.username }} have not team yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,4 @@
+services:
+    admin.history:
+        class: AdminBundle\Service\HistoryService
+        arguments: ["@doctrine.orm.entity_manager"]

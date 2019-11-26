@@ -1,0 +1,126 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/plugins/datatables/css/datatables.bootstrap.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-header with-border"><h3 class="box-title">Games</h3></div>
+                <div class="box-body">
+                    {% if games %}
+                        <div class="table-responsive">
+                            <table id="game_list" class="table table-condensed">
+                                <thead>
+                                <tr>
+                                    <th>ShortName - Name</th>
+                                    <th>Team | Solo</th>
+                                    <th>Logo | Banner</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for game in games %}
+                                        <tr {% if false == game.activated %}class="bg-warning"{% endif %}>
+                                            <td>
+                                                <a href="{{ path('admin_game_update', {'game': game.id}) }}">{{ game.shortName }} - {{ game.name }}</a>
+                                            </td>
+                                            <td>
+                                                {% if game.team %}<i class="text-success fas fa-circle"></i>{% else %}<i class="text-danger fas fa-circle"></i>{% endif %} |
+                                                {% if game.solo %}<i class="text-success fas fa-circle"></i>{% else %}<i class="text-danger fas fa-circle"></i>{% endif %}
+                                            </td>
+                                            <td>
+                                                {% if constant('DEFAULT_LOGO', game) != game.logo %}<i class="text-success fas fa-circle"></i>{% else %}<i class="text-danger fas fa-circle"></i>{% endif %} |
+                                                {% if constant('DEFAULT_BANNER', game) != game.banner %}<i class="text-success fas fa-circle"></i>{% else %}<i class="text-danger fas fa-circle"></i>{% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Modes</h3>
+                </div>
+                <div class="box-body">
+                    {% if modes %}
+                        <table id="game_list" class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Game</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for mode in modes %}
+                                    <tr {% if false == mode.activated %}class="bg-warning"{% endif %}>
+                                        <td><a href="{{ path('admin_mode_update', {'mode': mode.id}) }}">{{ mode.name }}</a></td>
+                                        <td>{{ mode.game.name }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Tags</h3>
+                </div>
+                <div class="box-body">
+                    {% if tags %}
+                        <table id="tag_list" class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Names</th>
+                                    <th>Game</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tag in tags %}
+                                    <tr>
+                                        <td><a href="{{ path('admin_tag_update', {'tag': tag.id}) }}">{{ tag.nameEn }} - {{ tag.nameFr }}</a></td>
+                                        <td>{{ tag.game.name }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Notification Template</h3>
+                </div>
+                <div class="box-body">
+                    {% if templates %}
+                        <table id="template_list" class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Content</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for template in templates %}
+                                    <tr>
+                                        <td><a href="{{ path('admin_notificationtemplate_update', {'template': template.id}) }}">{{ template.name }}</a></td>
+                                        <td>{{ template.contentEn }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

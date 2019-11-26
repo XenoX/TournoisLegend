@@ -1,0 +1,60 @@
+cancel: Cancel
+close: Close
+confirm: Confirm
+points: Points
+see_more: 'See more'
+send: Send
+alert.success.contact: 'Thank you for your message, an answer will be sent to you within 48 hours if necessary'
+contact.banner.subtitle: 'We would like to hear about you just send us a message!'
+contact.banner.title: 'Contact Us'
+contact.content.button: 'Send Message'
+contact.content.message: 'For any request related to our tournaments, please contact an admin on our Discord.'
+contact.content.title: 'Lets Get In Touch!'
+footer.about.content: 'Tournois-Legend is a tournament website since 2013.<br>Create your team if necessary, participate in our tournaments and become a legend.<br><br>Do not hesitate to come and talk to us on our Discord!<br>Follow us on Twitter and Facebook to miss nothing.<br><br>Website hosted by <a href="http://www.engine-serv.com" target="_blank">Engine-Serv</a>'
+footer.about.title: 'About Tournois-Legend'
+footer.categories: Categories
+footer.contact: Contact
+footer.home: Home
+footer.imprint: Imprint
+footer.terms: Terms
+footer.tournaments: Tournaments
+form.contact.email: Email
+form.contact.message: Message
+header.menu.lan: Lan
+header.menu.ranking: Ranking
+header.menu.teams: Teams
+header.menu.team_create: Create
+header.menu.tournaments: Tournaments
+header.user.profile: Profile
+header.user.settings: Settings
+header.user.sign_in: 'Sign In'
+header.user.sign_out: 'Sign Out'
+header.user.sign_up: 'Sign Up'
+header.search.placeholder: 'Type to search...'
+index.ranking_title: 'Top 10 Rank'
+results.banner.subtitle: '%count% results'
+results.banner.title: '%type% results for ''%keyword%'''
+results.teams: Teams
+results.title: Results
+results.tournaments: Tournaments
+results.users: Users
+role.administrator: Administrator
+role.kaio: Kaio
+role.moderator: Moderator
+role.streamer: Streamer
+role.tournament: 'Tournament Admin'
+role.user: Member
+role.vip: VIP
+search.banner.title: 'Search results'
+search.banner.subtitle: 'Results for ''%keyword%'''
+search.no_results: 'No results yet.'
+search.teams: Teams
+search.tournaments: Tournaments
+search.users: Users
+title.contact: Contact
+title.imprint: Imprint
+title.index: 'Tournois Legend - Online Tournaments'
+title.search: Search
+title.terms: Terms
+version.english: 'Version anglaise'
+version.french: 'Version française'

@@ -1,0 +1,77 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ game.name ? 'title.tournaments_game'|trans({'%game%': game.name}) : 'title.tournaments'|trans }} {{ parent() }}{% endblock %}
+
+{% import '@Tournament/Include/macros.html.twig' as tournamentMacros %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero hero-game height-300" style="background-image: url({{ asset(game.webPathBanner) }});">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title bold">{% if game.name %}{{ game.name }}{% else %}{{ 'tournament.list.all_games'|trans }}{% endif %}</div>
+                    <p></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="padding-top-25 no-padding-bottom border-bottom-1 border-grey-300">
+            <div class="container">
+                <div class="headline">
+                    <h4>{{ 'tournament.list.title'|trans }}</h4>
+                    <div class="dropdown">
+                        <a href="#" class="btn btn-primary btn-icon-left btn-icon-right dropdown-toggle" data-toggle="dropdown">
+                            <i class="fas fa-gamepad"></i> {% if game.name %}{{ game.name }}{% else %}{{ 'tournament.list.select_game'|trans }}{% endif %} <i class="fas fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% for game in games %}
+                                {% if loop.first %}
+                                    <li><a href="{{ path('tournament_tournament_index') }}">{{ 'tournament.list.all_games'|trans }}</a></li>
+                                {% endif %}
+                                <li><a href="{{ path('tournament_tournament_index_game', {'game': game.id, 'slug': game.name|slugify}) }}">{{ game.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="row sidebar">
+                    <div class="col-md-9 leftside">
+                        {% if tournamentsInProgress %}
+                            {% for tournament in tournamentsInProgress %}
+                                {{ tournamentMacros.tournament(tournament) }}
+                            {% endfor %}
+                        {% endif %}
+
+                        {% if tournaments.getTotalItemCount() > 0 %}
+                            {% for tournament in tournaments %}
+                                {{ tournamentMacros.tournament(tournament) }}
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-center text-info">
+                                {{ 'tournament.list.no_tournament'|trans }}
+                            </p>
+                        {% endif %}
+
+                        {{ knp_pagination_render(tournaments) }}
+
+                        {% if tournamentsLast %}
+                            <h3 class="margin-top-30">{{ 'tournament.list.last'|trans }}</h3><hr>
+                            {% for tournament in tournamentsLast %}
+                                {{ tournamentMacros.tournament(tournament) }}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-3 rightside hidden-sm hidden-xs">
+                        {% include 'UserBundle:Include:recent_tweets.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

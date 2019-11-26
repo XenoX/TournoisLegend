@@ -1,0 +1,89 @@
+{% if battle and battle.ready %}
+    {% if battle.participant1.team.id is defined %}
+        {% set link1 = path('user_team_profile', {'team': battle.participant1.team.id, 'slug': battle.participant1.team.name|slugify}) %}
+    {% else %}
+        {% set link1 = path('user_user_profile', {'user': battle.participant1.user.id, 'slug': battle.participant1.user.name|slugify}) %}
+    {% endif %}
+    {% if battle.participant2.team.id is defined %}
+        {% set link2 = path('user_team_profile', {'team': battle.participant2.team.id, 'slug': battle.participant2.team.name|slugify}) %}
+    {% else %}
+        {% set link2 = path('user_user_profile', {'user': battle.participant2.user.id, 'slug': battle.participant2.user.name|slugify}) %}
+    {% endif %}
+    <div class="container-fluid">
+        <div class="padding-15 margin-bottom-20" style="border: 1px dashed grey">
+            <div class="center-block text-center">
+                <h3 class="text-primary margin-bottom-10">--- {{ 'tournament.battle.title'|trans|upper }} ---</h3>
+
+                <table class="table table-bordered table-condensed margin-top-25 margin-bottom-25">
+                    <thead>
+                    <tr>
+                        <th colspan="2" class="text-center">{{ 'tournament.battle.infos'|trans({'%round%': battle.round, '%battle%': battle.battleId}) }}</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td><a href="{{ link1 }}" target="_blank">{{ battle.participant1.teamOrUser.name }}</a></td>
+                        <td>{{ battle.participant1|tags }}</td>
+                    </tr>
+                    <tr>
+                        <td><a href="{{ link2 }}" target="_blank">{{ battle.participant2.teamOrUser.name }}</a></td>
+                        <td>{{ battle.participant2|tags }}</td>
+                    </tr>
+                </table>
+
+                {% if totalParticipantsTeam and totalParticipantsTeam > tournament.format %}
+                    <p class="text-danger text-bold margin-bottom-10">{{ 'tournament.tell_lineup'|trans({'%link%': social.discord})|raw }}</p>
+                {% endif %}
+                {% if tournament.riotId %}
+                    <p class="text-warning text-bold margin-bottom-10">{{ 'tournament.riot_link'|trans({'%link%': 'https://events.euw.leagueoflegends.com/events/' ~ tournament.riotId})|raw }}</p>
+                {% endif %}
+                {% if battle.note %}
+                    <p class="text-primary text-bold margin-bottom-10">{{ battle.note }}</p>
+                {% endif %}
+
+                <p class="text-info text-bold margin-bottom-15">
+                    {% if participant.id == battle.participant1.id %}
+                        {{ 'tournament.battle.me_create'|trans }}<br>
+                    {% else %}
+                        {{ 'tournament.battle.not_me_create'|trans }}<br>
+                    {% endif %}
+                </p>
+
+                <p class="italic margin-bottom-30">{{ 'tournament.battle.problem'|trans }}</p>
+
+                {% if date() > date(battle.startAt)|date_modify("+10 minutes") %}
+                    <a data-toggle="modal" data-target="#modalWin" class="btn btn-warning btn-lg">
+                        {{ 'tournament.battle.button.win'|trans|upper }}
+                    </a>
+                {% else %}
+                    <span class="text-warning">
+                        {{ 'tournament.battle.button.warning'|trans({'%datetime%': battle.startAt|date_modify("+11 minutes")|localizeddate('none', 'short', null, battle.startAt|date('e'))}) }}
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if date() > date(battle.startAt)|date_modify("+10 minutes") %}
+        <div class="modal fade" id="modalWin" tabindex="-1" role="dialog" aria-labelledby="modalTitle">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalTitle">{{ 'tournament.battle.modal.confirm.title'|trans }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center">
+                            {{ battle.participant1.teamOrUser.name }} <span class="text-danger">{{ 'tournament.battle.versus'|trans|upper }}</span> {{ battle.participant2.teamOrUser.name }}
+                        </p>
+                        <br>
+                        <p class="text-danger"><i class="fas fa-warning"></i> {{ 'tournament.battle.modal.confirm.warning'|trans }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'cancel'|trans }}</button>
+                        <a href="{{ path('tournament_battle_win', {'battle': battle.id}) }}" class="btn btn-primary">{{ 'confirm'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endif %}

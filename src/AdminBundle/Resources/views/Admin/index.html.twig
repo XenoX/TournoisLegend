@@ -1,0 +1,231 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-md-4 col-xs-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua"><i class="fas fa-user"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Users</span>
+                            <span class="info-box-number">{{ userCount }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-xs-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua"><i class="fas fa-group"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Teams</span>
+                            <span class="info-box-number">{{ teamCount }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-xs-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-yellow"><i class="fas fa-trophy"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Tournaments</span>
+                            <span class="info-box-number">{{ tournamentCount }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-xs-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-green"><i class="fas fa-user"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Members Today</span>
+                            <span class="info-box-number">{{ userCountDay }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-xs-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-green"><i class="fas fa-user"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Members Week</span>
+                            <span class="info-box-number">{{ userCountWeek }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-xs-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-green"><i class="fas fa-user"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Members Month</span>
+                            <span class="info-box-number">{{ userCountMonth }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">In progress tournament(s)</h3>
+                </div>
+                <div class="box-body">
+                    {% if inProgressTournaments %}
+                        <table id="inprogresstournaments" class="table table-hover table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Id - Nom</th>
+                                <th>Start</th>
+                                <th>State</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for tournament in inProgressTournaments %}
+                                <tr>
+                                    <td>{{ tournament.id }} - <a href="{{ path('admin_tournament_manage', {'tournament': tournament.id}) }}">{{ tournament.name }}</a></td>
+                                    <td>{{ tournament.startAt|localizeddate('none', 'short', null, tournament.startAt|date('e')) }}</td>
+                                    <td>{{ tournament.state|tournamentState }}</td>
+                                    <td>
+                                        <a href="{{ path('admin_tournament_update', {'tournament': tournament.id}) }}" class="btn btn-xs btn-primary">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <a href="{{ path('tournament_tournament_profile', {'game': tournament.mode.game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-xs btn-primary" title="See in website" target="_blank">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-info text-center">Not tournaments in progress yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Week tournament(s)</h3>
+                </div>
+                <div class="box-body">
+                    {% if weekTournaments %}
+                        <table id="weekTournaments" class="table table-hover table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Id - Nom</th>
+                                <th>Start</th>
+                                <th>State</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for tournament in weekTournaments %}
+                                <tr>
+                                    <td>{{ tournament.id }} - <a href="{{ path('admin_tournament_manage', {'tournament': tournament.id}) }}">{{ tournament.name }}</a></td>
+                                    <td>{{ tournament.startAt|localizeddate('short', 'short', null, tournament.startAt|date('e')) }}</td>
+                                    <td>{{ tournament.state|tournamentState }}</td>
+                                    <td>
+                                        <a href="{{ path('admin_tournament_update', {'tournament': tournament.id}) }}" class="btn btn-xs btn-primary">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <a href="{{ path('tournament_tournament_profile', {'game': tournament.mode.game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-xs btn-primary" title="See in website" target="_blank">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-info text-center">No tournaments this week.</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Next week tournament(s)</h3>
+                </div>
+                <div class="box-body">
+                    {% if nextWeekTournaments %}
+                        <table id="nextWeekTournaments" class="table table-hover table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Id - Nom</th>
+                                <th>Start</th>
+                                <th>State</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for tournament in nextWeekTournaments %}
+                                <tr>
+                                    <td>{{ tournament.id }} - <a href="{{ path('admin_tournament_manage', {'tournament': tournament.id}) }}">{{ tournament.name }}</a></td>
+                                    <td>{{ tournament.startAt|localizeddate('short', 'short', null, tournament.startAt|date('e')) }}</td>
+                                    <td>{{ tournament.state|tournamentState }}</td>
+                                    <td>
+                                        <a href="{{ path('admin_tournament_update', {'id': tournament.id}) }}" class="btn btn-xs btn-primary">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <a href="{{ path('tournament_tournament_profile', {'game': tournament.mode.game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-xs btn-primary" title="See in website" target="_blank">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-info text-center">No tournaments for the next week.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Last members</h3>
+                </div>
+                <div class="box-body">
+                    {% if lastUsers %}
+                        <ul class="users-list clearfix">
+                            {% for user in lastUsers %}
+                                <li>
+                                    <img src="data:image/jpeg;base64,{{ user.name|avatar }}" alt="Avatar">
+                                    <a class="users-list-name" href="{{ path('admin_user_update', {'user': user.id}) }}">{{ user.name }}</a>
+                                    <span class="users-list-date">{{ user.registerAt|localizeddate('short', 'none', null, user.registerAt|date('e')) }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="box-footer text-center">
+                    <a href="{{ path('admin_user_index') }}">See all members</a>
+                </div>
+            </div>
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Last teams</h3>
+                </div>
+                <div class="box-body">
+                    {% if lastTeams %}
+                        <ul class="users-list clearfix">
+                            {% for team in lastTeams %}
+                                <li>
+                                    <img src="{{ web_image(team.webPath).scaleResize('130', '130') }}" alt="Avatar">
+                                    <a class="users-list-name" href="{{ path('admin_team_update', {'team': team.id}) }}">[{{ team.tag }}] {{ team.name }}</a>
+                                    <span class="users-list-date">{{ team.createdAt|localizeddate('short', 'none', null, team.createdAt|date('e')) }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div class="box-footer text-center">
+                    <a href="{{ path('admin_team_index') }}">See all teams</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

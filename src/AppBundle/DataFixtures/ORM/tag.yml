@@ -1,0 +1,9 @@
+AppBundle\Entity\Tag:
+    tag-lol:
+        nameEn: Summoner name
+        nameFr: Nom d'invocateur
+        game: '@game-lol'
+    tag-hs:
+        nameEn: Battle Tag
+        nameFr: Battle Tag
+        game: '@game-hs'

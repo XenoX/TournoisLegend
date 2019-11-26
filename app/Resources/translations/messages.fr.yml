@@ -1,0 +1,61 @@
+Bad credentials.: 'Mauvais nom d''utilisateur et/ou mot de passe.'
+cancel: Annuler
+close: Fermer
+confirm: Confirmer
+points: Points
+see_more: 'Voir plus'
+send: Envoyer
+alert.success.contact: 'Merci pour votre message, une réponse vous sera envoyée sous 48 heures si nécessaire'
+contact.banner.subtitle: 'Nous aimerions entendre ce que vous avez à nous dire, envoyez-nous un message !'
+contact.banner.title: 'Nous Contacter'
+contact.content.button: 'Envoyer le message'
+contact.content.message: 'Pour une question à propos de nos tournois, merci de contacter un administrateur sur notre Discord.'
+contact.content.title: 'Entrons en contact !'
+footer.about.content: 'Tournois-Legend est un site de tournois depuis 2013.<br>Crée ton équipe si nécessaire, participe a nos tournois et deviens une légende.<br><br>N''hésite pas a venir nous parler sur notre Discord !<br>Suis-nous sur Twitter et Facebook pour ne rien rater.<br><br>Site hébergé par notre sponsor <a href="http://www.engine-serv.com" target="_blank">Engine-Serv</a>'
+footer.about.title: 'À propos de Tournois-Legend'
+footer.categories: Catégories
+footer.contact: Contact
+footer.home: Accueil
+footer.imprint: CGU
+footer.terms: 'Mentions légales'
+footer.tournaments: Tournois
+form.contact.email: Email
+form.contact.message: Message
+header.menu.lan: Lan
+header.menu.ranking: Classement
+header.menu.teams: Equipes
+header.menu.team_create: 'Créer une équipe'
+header.menu.tournaments: Tournois
+header.user.profile: Profil
+header.user.settings: Paramètres
+header.user.sign_in: Connexion
+header.user.sign_out: Déconnexion
+header.user.sign_up: Inscription
+header.search.placeholder: 'Entrer votre recherche...'
+index.ranking_title: 'Top 10'
+results.banner.subtitle: '%count% resultats'
+results.banner.title: 'Résultats pour ''%keyword%'' dans les %type%'
+results.teams: Équipes
+results.title: Résultats
+results.tournaments: Tournois
+results.users: Utilisateurs
+role.administrator: Administrateur
+role.kaio: Kaio
+role.moderator: Modérateur
+role.streamer: Streamer
+role.tournament: 'Admin de tournoi'
+role.user: Membre
+role.vip: VIP
+search.banner.title: 'Résultats de recherche'
+search.banner.subtitle: 'Résultats pour ''%keyword%'''
+search.no_results: 'Pas de résultats.'
+search.teams: Equipes
+search.tournaments: Tournois
+search.users: Utilisateurs
+title.contact: Contact
+title.imprint: CGU
+title.index: 'Tournois Legend - Tournois en ligne'
+title.search: Recherche
+title.terms: 'Mentions Légales'
+version.english: 'English version'
+version.french: 'French version'

@@ -1,0 +1,2 @@
+password.invalid_message: 'Les mots de passe ne correspondent pas.'
+password.wrong_password: 'Mauvais mot de passe.'

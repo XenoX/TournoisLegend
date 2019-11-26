@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>404 Page Not Found</title>
+    <style type="text/css">
+        /*---------- Font ----------*/
+        @import url(http://fonts.googleapis.com/css?family=Press+Start+2P);
+
+
+        /*---------- Main ---------- */
+        html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            position: relative;
+            height: 100%;
+            min-width: 1054px;
+            margin:0;
+            padding:0;
+            margin-top:60px;
+            background-color: rgb(217, 223, 240);
+            -webkit-user-drag: none;
+        }
+
+        img {
+            -webkit-user-drag: none;
+            -moz-user-drag:none;
+        }
+
+        label {
+            position: relative;
+            font-family: 'Press Start 2P', cursive;
+            text-transform: uppercase;
+            font-size:4em;
+            color:white;
+            top:420px;
+            left:115px;
+            text-shadow:0px 4px 5px rgba(0,0,0,0.75), 0px 0px 2px rgba(0,0,0,1);
+            opacity:0;
+
+            -webkit-animation:fadeInTranslateY 0.6s linear;
+            -webkit-animation-delay: 1.3s;
+            -webkit-animation-fill-mode: forwards;
+
+            -moz-animation:fadeInTranslateY 0.6s linear;
+            -moz-animation-delay: 1.3s;
+            -moz-animation-fill-mode: forwards;
+        }
+
+        .center-block {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .label2 {
+            position: relative;
+            font-family: 'Press Start 2P', cursive;
+            top:420px;
+            left:115px;
+            opacity: 0;
+
+            -webkit-animation:fadeInTranslateY 0.6s linear;
+            -webkit-animation-delay: 1.3s;
+            -webkit-animation-fill-mode: forwards;
+
+            -moz-animation:fadeInTranslateY 0.6s linear;
+            -moz-animation-delay: 1.3s;
+            -moz-animation-fill-mode: forwards;
+        }
+
+
+        /*---------- Animation ----------*/
+        @-webkit-keyframes fadeInTranslateY {
+            0%{ opacity:0;-webkit-transform: translateY(15px);}
+            100%{ opacity:1;-webkit-transform: translateY(0px);}
+        }
+
+        @-moz-keyframes fadeInTranslateY {
+            0%{ opacity:0;-moz-transform: translateY(15px);}
+            100%{ opacity:1;-moz-transform: translateY(0px);}
+        }
+
+        @-webkit-keyframes linkAnimation {
+            0%{ background-position: -720px 0px;}
+            7%{ background-position: -1440px 0px;}
+            14%{ background-position: -960px 0px;}
+            21%{ background-position: -1200px 0px;}
+            28%{ background-position: -720px 0px;}
+            35%{ background-position: -1440px 0px;}
+            42%{ background-position: -960px 0px;}
+            49%{ background-position: -1200px 0px;}
+            56%{ background-position: -720px 0px;}
+            63%{ background-position: -1440px 0px;}
+            70%{ background-position: -960px 0px;}
+            77%{ background-position: -1200px 0px;}
+            84%{ background-position: 0px 0px;}
+            91%{ background-position: -240px 0px;}
+            100%{ background-position: -480px 0px;}
+        }
+
+        @-moz-keyframes linkAnimation {
+            0%{ background-position: -720px 0px;}
+            7%{ background-position: -1440px 0px;}
+            14%{ background-position: -960px 0px;}
+            21%{ background-position: -1200px 0px;}
+            28%{ background-position: -720px 0px;}
+            35%{ background-position: -1440px 0px;}
+            42%{ background-position: -960px 0px;}
+            49%{ background-position: -1200px 0px;}
+            56%{ background-position: -720px 0px;}
+            63%{ background-position: -1440px 0px;}
+            70%{ background-position: -960px 0px;}
+            77%{ background-position: -1200px 0px;}
+            84%{ background-position: 0px 0px;}
+            91%{ background-position: -240px 0px;}
+            100%{ background-position: -480px 0px;}
+        }
+
+        .link {
+            position:relative;
+            top:260px;
+            width:240px;
+            height:300px;
+            margin-left:auto;
+            margin-right:auto;
+            background:url('http://www.joeybergeron.com/_/404/img/linkFrames.png')0 0;
+
+            -webkit-animation: linkAnimation 1.3s linear;
+            -webkit-animation-fill-mode: forwards;
+            -webkit-animation-timing-function:step-start;
+
+            -moz-animation: linkAnimation 1.3s linear;
+            -moz-animation-fill-mode: forwards;
+            -moz-animation-timing-function:step-start;
+        }
+
+        .map {
+            position:relative;
+            width:800px;
+            height:800px;
+            margin-left:auto;
+            margin-right:auto;
+            background:url('http://www.joeybergeron.com/_/404/img/Hyrule.jpg');
+        }
+    </style>
+</head>
+<body>
+<div class="center-block">
+    <div class="map">
+        <div class="link"></div>
+        <label>Dead Link</label><br>
+        <span class="label2"><a href="{{ path('app_app_index') }}">go to homepage</a></span>
+    </div>
+</div>
+</body>
+</html>

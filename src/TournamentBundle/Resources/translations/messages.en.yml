@@ -1,0 +1,144 @@
+cancel: Cancel
+close: Close
+confirm: Confirm
+form.stream_request.channel: 'Channel name (Twitch)'
+lan.profile.about.confirmed: 'Everything is ok for you! Just wait lan start. Don''t forget to read rules'
+lan.profile.about.registered: 'You are registered but you need to do an action (check your email).'
+lan.profile.no_participant: 'No participant for this LAN, be the first!'
+lan.profile.register.team: 'Register my team'
+lan.profile.register.solo: Register
+lan.profile.register_and_participants: 'Registration & participants'
+lan.profile.rules: Rules
+lan.profile.subscription: Subscription
+mail.body.check_in: "<p>Hello %username%,</p>\n<p>The %name% tournament is in the check-in phase.</p><p>If you wish to participate in this tournament, please check in to participate and reserve your place by clicking on the blue button in the tournament page:</p>\n<p><a href=\"%link%\">%name%</a></p>\n<p>If the link is broken, copy the following link in the address field of your browser: %link%</p>\n<p>This is an automatic mail, please do not reply.</p>\n<p>Greetings,<br>Tournois-Legend</p>\n"
+mail.body.confirm: "<p>Hello %username%,</p>\n<p>>You are registered on %name% tournament but your tag is missing.</p><p>Your tag is required to participate in this tournament, please enter your tag by clicking on the green button in the tournament page:</p>\n<p><a href=\"%link%\">%name%</a></p>\n<p>If the link is broken, copy the following link in the address field of your browser: %link%</p>\n<p>This is an automatic mail, please do not reply.</p>\n<p>Greetings,<br>Tournois-Legend</p>\n"
+mail.subject.check_in: "Participation confirmation for %name% tournament"
+mail.subject.confirm: "Your tag is missing for %name% tournament"
+participant.state.checked_in: 'Check In'
+participant.state.confirmed: Confirmed
+participant.state.registered: Registered
+points: Points
+prize.reason.cancel: 'Tournament cancelled'
+prize.reason.other: 'Unknown reason'
+prize.reason.small: 'Not enough participants'
+ranking.banner.title: Ranking
+ranking.banner.subtitle: 'Select a ranking'
+ranking.elo: Elo
+ranking.game.year.title: 'Rankings by year'
+ranking.game.year.no_ranking: 'No ranking by year yet'
+ranking.game.season.title: 'Rankings by season'
+ranking.game.season.no_ranking: 'No ranking by season yet'
+ranking.name: Name
+ranking.no_mode: 'No mode for this game yet'
+ranking.no_participant: 'No participants for this ranking yet'
+ranking.place: Place
+ranking.rank: Rank
+registration.alert.danger.all_tag_needed: 'You must fill all tags for registration in check in phase'
+registration.alert.danger.ban: 'Your team or your account are banned'
+registration.alert.danger.dumb: 'An error occurred, please try again or contact an admin'
+registration.alert.danger.minimum_confirmed: 'You don''t have enough confirmed players for check in'
+registration.alert.danger.minimum_participant: 'You must have at least %minimum% players on your team to do this action'
+registration.alert.danger.player_already_registered: 'The player %username% is already register to this tournament with the team %team%'
+registration.alert.danger.tag_banned: 'A tag is banned, please change your registration'
+registration.alert.danger.tag_banned_solo: 'This tag is banned, thank you to change it to confirm your registration'
+registration.alert.danger.tag_length_minimum: 'Your tag must have at least 3 characters'
+registration.alert.success.check_in: 'Check in successfully, do the best!'
+registration.alert.success.confirmed: 'Participation confirmed successfully!'
+registration.alert.success.registered: 'Thanks for your participation, good luck!'
+registration.alert.success.removed: 'Participation to the tournament removed successfully!'
+registration.confirm.banner: Registration
+registration.confirm.title: 'Confirm your registration'
+registration.confirm.recent_tags: 'Recent tags'
+registration.index.create.message: 'Create a team now, it will be directly registered in the tournament, a link will be generated for you to send to your players to join directly the team (and tournament of course).'
+registration.index.create.title: 'Create a team'
+registration.index.create.warning: 'Warning, unsure participation.'
+registration.index.choose.info: 'You have %teamCount% admissible team(s)'
+registration.index.choose.message: 'Choose one of your eligible teams to register by selecting your players and substitutes if necessary.'
+registration.index.choose.success: Recommanded
+registration.index.choose.title: 'Choose a team'
+registration.index.solo.error: 'Not implemented yet, coming soon'
+registration.index.solo.message: 'Sign up as a player waiting for a team, teams will have the opportunity to choose you. If not, a team of solo players will be generated if possible.'
+registration.index.solo.title: 'Register without team'
+registration.index.solo.warning: 'Warning, unsure participation.'
+registration.index.title: 'Tournament Registration'
+registration.players.check_in_phase: 'It''s the check in phase, you must fill all tags. Your team will be directly checked in, take care about your line up.'
+registration.players.title: 'Choose players'
+registration.players.subtitle: 'Select players'
+registration.players.info: 'You must choose between %minParticipant% and %maxParticipant% players.'
+registration.team.title: 'Choose a team'
+see_more: See more
+send: Send
+stream.alert.danger.not_valid_or_already_registered: 'Your channel name is not valid or you have already make a request'
+stream.alert.success.request: 'Stream request successfully registered!'
+title.ranking: Ranking
+title.registration: 'Tournament registration'
+title.registration_confirm: 'Confirm registration'
+title.registration_players: 'Choose players'
+title.registration_team: 'Choose team'
+title.tournaments: Tournaments
+title.tournaments_game: '%game% Tournaments'
+tournament.battle.button.warning: 'The victory button will appear at %datetime%'
+tournament.battle.button.win: 'i won this match'
+tournament.battle.infos: 'Round %round% Match %battle%'
+tournament.battle.me_create: 'It''s up to you to create the game and invite the opposing participant(s)'
+tournament.battle.modal.confirm.title: 'Confirm your win'
+tournament.battle.modal.confirm.warning: 'Warning: Any fraud is punishable by a definitive ban'
+tournament.battle.not_me_create: 'You will receive an invitation from your opponent.'
+tournament.battle.problem: 'If you have a problem with this game please contact us on our Discord (link in menu)'
+tournament.battle.title: 'You have a match now, good luck!'
+tournament.battle.versus: vs
+tournament.list.all_games: 'All games'
+tournament.list.by: By
+tournament.list.last: 'Last tournaments'
+tournament.list.no_tournament: 'No tournament yet.'
+tournament.list.title: 'Tournaments list'
+tournament.list.select_game: 'Select a game'
+tournament.list.teams: teams
+tournament.list.users: users
+tournament.profile.about.checked_in: 'Everything is ok for you! Just wait tournament start.'
+tournament.profile.about.confirmed: 'All player have tag, you can check in your team! (in check in phase).'
+tournament.profile.about.registered: 'Team registered but one or more player haven''t tag.'
+tournament.profile.about.registered_solo: 'You are registered, just wait check in phase for check in.'
+tournament.profile.about.title: 'About Status'
+tournament.profile.actions: Actions
+tournament.profile.basic_informations: 'Basic Informations'
+tournament.profile.bracket: Bracket
+tournament.profile.bracket_amateur: 'Bracket Amateur'
+tournament.profile.checkin: 'Check In'
+tournament.profile.dates: Dates
+tournament.profile.format: Format
+tournament.profile.hidden_participant: 'Participants are hidden'
+tournament.profile.informations: Informations
+tournament.profile.map: Map
+tournament.profile.no_bracket: 'The bracket will appear at the tournament start'
+tournament.profile.no_participant: 'No participant for this tournament, be the first!'
+tournament.profile.no_tag: 'No confirmed player'
+tournament.profile.organizer: Organizer
+tournament.profile.participant: Participant
+tournament.profile.participants: Participants
+tournament.profile.participation.delete: 'Remove participation'
+tournament.profile.participation.update: 'Change line-up'
+tournament.profile.refresh_auto: 'The bracket automatically update'
+tournament.profile.registration: Registration
+tournament.profile.registration_start: 'Registration Start'
+tournament.profile.registration_stop: 'Check in Start'
+tournament.profile.rewards: Rewards
+tournament.profile.rules: Rules
+tournament.profile.start_at: 'Start at'
+tournament.profile.size: Size
+tournament.profile.stream.modal.body: 'Tell us that you stream the tournament, if you are accepted, your stream will be present in the stream tab of the tournament'
+tournament.profile.stream.modal.info: 'If you have the streamer rank, your request will be accepted automatically'
+tournament.profile.stream.modal.title: 'Stream Request'
+tournament.profile.stream.request_link: 'I want to stream this tournament'
+tournament.profile.stream.title: Streams
+tournament.profile.team_waiting: 'Team waiting players'
+tournament.profile.to: to
+tournament.riot_link: 'Don''t forget to register in tournament in RIOT website for get the rewards! <br><a href="%link%" target="_blank">%link%</a>'
+tournament.state.check_in: 'Check in'
+tournament.state.done: Done
+tournament.state.init: Preparation
+tournament.state.match: Match
+tournament.state.prized: Prized
+tournament.state.registration: Registration
+tournament.state.unknow: Unknow
+tournament.tell_lineup: 'You may be eligible for rewards, but you have substitutes on your team. In order to receive the rewards, please provide the lineup of your last match to a tournament admin on our Discord <a href="%link%" target="_blank">%link%</a>'

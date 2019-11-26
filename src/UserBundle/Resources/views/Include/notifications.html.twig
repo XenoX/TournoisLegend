@@ -1,0 +1,10 @@
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <i class="fas fa-bell"></i> {% if notificationsNonSeenCount > 0 %}<span class="label label-danger">{{ notificationsNonSeenCount }}</span>{% endif %}
+</a>
+<ul class="dropdown-menu" style="line-height: 25px;">
+    {% for notification in notifications %}
+        <li class="border-bottom-1 border-grey-200" {% if not notification.seenAt %}style="background-color:#FAFAFA;"{% endif %}>
+            <a href="{{ links[notification.id] }}" style="padding: 10px 15px;">{{ attribute(notification.template, "content" ~ app.request.locale|capitalize) }}</a>
+        </li>
+    {% endfor %}
+</ul>

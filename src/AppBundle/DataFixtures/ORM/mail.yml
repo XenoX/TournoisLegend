@@ -1,0 +1,5 @@
+TournamentBundle\Entity\Mail:
+    mail-ballzyparty:
+        name: Default
+        content: <realText(4000)>
+        subject: "Votre inscription pour la ballzyparty #1"

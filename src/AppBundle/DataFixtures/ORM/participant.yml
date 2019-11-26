@@ -1,0 +1,49 @@
+TournamentBundle\Entity\Participant:
+    participant-{1..3}:
+        tag: <username()>
+        tournament: '@tournament-team'
+        team: '@team-1'
+        user (unique): '@user-*'
+    participant-{4..6}:
+        tag: <username()>
+        tournament: '@tournament-team'
+        team: '@team-2'
+        user (unique): '@user-*'
+    participant-{7..9}:
+        tag: <username()>
+        tournament: '@tournament-team'
+        team: '@team-3'
+        user (unique): '@user-*'
+    participant-{10..12}:
+        tag: <username()>
+        tournament: '@tournament-team'
+        team: '@team-4'
+        user (unique): '@user-*'
+    participant-{13..15}:
+        tag: <username()>
+        tournament: '@tournament-team'
+        team: '@team-5'
+        user (unique): '@user-*'
+    participant-{16..18}:
+        tournament: '@tournament-team'
+        team: '@team-6'
+        user (unique): '@user-*'
+    participant-{19..21}:
+        tag: <username()>
+        tournament: '@tournament-team'
+        team: '@team-7'
+        user (unique): '@user-*'
+    participant-{22..24}:
+        tag: <username()>
+        tournament: '@tournament-team'
+        team: '@team-8'
+        user (unique): '@user-*'
+    participant-{25..27}:
+        tag: <username()>
+        tournament: '@tournament-team'
+        team: '@team-9'
+        user (unique): '@user-*'
+    participant-{28..35}:
+        tag: <username()>
+        tournament: '@tournament-solo'
+        user (unique): '@user-*'

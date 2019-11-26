@@ -1,0 +1,13 @@
+AppBundle\Entity\News:
+    news-1:
+        titleFr: 'Titre de news 1 FR'
+        titleEn: 'Titre de news 1 EN'
+        contentFr: '<realText(600)>'
+        contentEn: '<realText(600)>'
+        user: '@user-*'
+    news-2:
+        titleFr: 'Titre de news 2 FR'
+        titleEn: 'Titre de news 2 EN'
+        contentFr: '<realText(2000)>'
+        contentEn: '<realText(2000)>'
+        user: '@user-*'

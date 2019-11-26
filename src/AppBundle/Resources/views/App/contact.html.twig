@@ -1,0 +1,61 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.contact'|trans }}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero">
+            <div class="hero-bg-primary"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">{{ 'contact.banner.title'|trans }}</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="padding-30">
+            <div class="container text-center">
+                <h2 class="font-size-22 font-weight-300">{{ 'contact.banner.subtitle'|trans }}</h2>
+            </div>
+        </section>
+
+        <section class="border-top-1 border-bottom-1 border-grey-400 section no-padding no-margin">
+            <div id="map" class="height-400">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d21006.932656143872!2d2.276193950627435!3d48.84168351881302!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e67014196e60f5%3A0x50b82c368941b30!2s15e+Arrondissement%2C+75015+Paris!5e0!3m2!1sfr!2sfr!4v1518042983256" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="overflow-hidden">
+            <div class="container">
+                <div class="col-lg-8">
+                    <div class="row margin-bottom-55">
+                        <iframe src="https://discordapp.com/widget?id=220866674310643713&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
+                    </div>
+                    <div class="row">
+                        <div class="title">
+                            <h4><i class="fas fa-envelope"></i> {{ 'contact.content.title'|trans }}</h4>
+                            <p>{{ 'contact.content.message'|trans }}</p>
+                        </div>
+                        {{ form_start(form) }}
+                        <div class="form-group">
+                            {{ form_row(form.email) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(form.message) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.captcha) }}
+                        </div>
+                        <div class="text-center margin-top-30">
+                            <button type="submit" class="btn btn-primary btn-lg btn-rounded btn-shadow">{{ 'contact.content.button'|trans }}</button>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    {% include '@User/Include/recent_tweets.html.twig' %}
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

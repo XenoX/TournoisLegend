@@ -1,0 +1,62 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.registration_team'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero hero-game height-300" style="background-image: url({{ asset(tournament.mode.game.webPathBanner) }});">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title bold">{{ 'registration.team.title'|trans }}</div>
+                    <p class="font-size-20">{{ tournament.name }}</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="row sidebar">
+                    <div class="col-md-9 leftside">
+                        <div class="row">
+                            {% for tm in teamsMember %}
+                                {% set team = tm.team %}
+                                <div class="col-sm-4 col-xs-6 margin-bottom-sm-30">
+                                    <a href="{{ path('tournament_registration_players', {'tournament': tournament.id, 'slug': tournament.name|slugify, 'team': team.id, 'teamSlug': team.name|slugify}) }}">
+                                        <div class="card card-hover">
+                                            <div class="card-img">
+                                                <img src="{{ asset(team.webPath) }}" alt="{{ team.name }}_logo">
+                                                <div class="category">
+                                                    {% if tm.user.id == team.leader.id %}
+                                                        <span class="label label-warning">{{ tm.role|trans }}</span>
+                                                    {% else %}
+                                                        <span class="label label-primary">{{ tm.role|trans }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="caption">
+                                                <h3 class="card-title">
+                                                    <a href="{{ path('user_team_profile', {'team': team.id, 'slug': team.name|slugify}) }}" target="_blank">
+                                                        {{ team.name }}
+                                                    </a>
+                                                </h3>
+                                                <p>
+                                                    <i class="fas fa-clock"></i>
+                                                    {{ tm.joinAt|localizeddate('long', 'none', null, tm.joinAt|date('e')) }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 rightside hidden-sm hidden-xs">
+                        {% include 'UserBundle:Include:recent_tweets.html.twig' %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

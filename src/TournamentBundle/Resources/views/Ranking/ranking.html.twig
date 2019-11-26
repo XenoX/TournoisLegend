@@ -1,0 +1,50 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ game.shortName }} {{ mode.name }} {{ 'title.ranking'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero" style="background-image: url({{ asset('static/img/cover-ranking.jpg') }});">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">{{ 'ranking.banner.title'|trans }}</div>
+                    <em class="text-white">{{ ranking.mode.game.name }} {{ attribute(ranking, "name" ~ app.request.locale|capitalize) }}</em>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                {% if 0 < participants.getTotalItemCount %}
+                    <table class="table table-responsive table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>{{ 'ranking.place'|trans }} - {{ 'ranking.name'|trans }}</th>
+                            <th>{{ 'ranking.elo'|trans }}</th>
+                            <th>{{ 'ranking.rank'|trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for participant in participants %}
+                            {% set teamOrUser = participant.teamOrUser %}
+                            {% set link = participant.team ? path('user_team_profile', {'team': teamOrUser.id, 'slug': teamOrUser.name|slugify}) : path('user_user_profile', {'user': teamOrUser.id, 'slug': teamOrUser.name|slugify}) %}
+                            <tr>
+                                <td>{{ loop.index }} - <a href="{{ link }}" target="_blank">{{ teamOrUser.name }}</a></td>
+                                <td>{{ participant.elo }}</td>
+                                <td>
+                                    {#<img src="{{ asset(participant.elo|rankingLevelLogo(rankingLevels)) }}" alt="ranking" style="max-height: 30px;">#}
+                                    {{ participant.elo|rankingLevelColor(rankingLevels, app.request.locale) }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {{ knp_pagination_render(participants) }}
+                {% else %}
+                    <p class="text-center text-primary">{{ 'ranking.no_participant'|trans }}</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+{% endblock %}

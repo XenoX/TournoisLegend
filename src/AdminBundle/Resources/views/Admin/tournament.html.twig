@@ -1,0 +1,275 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('static/plugins/datatables/css/datatables.bootstrap.css') }}">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Tournaments</h3>
+                </div>
+                <div class="box-body">
+                    <h4 class="text-info">In Registration :</h4>
+                    {% if nextTournaments %}
+                        <table id="next_tournament_list" class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>State</th>
+                                    <th>Action(s)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tournament in nextTournaments %}
+                                    <tr {% if false == tournament.activated %}class="bg-warning"{% endif %}>
+                                        <td><a href="{{ path('admin_tournament_update', {'tournament': tournament.id}) }}">{{ tournament.name }}</a></td>
+                                        <td>{{ tournament.state }}</td>
+                                        <td>
+                                            <a href="{{ path('admin_tournament_manage', {'tournament': tournament.id}) }}" class="btn btn-xs btn-info" title="Manage">
+                                                <i class="fas fa-cogs"></i> Manage
+                                            </a>
+                                            <a href="{{ path('tournament_tournament_profile', {'game': tournament.mode.game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-xs btn-primary" title="See in website" target="_blank">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-center text-info">No tournament in registration phase yet.</p>
+                    {% endif %}
+                    <h4 class="text-success">New :</h4>
+                    {% if initTournaments %}
+                        <table id="init_tournament_list" class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>[game] format (size) - name</th>
+                                    <th>Registration</th>
+                                    <th>Start</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for tournament in initTournaments %}
+                                    <tr {% if false == tournament.activated %}class="bg-warning"{% endif %}>
+                                        <td>
+                                            <a href="{{ path('admin_tournament_update', {'tournament': tournament.id}) }}">
+                                                [{{ tournament.mode.game.shortName }}] {{ tournament.formatStringify }} ({{ tournament.size }}) - {{ tournament.name }}
+                                            </a>
+                                        </td>
+                                        <td>{{ tournament.registrationStartAt.format('d/m h\\hi') }} - {{ tournament.registrationStopAt.format('d/m h\\hi') }}</td>
+                                        <td>{{ tournament.startAt.format('d/m h\\hi') }}</td>
+                                        <td>
+                                            <a href="{{ path('admin_tournament_manage', {'tournament': tournament.id}) }}" class="btn btn-xs btn-info" title="Manage">
+                                                <i class="fas fa-cogs"></i> Manage
+                                            </a>
+                                            <a href="{{ path('tournament_tournament_profile', {'game': tournament.mode.game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-xs btn-primary" title="See in website" target="_blank">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-center text-info">No tournament in initialization phase yet.</p>
+                    {% endif %}
+                    <br>
+                    <h4 class="text-default">Done and Prized :</h4>
+                    {% if doneTournaments %}
+                        <table id="done_tournament_list" class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>State</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for tournament in doneTournaments %}
+                                <tr {% if false == tournament.activated %}class="bg-warning"{% endif %}>
+                                    <td><a href="{{ path('admin_tournament_update', {'tournament': tournament.id}) }}">{{ tournament.name }}</a></td>
+                                    <td>{{ tournament.state }}</td>
+                                    <td>
+                                        <a href="{{ path('admin_tournament_manage', {'tournament': tournament.id}) }}" class="btn btn-xs btn-info" title="Manage">
+                                            <i class="fas fa-cogs"></i> Manage
+                                        </a>
+                                        <a href="{{ path('tournament_tournament_profile', {'game': tournament.mode.game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-xs btn-primary" title="See in website" target="_blank">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-center text-info">No tournament in initialization phase yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-warning">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Tournament(s) in progress</h3>
+                </div>
+                <div class="box-body">
+                    {% if inProgressTournaments %}
+                        <table id="in_progress_tournament_list" class="table table-condensed">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>State</th>
+                                <th>Action(s)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for tournament in inProgressTournaments %}
+                                    <tr>
+                                        <td><a href="{{ path('admin_tournament_update', {'tournament': tournament.id}) }}">{{ tournament.name }}</a></td>
+                                        <td>{{ tournament.state }}</td>
+                                        <td>
+                                            <a href="{{ path('admin_tournament_manage', {'tournament': tournament.id}) }}" class="btn btn-xs btn-info" title="Manage">
+                                                <i class="fas fa-cogs"></i> Manage
+                                            </a>
+                                            <a href="{{ path('tournament_tournament_profile', {'game': tournament.mode.game.name|slugify, 'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-xs btn-primary" title="See in website" target="_blank">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-center text-info">No tournament in progress yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Descriptions</h3>
+                        </div>
+                        <div class="box-body">
+                            {% if descriptions %}
+                                <table id="description_list" class="table table-condensed">
+                                    <tbody>
+                                        {% for description in descriptions %}
+                                            <tr {% if false == description.activated %}class="bg-warning"{% endif %}>
+                                                <td><a href="{{ path('admin_description_update', {'description': description.id}) }}">{{ description.name }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Rules</h3>
+                        </div>
+                        <div class="box-body">
+                            {% if rules %}
+                                <table id="rules_list" class="table table-condensed">
+                                    <tbody>
+                                        {% for rule in rules %}
+                                            <tr>
+                                                <td><a href="{{ path('admin_rules_update', {'rules': rule.id}) }}">{{ rule.name }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Rewards</h3>
+                        </div>
+                        <div class="box-body">
+                            {% if rewards %}
+                                <table id="reward_list" class="table table-condensed">
+                                    <tbody>
+                                        {% for reward in rewards %}
+                                            <tr {% if false == reward.activated %}class="bg-warning"{% endif %}>
+                                                <td><a href="{{ path('admin_reward_update', {'reward': reward.id}) }}">{{ reward.name }}</a></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Organizers</h3>
+                        </div>
+                        <div class="box-body">
+                            {% if organizers %}
+                                <table id="reward_list" class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Website</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for organizer in organizers %}
+                                            <tr>
+                                                <td><a href="{{ path('admin_organizer_update', {'organizer': organizer.id}) }}">{{ organizer.name }}</a></td>
+                                                <td>{{ organizer.website }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('static/plugins/datatables/js/datatables.bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('static/plugins/datatables/js/jquery.datatables.js') }}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#next_tournament_list').dataTable({
+                "bPaginate":false,
+                "bLengthChange":false,
+                "bInfo":false,
+                "bSort":false,
+                "bFilter":false
+            });
+            $('#init_tournament_list').dataTable({
+                "bPaginate":false,
+                "bLengthChange":false,
+                "bInfo":false,
+                "bSort":false,
+                "bFilter":false
+            });
+            $('#done_tournament_list').dataTable({
+                "bPaginate":true,
+                "bLengthChange":false,
+                "bInfo":false,
+                "bSort":false,
+                "bFilter":true
+            });
+            $('#in_progress_tournament_list').dataTable({
+                "bPaginate":false,
+                "bLengthChange":false,
+                "bInfo":false,
+                "bSort":false,
+                "bFilter":false
+            });
+        });
+    </script>
+{% endblock %}

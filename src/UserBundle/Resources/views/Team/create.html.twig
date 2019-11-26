@@ -1,0 +1,94 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'title.team_create'|trans }} {{ parent() }}{% endblock %}
+
+{% block css %}
+<style>
+    textarea {
+        resize: none;
+        min-height: 150px;
+    }
+    #team_create_file, #team_create_fileBanner {
+        display: none;
+    }
+    #logoUpload:hover, #bannerUpload:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div id="wrapper">
+    <section class="hero" style="background-image: url({{ asset('static/img/cover-team-create.jpg') }});">
+        <div class="hero-bg-primary"></div>
+        <div class="container">
+            <div class="page-header">
+                <div class="page-title">{{ 'team_create.banner.title'|trans }}</div>
+                <em>{{ 'team_create.banner.subtitle'|trans }}</em>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row sidebar">
+                <div class="col-md-8 leftside">
+                    <h3>{{ 'form.team_create.title'|trans }}</h3><hr>
+                    {{ form_start(form) }}
+                    <div class="row margin-bottom-10 hidden-xs">
+                        <div class="col-sm-3">
+                            <label for="team_create_file">
+                                <img id="logoUpload" src="{{ asset(team.getWebPath()) }}" alt="logo_{{ team.name }}" class="img-responsive">
+                                {{ form_errors(form.file) }}
+                                {{ form_widget(form.file) }}
+                            </label>
+                        </div>
+                        <div class="col-sm-9">
+                            <label for="team_create_fileBanner">
+                                <img id="bannerUpload" src="{{ asset(team.getWebPathBanner()) }}" alt="banner_{{ team.name }}" class="img-responsive">
+                                {{ form_errors(form.fileBanner) }}
+                                {{ form_widget(form.fileBanner) }}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-10">
+                        <div class="col-sm-4">
+                            {% if team.logo != constant('DEFAULT_LOGO', team) %}
+                                <a href="{{ path('user_team_removeimage', {'type': 'logo', 'team': team.id}) }}" class="text-warning">{{ 'team_create.remove_logo'|trans }}</a>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-8">
+                            {% if team.banner != constant('DEFAULT_BANNER', team) %}
+                                <a href="{{ path('user_team_removeimage', {'type': 'banner', 'team': team.id}) }}" class="text-warning pull-right">{{ 'team_create.remove_banner'|trans }}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                {{ form_label(form.tag) }}
+                                <div class="input-group">
+                                    <div class="input-group-addon">[</div>{{ form_widget(form.tag) }}<div class="input-group-addon">]</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-9">
+                            {{ form_row(form.name) }}
+                        </div>
+                    </div>
+                    {{ form_row(form.website) }}
+                    {{ form_row(form.description) }}
+                    {{ form_rest(form) }}
+                    <button type="submit" class="btn btn-primary pull-right">{{ 'form.team_create.button'|trans }}</button>
+                    {{ form_end(form) }}
+                </div>
+
+                <div class="col-md-4 rightside hidden-xs hidden-sm">
+                    {% include 'UserBundle:Include:recent_tweets.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+services:
+    app.mail:
+        class: AppBundle\Service\MailService
+        public: true
+        arguments: ["@mailer", "%website%"]
+
+    AppBundle\EventListener\KernelRequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 20 }
+
+    # Twig Extension
+    AppBundle\Twig\RolesExtension:
+        arguments: ["%role_name%", "@translator.default"]
+        tags:
+            - { name: twig.extension }
+
+    AppBundle\Twig\AvatarExtension:
+        arguments: ["@request_stack"]
+        tags:
+            - { name: twig.extension }
+
+    AppBundle\Twig\TagsExtension:
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: twig.extension }

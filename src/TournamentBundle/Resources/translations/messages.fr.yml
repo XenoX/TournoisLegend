@@ -1,0 +1,144 @@
+cancel: Annuler
+close: Fermer
+confirm: Confirmer
+form.stream_request.channel: 'Nom de la chaine (Twitch)'
+lan.profile.about.confirmed: 'Tout est ok pour vous ! Attendez juste que la LAN commence. N''oubliez pas de lire les règles'
+lan.profile.about.registered: 'Vous êtes inscrit mais vous devez effectuer une action (vérifiez votre adresse e-mail).'
+lan.profile.no_participant: 'Aucun participant pour cette LAN, soyez le premier !'
+lan.profile.register.team: 'Inscrire mon équipe'
+lan.profile.register.solo: 'M''inscrire'
+lan.profile.register_and_participants: 'Inscription & Participants'
+lan.profile.rules: Règles
+lan.profile.subscription: Inscription
+mail.body.check_in: "<p>Bonjour %username%,</p>\n<p>Le tournoi %name% vient d''entrer en phase de check-in.</p><p>Si vous souhaitez participer à ce tournoi, veuillez vous check-in et ainsi réserver votre place en cliquant sur le bouton bleu sur la page du tournoi :</p>\n<p><a href=\"%link%\">%name%</a></p>\n<p>Si le lien ne fonctionne pas, copiez le lien suivant dans le champ d'adresse de votre navigateur : %link%</p>\n<p>Ceci est un mail automatique, merci de ne pas répondre.</p>\n<p>Salutations,<br>Tournois-Legend</p>\n"
+mail.body.confirm: "<p>Bonjour %username%,</p>\n<p>>Vous êtes inscrit au tournoi %name% mais il manque votre tag.</p><p>Votre tag est requis pour participer au tournoi, merci de le spécifier en cliquant sur le bouton vert sur la page du tournoi :</p>\n<p><a href=\"%link%\">%name%</a></p>\n<p>Si le lien ne fonctionne pas, copiez le lien suivant dans le champ d'adresse de votre navigateur : %link%</p>\n<p>Ceci est un mail automatique, merci de ne pas répondre.</p>\n<p>Salutations,<br>Tournois-Legend</p>\n"
+mail.subject.check_in: "[%name%] Confirmez votre participation !"
+mail.subject.confirm: "Votre tag est manquant pour le tournoi %name%"
+participant.state.checked_in: 'Check in'
+participant.state.confirmed: Confirmé
+participant.state.registered: Inscrit
+points: Points
+prize.reason.cancel: 'Tournoi annulé'
+prize.reason.other: 'Raison inconnu'
+prize.reason.small: 'Pas assez de participant'
+ranking.banner.title: Classement
+ranking.banner.subtitle: 'Sélectionnez un classement'
+ranking.elo: Elo
+ranking.game.year.title: 'Classements par année'
+ranking.game.year.no_ranking: 'Aucun classement par année actuellement.'
+ranking.game.season.title: 'Classement par saison'
+ranking.game.season.no_ranking: 'Aucun classement par saison actuellement.'
+ranking.name: Nom
+ranking.no_mode: 'Aucun mode pour ce jeu actuellement.'
+ranking.no_participant: 'Aucun participant pour ce classement actuellement.'
+ranking.place: Place
+ranking.rank: Rang
+registration.alert.danger.all_tag_needed: 'C''est la phase de check in, vous devez donc renseigner tous les tags de vos joueurs'
+registration.alert.danger.ban: 'Votre équipe ou votre compte est banni'
+registration.alert.danger.dumb: 'Une erreur est apparue, merci de réessayer ou de nous contacter si le problème persiste'
+registration.alert.danger.minimum_confirmed: 'Vous n''avez pas assez de joueur confirmés pour check in'
+registration.alert.danger.minimum_participant: 'Vous devez avoir %minimum% joueurs minimum dans votre équipe pour faire cela'
+registration.alert.danger.player_already_registered: 'Le joueur %username% est déjà inscrit a ce tournoi avec l''équipe : %team%'
+registration.alert.danger.tag_banned: 'Un tag est banni, merci de changer votre inscription'
+registration.alert.danger.tag_banned_solo: 'Ce tag est banni, merci de le changer pour confirmer votre inscription'
+registration.alert.danger.tag_length_minimum: 'Votre tag doit avoir au moins 3 caractères'
+registration.alert.success.check_in: 'Check in effectué avec succès, do the best!'
+registration.alert.success.confirmed: 'Confirmation de participation effectuée avec succès !'
+registration.alert.success.registered: 'Merci pour votre participation, bonne chance !'
+registration.alert.success.removed: 'Désinscription effectuée avec succès !'
+registration.confirm.banner: Inscription
+registration.confirm.title: 'Confirmation de votre inscription'
+registration.confirm.recent_tags: 'Tags récents'
+registration.index.create.message: 'Créez une équipe maintenant, elle sera directement inscrite au tournoi, un lien sera généré pour que vos joueurs rejoignent directement l''équipe (et le tournoi bien sûr).'
+registration.index.create.title: 'Créer une équipe'
+registration.index.create.warning: 'Attention, participation non certaine.'
+registration.index.choose.info: 'Vous avez %teamCount% équipe(s) éligible(s)'
+registration.index.choose.message: 'Choisissez une de vos équipes éligibles pour vous inscrire en sélectionnant vos joueurs et vos remplaçants si nécessaire.'
+registration.index.choose.success: Recommandé
+registration.index.choose.title: 'Choisir une équipe'
+registration.index.solo.error: 'Pas encore implémenté, à venir'
+registration.index.solo.message: 'Inscrivez-vous en tant que joueur en attente d''une équipe, les équipes auront la possibilité de vous choisir. Sinon, une équipe de joueurs solo sera générée si possible.'
+registration.index.solo.title: 'Inscription sans équipe'
+registration.index.solo.warning: 'Attention, participation non certaine.'
+registration.index.title: 'Inscription au tournoi'
+registration.players.check_in_phase: 'C''est la phase de check in, vous devez remplir tous les tags. Votre équipe sera directement enregistrée, faite attention a votre line up.'
+registration.players.title: 'Choisir les joueurs'
+registration.players.subtitle: 'Sélection des joueurs'
+registration.players.info: 'Vous devez choisir entre %minParticipant% et %maxParticipant% joueurs.'
+registration.team.title: 'Choix d''une équipe'
+send: Envoyer
+see_more: Voir plus
+stream.alert.danger.not_valid_or_already_registered: 'Le nom de votre chaîne n''est pas valide ou vous avez déjà fait une demande'
+stream.alert.success.request: 'Demande de stream enregistrée avec succès !'
+title.ranking: Classement
+title.registration: 'Inscription au tournoi'
+title.registration_confirm: 'Confirmation d''inscription'
+title.registration_players: 'Choix des joueurs'
+title.registration_team: 'Choix de l''équipe'
+title.tournaments: Tournois
+title.tournaments_game: 'Tournois %game%'
+tournament.battle.button.warning: 'Le bouton de victoire apparaîtra à %datetime%'
+tournament.battle.button.win: 'j''ai gagné ce match'
+tournament.battle.infos: 'Round %round% Match %battle%'
+tournament.battle.me_create: 'C''est à vous de créer la partie et d''inviter le(s) participant(s) adverse(s)'
+tournament.battle.modal.confirm.title: 'Confirmer ma victoire'
+tournament.battle.modal.confirm.warning: 'Attention: Toute fraude est passible d''une interdiction définitive'
+tournament.battle.not_me_create: 'Vous allez recevoir une invitation de votre adversaire.'
+tournament.battle.problem: 'Si vous avez un problème avec cette partie s''il vous plaît contactez-nous sur notre Discord (lien dans le menu)'
+tournament.battle.title: 'Vous avez un match maintenant, bonne chance!'
+tournament.battle.versus: vs
+tournament.list.all_games: 'Tous les jeux'
+tournament.list.by: Par
+tournament.list.last: 'Derniers tournois'
+tournament.list.no_tournament: 'Aucun tournoi actuellement.'
+tournament.list.title: 'Liste des tournois'
+tournament.list.select_game: 'Sélectionnez un jeu'
+tournament.list.teams: équipes
+tournament.list.users: utilisateurs
+tournament.profile.about.checked_in: 'Tout est ok pour vous ! Attendez juste que le tournoi commence.'
+tournament.profile.about.confirmed: 'Tous les joueurs ont un tag, vous pouvez check in votre équipe! (en phase de check in).'
+tournament.profile.about.registered: 'L''équipe est enregistrée mais un ou plusieurs joueurs n''ont pas de tag.'
+tournament.profile.about.registered_solo: 'Vous êtes inscrit, attendez la phase de check in pour vous check in :)'
+tournament.profile.about.title: 'À propos des statuts'
+tournament.profile.actions: Actions
+tournament.profile.basic_informations: 'Informations de base'
+tournament.profile.bracket: Bracket
+tournament.profile.bracket_amateur: 'Bracket Amateur'
+tournament.profile.checkin: 'Check In'
+tournament.profile.dates: Dates
+tournament.profile.format: Format
+tournament.profile.hidden_participant: 'Les participants sont cachés'
+tournament.profile.informations: Informations
+tournament.profile.map: Map
+tournament.profile.no_bracket: 'Le bracket apparaîtra au début du tournoi'
+tournament.profile.no_participant: 'Aucun participant pour ce tournoi, soyez le premier !'
+tournament.profile.no_tag: 'Joueur non confirmé'
+tournament.profile.organizer: Organisateur
+tournament.profile.participant: Participant
+tournament.profile.participants: Participants
+tournament.profile.participation.delete: 'Supprimer la participation'
+tournament.profile.participation.update: 'Modifier la line-up'
+tournament.profile.refresh_auto: 'Le bracket se met à jour automatiquement'
+tournament.profile.registration: Inscription
+tournament.profile.registration_start: 'Début des inscriptions'
+tournament.profile.registration_stop: 'Début du check in'
+tournament.profile.rewards: Récompenses
+tournament.profile.rules: Règles
+tournament.profile.start_at: 'Commence le'
+tournament.profile.size: Taille
+tournament.profile.stream.modal.body: 'Dites-nous que vous streamez le tournoi, si vous êtes accepté, votre chaine sera présente dans l''onglet stream du tournoi'
+tournament.profile.stream.modal.info: 'Si vous avez le rang streamer, votre demande sera automatiquement acceptée'
+tournament.profile.stream.modal.title: 'Demande de stream'
+tournament.profile.stream.request_link: 'Je veux stream ce tournoi'
+tournament.profile.stream.title: Streams
+tournament.profile.team_waiting: 'Joueurs en attente d''équipe'
+tournament.profile.to: à
+tournament.riot_link: 'N''oubliez pas de vous inscrire au tournoi sur le site de RIOT pour recevoir vos récompenses ! <br><a href="%link%" target="_blank">%link%</a>'
+tournament.state.check_in: 'Check in'
+tournament.state.done: Terminé
+tournament.state.init: Préparation
+tournament.state.match: Match
+tournament.state.prized: Récompensé
+tournament.state.registration: Inscription
+tournament.state.unknow: Inconnu
+tournament.tell_lineup: 'Vous êtes possiblement éligible aux récompenses mais vous avez des remplaçants dans votre équipe. Afin de recevoir les récompenses, merci de fournir la lineup de votre dernier match a un admin tournoi sur notre Discord <a href="%link%" target="_blank">%link%</a>'

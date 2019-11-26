@@ -1,0 +1,72 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ game.shortName }} {{ 'title.ranking'|trans }} {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div id="wrapper">
+        <section class="hero" style="background-image: url({{ asset('static/img/cover-ranking.jpg') }});">
+            <div class="hero-bg-primary"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">{{ 'ranking.banner.title'|trans }}</div>
+                    <em>{{ 'ranking.banner.subtitle'|trans }}</em>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="vertical-tab">
+                    <ul class="nav nav-tabs">
+                        {% for mode in modes %}
+                            <li class="{{ loop.first ? 'active' }}">
+                                <a href="#tab{{ mode.id }}" data-toggle="tab">{{ attribute(mode, "name" ~ app.request.locale|capitalize) }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                        {% for mode in modes %}
+                            <div class="tab-pane fade {{ loop.first ? 'in active' }}" id="tab{{ mode.id }}">
+                                <div class="widget widget-list">
+                                    <div class="margin-top-15 title">{{ 'ranking.game.year.title'|trans }}</div>
+                                    <ul>
+                                        {% for ranking in rankingsByMode[mode.id] if ranking.seasonNumber is null %}
+                                            <li>
+                                                <div class="widget-list-meta">
+                                                    <h4 class="widget-list-title">
+                                                        <a href="{{ path('tournament_ranking_ranking', {'slugGame': mode.game.name|slugify, 'ranking': ranking.id, 'rankingSlug': ranking.name|slugify}) }}">{{ attribute(ranking, "name" ~ app.request.locale|capitalize) }}</a>
+                                                    </h4>
+                                                    <p><i class="fas fa-clock"></i> {{ ranking.startAt|localizeddate('long', 'none', null, ranking.startAt|date('e')) }} - {{ ranking.stopAt|localizeddate('long', 'none', null, ranking.stopAt|date('e')) }}</p>
+                                                </div>
+                                            </li>
+                                        {% else %}
+                                            <p class="text-center text-primary">{{ 'ranking.game.year.no_ranking'|trans }}</p>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                                <div class="widget widget-list">
+                                    <div class="margin-top-15 title">{{ 'ranking.game.season.title'|trans }}</div>
+                                    <ul>
+                                        {% for ranking in rankingsByMode[mode.id] if ranking.seasonNumber is not null %}
+                                            <li>
+                                                <div class="widget-list-meta">
+                                                    <h4 class="widget-list-title">
+                                                        <a href="{{ path('tournament_ranking_ranking', {'slugGame': mode.game.name|slugify, 'ranking': ranking.id, 'rankingSlug': ranking.name|slugify}) }}">{{ attribute(ranking, "name" ~ app.request.locale|capitalize) }}</a>
+                                                    </h4>
+                                                    <p><i class="fas fa-clock"></i> {{ ranking.startAt|localizeddate('long', 'none', null, ranking.startAt|date('e')) }} - {{ ranking.stopAt|localizeddate('long', 'none', null, ranking.stopAt|date('e')) }}</p>
+                                                </div>
+                                            </li>
+                                        {% else %}
+                                            <p class="text-center text-primary">{{ 'ranking.game.season.no_ranking'|trans }}</p>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

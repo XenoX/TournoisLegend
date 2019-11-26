@@ -1,0 +1,303 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ tournament.name }} {{ parent() }}{% endblock %}
+
+{% set locale = app.request.locale|capitalize %}
+{% if tournament.solo %}
+    {% set registrationLink = path('tournament_registration_confirm', {'tournament': tournament.id, 'slug': tournament.name|slugify}) %}
+{% else %}
+    {% set registrationLink = path('tournament_registration_index', {'tournament': tournament.id, 'slug': tournament.name|slugify}) %}
+{% endif %}
+
+{% block body %}
+    {% for alert in alerts %}
+        <section id="flash" class="bg-{{ alert.type }}">
+            <div class="container">
+                <button id="closeFlash" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="color-white font-weight-300 text-center">{{ attribute(alert, "content" ~ app.request.locale|capitalize) }}</h3>
+            </div>
+        </section>
+    {% endfor %}
+
+    <div id="wrapper">
+        <section class="hero height-350 hero-game" style="background-image: url({{ asset(tournament.mode.banner ? tournament.mode.webPathBanner : tournament.mode.game.webPathBanner) }});">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="page-header">
+                    <div class="page-title">{{ tournament.name }}</div>
+                    <p class="font-size-20">{{ tournament.mode.game.name }}</p>
+                    {% if not tournament.started %}
+                        {% if actionPossibility is constant('TournamentBundle\\Entity\\Participant::CAN_REGISTRATION') %}
+                            <a href="{{ registrationLink }}" class="btn btn-primary text-initial">
+                                {{ 'tournament.profile.registration'|trans }}
+                            </a>
+                        {% elseif actionPossibility is constant('TournamentBundle\\Entity\\Participant::CAN_CHECK_IN') and tournament.state == constant('TournamentBundle\\Workflow\\TournamentWorkflow::STATE_CHECK_IN') %}
+                            <a href="{{ path('tournament_registration_check', {'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-info text-initial">
+                                {{ 'tournament.profile.checkin'|trans }}
+                            </a>
+                        {% elseif actionPossibility is constant('TournamentBundle\\Entity\\Participant::CAN_CONFIRM') %}
+                            <a href="{{ path('tournament_registration_confirm', {'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-success text-initial">
+                                {{ 'confirm'|trans }}
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white no-padding hidden-xs border-bottom-1 border-grey-300" style="height: 54px">
+            <div class="tab-select text-center sticky">
+                <div class="container">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="{{ not tournament.started ? 'active' }}">
+                            <a href="#informations" aria-controls="informations" role="tab" data-toggle="tab">
+                                <i class="fas fa-file-text"></i> {{ 'tournament.profile.informations'|trans }}
+                            </a>
+                        </li>
+                        <li role="presentation" class="{{ tournament.started ? 'active' }}">
+                            <a href="#bracket" aria-controls="bracket" role="tab" data-toggle="tab">
+                                <i class="fas fa-list"></i> {{ 'tournament.profile.bracket'|trans }}
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#participants" aria-controls="participants" role="tab" data-toggle="tab">
+                                <i class="fas fa-users"></i> {{ 'tournament.profile.participant'|trans }} ({{ not tournament.hiddenParticipant ? participants|length : '?' }})
+                            </a>
+                        </li>
+                        {% if tournament.rules %}
+                            <li role="presentation">
+                                <a href="#rules" aria-controls="rules" role="tab" data-toggle="tab">
+                                    <i class="fas fa-balance-scale"></i> {{ 'tournament.profile.rules'|trans }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-grey-50 padding-top-30">
+            <div class="container">
+                <div class="row margin-bottom-30">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade {{ not tournament.started ? 'in active' }}" id="informations">
+                            <div class="col-md-8 padding-right-20">
+                                {{ attribute(tournament.description, "content" ~ locale)|raw }}
+                            </div>
+                            <div class="col-md-4 padding-left-20">
+                                <div class="widget widget-game">
+                                    <div class="overlay">
+                                        {% include 'TournamentBundle:Include:informations_widget.html.twig' with {'object': tournament} %}
+
+                                        <div class="description">
+                                            {% if actionPossibility is constant('TournamentBundle\\Entity\\Participant::CAN_REGISTRATION') %}
+                                                <a href="{{ registrationLink }}" class="btn btn-primary btn-block margin-top-40 text-initial" data-toggle="lightbox" data-width="1280">{{ 'tournament.profile.registration'|trans }}</a>
+                                            {% elseif actionPossibility is constant('TournamentBundle\\Entity\\Participant::CAN_CHECK_IN') %}
+                                                <a href="{{ path('tournament_registration_check', {'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-info btn-block margin-top-40 text-initial" data-toggle="lightbox" data-width="1280">{{ 'tournament.profile.checkin'|trans }}</a>
+                                            {% elseif actionPossibility is constant('TournamentBundle\\Entity\\Participant::CAN_CONFIRM') %}
+                                                <a href="{{ path('tournament_registration_confirm', {'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-success btn-block margin-top-40 text-initial" data-toggle="lightbox" data-width="1280">{{ 'confirm'|trans }}</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane fade {{ tournament.started ? 'in active' }}" id="bracket">
+                            {# STREAM #}
+                            {% if true == tournament.streams %}
+                                <button type="button" class="btn btn-primary btn-sm center-block margin-bottom-20" data-toggle="modal" data-target="#streamRequest">
+                                    {{ 'tournament.profile.stream.request_link'|trans }}
+                                </button>
+                                {% include 'TournamentBundle:Include:stream_request.html.twig' with {'form': formStream} %}
+                            {% endif %}
+                            {% if streams is not null %}
+                                {% include 'TournamentBundle:Include:stream.html.twig' with {'streams': streams} %}
+                            {% endif %}
+
+                            {# BRACKET #}
+                            {% if tournament.started %}
+                                <div id="bracket">
+                                    <div id="battle"></div>
+                                    <p class="text-info text-center">
+                                        <i class="fas fa-info-circle"></i> {{ 'tournament.profile.refresh_auto'|trans }}
+                                    </p>
+                                    <div class="data"></div>
+                                    <div id="bracketJS"></div>
+                                </div>
+                            {% else %}
+                                <p class="text-info text-center margin-top-30">
+                                    <i class="fas fa-info-circle"></i> {{ 'tournament.profile.no_bracket'|trans }}
+                                </p>
+                            {% endif %}
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane fade" id="participants">
+                            <div class="col-md-8 padding-right-20">
+                                <div class="widget widget-list">
+                                    <div class="panel panel-default margin-bottom-20">
+                                        <div class="panel-heading bold">{{ 'tournament.profile.participants'|trans }}</div>
+                                        <div class="panel-body">
+                                            <ul>
+                                                {% if not tournament.hiddenParticipant %}
+                                                    {% for key, participant in participants %}
+                                                        <li>
+                                                            {% if participant[0].team %}
+                                                                <a href="{{ path('user_team_profile', {'team': participant[0].team.id, 'slug': participant[0].team.name|slugify}) }}" class="thumb">
+                                                                    <img src="{{ asset(participant[0].team.webPath) }}">
+                                                                </a>
+                                                                <div class="widget-list-meta">
+                                                                    <h4 class="widget-list-title">
+                                                                        <a href="{{ path('user_team_profile', {'team': participant[0].team.id, 'slug': participant[0].team.name|slugify}) }}">
+                                                                            {{ participant[0].team.name }}
+                                                                        </a>
+                                                                        - <span class="font-size-12">{{ participant|participantState }}</span>
+                                                                    </h4>
+                                                                    <p>
+                                                                        <i class="fas fa-users"></i>
+                                                                        {% for userParticipant in participant %}
+                                                                            {% if userParticipant.tag %}
+                                                                                <a href="{{ path('user_user_profile', {'user': participant[loop.index0].user.id, 'slug': participant[loop.index0].user.name|slugify}) }}">
+                                                                                    {{ userParticipant.tag }}
+                                                                                </a>
+                                                                            {% else %}
+                                                                                <span class="text-warning">{{ 'tournament.profile.no_tag'|trans }}</span>
+                                                                            {% endif %}
+                                                                            {% if not loop.last %} |{% endif %}
+                                                                        {% endfor %}
+                                                                    </p>
+                                                                </div>
+                                                            {% else %}
+                                                                <a href="{{ path('user_user_profile', {'user': participant[0].user.id, 'slug': participant[0].user.name|slugify}) }}" class="thumb">
+                                                                    <img src="data:image/jpeg;base64,{{ participant[0].user.name|avatar }}">
+                                                                </a>
+                                                                <div class="widget-list-meta">
+                                                                    <h4 class="widget-list-title">
+                                                                        <a href="{{ path('user_user_profile', {'user': participant[0].user.id, 'slug': participant[0].user.name|slugify}) }}">
+                                                                            {{ participant[0].user.name }}
+                                                                        </a>
+                                                                        - <span class="font-size-12">{{ participant|participantState }}</span>
+                                                                    </h4>
+                                                                    <p><i class="fas fa-user"></i> {{ participant[0].tag }}</p>
+                                                                </div>
+                                                            {% endif %}
+                                                        </li>
+                                                    {% else %}
+                                                        <p class="text-info text-center margin-top-20">{{ 'tournament.profile.no_participant'|trans }}</p>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <p class="text-info text-center margin-top-20">{{ 'tournament.profile.hidden_participant'|trans }}</p>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 padding-left-20">
+                                {% if not tournament.started and participant and not participant.checkIn %}
+                                    <div class="widget">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">{{ 'tournament.profile.actions'|trans }}</div>
+                                            <div class="panel-body">
+                                                {% if participant.team is not null %}
+                                                    <a href="{{ path('tournament_registration_players', {'tournament': tournament.id, 'slug': tournament.name|slugify, 'team': participant.team.id, 'teamSlug': participant.team.name|slugify}) }}" class="btn btn-block btn-info">
+                                                        {{ 'tournament.profile.participation.update'|trans }}
+                                                    </a>
+                                                {% endif %}
+                                                <a href="{{ path('tournament_registration_delete', {'tournament': tournament.id, 'slug': tournament.name|slugify}) }}" class="btn btn-block btn-warning">
+                                                    {{ 'tournament.profile.participation.delete'|trans }}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <div class="widget hidden-xs">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">{{ 'tournament.profile.about.title'|trans }}</div>
+                                        <div class="panel-body">
+                                            {% if tournament.team %}
+                                                <span class="text-warning bold">{{ 'participant.state.registered'|trans }}: </span> {{ 'tournament.profile.about.registered'|trans }}<br><br>
+                                                <span class="text-primary bold">{{ 'participant.state.confirmed'|trans }}: </span> {{ 'tournament.profile.about.confirmed'|trans }}<br><br>
+                                                <span class="text-success bold">{{ 'participant.state.checked_in'|trans }}: </span> {{ 'tournament.profile.about.checked_in'|trans }}<br>
+                                            {% else %}
+                                                <span class="text-primary bold">{{ 'participant.state.confirmed'|trans }}: </span> {{ 'tournament.profile.about.registered_solo'|trans }}<br><br>
+                                                <span class="text-success bold">{{ 'participant.state.checked_in'|trans }}: </span> {{ 'tournament.profile.about.checked_in'|trans }}<br>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if tournament.rules %}
+                            <div role="tabpanel" class="tab-pane fade" id="rules">
+                                {{ attribute(tournament.rules, "content" ~ locale)|raw }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        var refreshTimeout;
+
+        function refreshBracket() {
+            $.ajax({
+                type: "GET",
+                url: "{{ path('tournament_tournament_bracket', {'tournament': tournament.id }) }}",
+                data: '',
+                cache: false,
+                success: function(data){
+                    $('#bracketJS').html(data);
+                },
+                error: function(){},
+                complete: function(){
+                    refreshTimeout = setTimeout(refresh, 15000);
+                }
+            });
+        }
+
+        function refreshBattle() {
+            {% if participant.id is defined %}
+                $.ajax({
+                    type: "GET",
+                    url: "{{ path('tournament_tournament_battle', {'tournament': tournament.id, 'participant': participant.id}) }}",
+                    data: '',
+                    cache: false,
+                    success: function(data){
+                        $('#battle').html(data);
+                    },
+                    error: function(){},
+                    complete: function(){}
+                });
+            {% endif %}
+        }
+
+        function refresh() {
+            {% if tournament.started %}
+                refreshBracket();
+                refreshBattle();
+            {% endif %}
+        }
+
+        $(function() {
+            refreshBracket();
+            {% if not tournament.done and tournament.started %}
+                refreshBattle();
+            {% endif %}
+
+            $(document).on('show.bs.modal','#modalWin', function () {
+                clearTimeout(refreshTimeout);
+            });
+
+            $(document).on('hide.bs.modal','#modalWin', function () {
+                refresh();
+            });
+        });
+    </script>
+{% endblock %}

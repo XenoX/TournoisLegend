@@ -1,0 +1,28 @@
+TournamentBundle\Entity\Ranking:
+    ranking-year-classic:
+        nameFr: '2017'
+        nameEn: '2017'
+        startAt: '<(new DateTime("2017-01-01"))>'
+        stopAt: '<(new DateTime("2017-12-31"))>'
+        mode: '@mode-*'
+    ranking-season-one:
+        nameFr: 'Saison 1'
+        nameEn: 'Season 1'
+        seasonNumber: 1
+        startAt: '<(new DateTime("2017-01-01"))>'
+        stopAt: '<(new DateTime("2017-03-31"))>'
+        mode: '@mode-*'
+    ranking-season-two:
+        nameFr: 'Saison 2'
+        nameEn: 'Season 2'
+        seasonNumber: 2
+        startAt: '<(new DateTime("2017-04-01"))>'
+        stopAt: '<(new DateTime("2017-06-31"))>'
+        mode: '@mode-*'
+    ranking-season-three:
+        nameFr: 'Saison 3'
+        nameEn: 'Season 3'
+        seasonNumber: 3
+        startAt: '<(new DateTime("2017-07-01"))>'
+        stopAt: '<(new DateTime("2017-09-31"))>'
+        mode: '@mode-*'

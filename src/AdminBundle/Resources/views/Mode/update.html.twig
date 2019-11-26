@@ -1,0 +1,33 @@
+{% extends 'AdminBundle::base.html.twig' %}
+
+{% block body %}
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    {% if mode.name %}
+                        Update {{ mode.name }}
+                    {% else %}
+                        Create game mode
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="box-body">
+                {{ form_start(form) }}
+                <img src="{{ asset(mode.webPathBanner) }}"  class="center-block" style="max-width:200px;max-height:200px;">
+                {{ form_row(form.fileBanner) }}
+                <div class="row">
+                    <div class="col-md-6">{{ form_row(form.nameFr) }}</div>
+                    <div class="col-md-6">{{ form_row(form.nameEn) }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">{{ form_row(form.game) }}</div>
+                    <div class="col-md-6">{{ form_row(form.activated) }}</div>
+                </div>
+                {{ form_rest(form) }}
+                <button type="submit" class="btn btn-primary margin-top-10">Send</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
